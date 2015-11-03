@@ -11,7 +11,6 @@ angular.module('myApp', [
   'ngAnimate',
   'ui.bootstrap',
   'myApp.security',
-  'myApp.frontpage',
   'myApp.view2',
   'myApp.view3',
   'myApp.filters',
@@ -31,6 +30,11 @@ angular.module('myApp', [
     $routeProvider
     .when('/login', {
       templateUrl: 'app/templates/loginForm.html'
+    })
+    .when('/', {
+        templateUrl: 'app/templates/frontpage.html',
+        controller: 'FrontpageCtrl',
+        controllerAs : 'forntpageCtrl'
     })
     .otherwise({redirectTo: '/'});
 }])

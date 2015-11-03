@@ -1,6 +1,9 @@
 /*
  * Angular authentication module
- *  
+ * 
+ * A rewrite of the security module provided for the semester projects.
+ * 
+ * @Author: Casper Schultz
  */
 'use strict';
 
@@ -83,6 +86,7 @@ angular.module('myApp.security', [])
     
     
     /**
+     * Factory for handling the login / logout events.
      * 
      * @param {type} $http
      * @param {type} $window
@@ -184,13 +188,13 @@ angular.module('myApp.security', [])
 
 
 /**
- * NOT SURE ABOUT THESE
+ * NOT SURE ABOUT WHY THESE HAS BEEN ADDED IN THE FIRST PLACE
+ * 
+ * They are not needed
  * 
  * So for now, I will comment them out, and find a solution, when/if
  * I will ever need it.
  */
-//.controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, UrlBaseDecode) {  
-//
 //  //Other controller emits the logOutEvent to force a logout
 //  $scope.$on('logOutEvent', function (event, args) {
 //    $scope.error = "Your session timed out. Please login again";
@@ -200,4 +204,3 @@ angular.module('myApp.security', [])
 //  $scope.isActive = function (viewLocation) {
 //    return viewLocation === $location.path();
 //  };
-//});

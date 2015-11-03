@@ -37,7 +37,12 @@ angular.module('myApp.controllers', ['myApp.security'])
     self.doLogout = function() {
         LoginFactory.doLogout();
     };
-});
+})
+
+.controller('FrontpageCtrl', ["InfoFactory","InfoService",function(InfoFactory,InfoService) {
+  this.msgFromFactory = InfoFactory.getInfo();
+  this.msgFromService = InfoService.getInfo();
+}]);
 
 
 

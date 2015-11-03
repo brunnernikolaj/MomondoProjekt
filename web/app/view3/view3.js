@@ -11,11 +11,11 @@ angular.module('myApp.view3', ['ngRoute'])
 
 .controller('View3Ctrl', function($http,$scope) {
   $http.get('api/demoadmin')
-            .success(function (data, status, headers, config) {
-              $scope.data = data;
-            })
-            .error(function (data, status, headers, config) {
-              
-             });
+    .success(function (data, status, headers, config) {
+      $scope.data = data;
+    })
+    .error(function (data, status, headers, config) {
+
+     });
  
 });
