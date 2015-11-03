@@ -18,7 +18,6 @@
         <script src="app/frontpage/frontpage.js"></script>
         <script src="app/view2/view2.js"></script>
         <script src="app/view3/view3.js"></script>
-        <script src="app/login/login.js"></script>
         
         <!-- App components -->
         <script src="app/app.js"></script>
@@ -51,9 +50,9 @@
                     </ul>
                     <div>
                         <ul class="nav navbar-nav navbar-right">
-                            <li ng-show="isAuthenticated">Hi {{username}}</li>
-                            <li ng-show="isAuthenticated"><a ng-href="" ng-click="logout()">Logout</a></li> 
-                            <li ng-show="!isAuthenticated"><a href="#/login">Login</a></li>
+                            <li ng-show="ctrl.authenticated"><a href="#/">Hi {{ctrl.username}}</a></li>
+                            <li ng-show="ctrl.authenticated"><a href="#/" ng-click="ctrl.doLogout()">Logout</a></li> 
+                            <li ng-show="!ctrl.authenticated"><a href="#/login">Login</a></li>
                         </ul>
                     </div>
                 </div>
