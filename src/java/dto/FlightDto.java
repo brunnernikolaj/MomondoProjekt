@@ -14,28 +14,22 @@ import java.util.Date;
  */
 public class FlightDto {
 
-    private String iataFrom;
-
-    private String iataTo;
-
-    private Double price;
-
-    private String flightNumber;
-
-    private int noOfSeats;
-
-    private Date travelDate;
-
-    private int travelTime;
+    private String origin;
+    private String destination;
+    private Double totalPrice;
+    private String flightID;
+    private int numberOfSeats;
+    private Date date;
+    private int traveltime;
 
     public FlightDto(String iataFrom, String iataTo, Double price, String flightNumber, int noOfSeats, Date travelDate, int travelTime) {
-        this.iataFrom = iataFrom;
-        this.iataTo = iataTo;
-        this.price = price;
-        this.flightNumber = flightNumber;
-        this.noOfSeats = noOfSeats;
-        this.travelDate = travelDate;
-        this.travelTime = travelTime;
+        this.origin = iataFrom;
+        this.destination = iataTo;
+        this.totalPrice = price;
+        this.flightID = flightNumber;
+        this.numberOfSeats = noOfSeats;
+        this.date = travelDate;
+        this.traveltime = travelTime;
        
     }
 
@@ -43,58 +37,58 @@ public class FlightDto {
     }
 
     public int getTravelTime() {
-        return travelTime;
+        return traveltime;
     }
 
     public void setTravelTime(int travelTime) {
-        this.travelTime = travelTime;
+        this.traveltime = travelTime;
     }
 
     public Date getTravelDate() {
-        return travelDate;
+        return date;
     }
 
     public void setTravelDate(Date travelDate) {
-        this.travelDate = travelDate;
+        this.date = travelDate;
     }
 
     public String getIataFrom() {
-        return iataFrom;
+        return origin;
     }
 
     public void setIataFrom(String iataFrom) {
-        this.iataFrom = iataFrom;
+        this.origin = iataFrom;
     }
 
     public String getIataTo() {
-        return iataTo;
+        return destination;
     }
 
     public void setIataTo(String iataTo) {
-        this.iataTo = iataTo;
+        this.destination = iataTo;
     }
 
     public Double getPrice() {
-        return price;
+        return totalPrice;
     }
 
     public void setPrice(Double price) {
-        this.price = price;
+        this.totalPrice = price;
     }
 
     public String getFlightNumber() {
-        return flightNumber;
+        return flightID;
     }
 
     public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
+        this.flightID = flightNumber;
     }
 
     public int getNoOfSeats() {
-        return noOfSeats;
+        return numberOfSeats;
     }
 
     public void setNoOfSeats(int noOfSeats) {
-        this.noOfSeats = noOfSeats;
+        this.numberOfSeats = noOfSeats;
     }
 }
