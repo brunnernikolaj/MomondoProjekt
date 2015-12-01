@@ -18,7 +18,7 @@ public class CommonService {
 	 */
 	public static int getRandomNumber(int low, int high) {
 		
-		Random r = new Random(42);
+		Random r = new Random();
 		int result = r.nextInt(high-low) + low;
 		return result;
 	}
