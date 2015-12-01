@@ -14,3 +14,8 @@ hs_err_pid*
 
 /nbproject
 build.xml
+/build/
+/dist/
+
+node_modules/
+bower_components/
