@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Nikolaj
  */
-public class FlightDto {
+public class FlightDTO {
 
     private String origin;
     private String destination;
@@ -22,7 +22,7 @@ public class FlightDto {
     private Date date;
     private int traveltime;
 
-    public FlightDto(String iataFrom, String iataTo, Double price, String flightNumber, int noOfSeats, Date travelDate, int travelTime) {
+    public FlightDTO(String iataFrom, String iataTo, Double price, String flightNumber, int noOfSeats, Date travelDate, int travelTime) {
         this.origin = iataFrom;
         this.destination = iataTo;
         this.totalPrice = price;
@@ -33,7 +33,7 @@ public class FlightDto {
        
     }
 
-    public FlightDto() {
+    public FlightDTO() {
     }
 
     public int getTravelTime() {
