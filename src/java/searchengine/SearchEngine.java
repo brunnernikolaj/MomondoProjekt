@@ -5,7 +5,7 @@
  */
 package searchengine;
 
-import dto.FlightDto;
+import dto.FlightDTO;
 import entity.FlightEntity;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,18 +36,18 @@ public class SearchEngine {
 
     private List<String> urls = Arrays.asList("http://angularairline-plaul.rhcloud.com");
 
-    public List<FlightDto> search(FlightRequest request) throws InterruptedException {
+    public List<FlightDTO> search(FlightRequest request) throws InterruptedException {
         try {
             Stream<SearchTask> tasks = urls.stream().map(url -> new SearchTask(url, request));
 
-            List<Future<List<FlightDto>>> temp = tasks.map(task -> threadPool.submit(task)).collect(Collectors.toList());
+            List<Future<List<FlightDTO>>> temp = tasks.map(task -> threadPool.submit(task)).collect(Collectors.toList());
 
             threadPool.shutdown();
             threadPool.awaitTermination(20, TimeUnit.SECONDS);
 
-            List<List<FlightDto>> temp1 = new ArrayList<>();
+            List<List<FlightDTO>> temp1 = new ArrayList<>();
             
-            for (Future<List<FlightDto>> list : temp){
+            for (Future<List<FlightDTO>> list : temp){
                 temp1.add(list.get());
             }
             

@@ -6,7 +6,7 @@
 package searchengine;
 
 import com.google.gson.Gson;
-import dto.FlightDto;
+import dto.FlightDTO;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,7 +25,7 @@ import us.monoid.web.Resty;
  *
  * @author Nikolaj
  */
-class SearchTask implements Callable<List<FlightDto>> {
+class SearchTask implements Callable<List<FlightDTO>> {
 
     private FlightRequest request;
     private String url;
@@ -36,7 +36,7 @@ class SearchTask implements Callable<List<FlightDto>> {
     }
 
     @Override
-    public List<FlightDto> call() throws Exception {
+    public List<FlightDTO> call() throws Exception {
 
         String apiUrl = url + request.getApiString();
 
@@ -44,7 +44,7 @@ class SearchTask implements Callable<List<FlightDto>> {
 
         JSONArray json = (JSONArray) r.json(apiUrl).get("flights");
 
-        List<FlightDto> dtos = new ArrayList<>();
+        List<FlightDTO> dtos = new ArrayList<>();
 
         for (int i = 0; i < json.length(); i++) {
             JSONObject object = (JSONObject) json.get(i);
@@ -54,7 +54,7 @@ class SearchTask implements Callable<List<FlightDto>> {
             df.setTimeZone(tz);
             Date time = df.parse((String) object.get("date"));
 
-            dtos.add(new FlightDto(
+            dtos.add(new FlightDTO(
                     (String) object.get("origin"),
                     (String) object.get("destination"),
                     (Double) object.get("priceTotal"),

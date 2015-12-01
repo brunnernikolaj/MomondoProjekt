@@ -5,7 +5,7 @@
  */
 package tester;
 
-import dto.FlightDto;
+import dto.FlightDTO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,7 +26,7 @@ public class Tester {
         
         FlightRequest request = new FlightRequest("CPH", "ABE", date, 1);
         
-        List<FlightDto> list = search.search(request);
+        List<FlightDTO> list = search.search(request);
         
         System.out.println("lol");
     }
