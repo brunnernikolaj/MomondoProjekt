@@ -5,20 +5,23 @@
  */
 package requests;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  *
  * @author Nikolaj
  */
 public class FlightRequest {
-    
+
     private String fromIATA;
-            
+
     private String toIATA;
-    
+
     private Date date;
-    
+
     private int ticketAmount;
 
     public FlightRequest(String fromIATA, String toIATA, Date date, int ticketAmount) {
@@ -27,7 +30,7 @@ public class FlightRequest {
         this.date = date;
         this.ticketAmount = ticketAmount;
     }
-    
+
     public String getFromIATA() {
         return fromIATA;
     }
@@ -59,7 +62,14 @@ public class FlightRequest {
     public void setTicketAmount(int ticketAmount) {
         this.ticketAmount = ticketAmount;
     }
-    
-    
-    
+
+    public String getApiString() {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(tz);
+        String timeAsISO = df.format(this.date);
+        
+        return String.format("/api/flightinfo/%s/%s/%s", fromIATA, timeAsISO, ticketAmount);
+    }
+
 }
