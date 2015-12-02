@@ -22,7 +22,7 @@ import javax.persistence.Temporal;
 @Table(name = "FLIGHTS")
 @NamedQueries({
     @NamedQuery(name = "FlightEntity.findFlights", query = "SELECT p FROM FlightEntity p WHERE p.origin = :origin AND p.destination = :destination AND p.travelDate >= :theDay AND p.travelDate < :theNextDay")})
-public class FlightEntity {
+public class Flight {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +51,7 @@ public class FlightEntity {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date travelDate;    
 
-    public FlightEntity() {
+    public Flight() {
     }
 
     public int getTravelTime() {

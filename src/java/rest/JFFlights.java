@@ -11,7 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import entity.FlightEntity;
+import entity.Flight;
 import facades.FlightFacade;
 import java.io.IOException;
 import java.text.ParseException;
@@ -75,10 +75,10 @@ public class JFFlights {
         
         
         // Fetch the flights
-        List<FlightEntity> flights = facade.getJFFlights(from, to, day, seats);
+        List<Flight> flights = facade.getJFFlights(from, to, day, seats);
         
         // We need to conert the list to a json list in order to store it in the json object
-        JsonElement element = gson.toJsonTree(flights, new TypeToken<List<FlightEntity>>() {}.getType());
+        JsonElement element = gson.toJsonTree(flights, new TypeToken<List<Flight>>() {}.getType());
         JsonArray jsonArray = element.getAsJsonArray();
         
         // We build the object

@@ -5,7 +5,7 @@
  */
 package facades;
 
-import entity.FlightEntity;
+import entity.Flight;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -23,7 +23,7 @@ import static utility.WebScraper.getListOfFlights;
  *
  * @author casper
  */
-public class FlightFacade extends DataManager<FlightEntity, Integer> {
+public class FlightFacade extends DataManager<Flight, Integer> {
     
     public static FlightFacade instance = null;
     
@@ -54,9 +54,9 @@ public class FlightFacade extends DataManager<FlightEntity, Integer> {
      * @return                  List of flight objects that match the criteria
      * @throws ParseException 
      */
-    public List<FlightEntity> getJFFlights(String from, String to, String date, int seats) throws ParseException {
+    public List<Flight> getJFFlights(String from, String to, String date, int seats) throws ParseException {
         
-        List<FlightEntity> flights;
+        List<Flight> flights;
         DateTime dt = new DateTime(date);
         Date nextDay = dt.plus(Period.days(1)).toDate();
         
@@ -104,7 +104,7 @@ public class FlightFacade extends DataManager<FlightEntity, Integer> {
      * @throws ParseException
      * @throws IOException 
      */
-    private List<FlightEntity> getFlightsFromNorweigian(String from, String to, DateTime date) throws ParseException, IOException {
+    private List<Flight> getFlightsFromNorweigian(String from, String to, DateTime date) throws ParseException, IOException {
         System.out.println("Fetching from norweigian");
         
         // We need to get the date and format it a bit

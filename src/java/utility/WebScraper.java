@@ -1,6 +1,6 @@
 package utility;
 
-import entity.FlightEntity;
+import entity.Flight;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,10 +23,10 @@ public class WebScraper {
 
         String url = "http://www.norwegian.com/uk/booking/fly/valg-flyvning/?D_City=CPH&A_City=ARN&D_Day=30&D_Month=201511&D_SelectedDay=30&R_Day=06&R_Month=201512&R_SelectedDay=06&CurrencyCode=EUR&TripType=2";
 
-        List<FlightEntity> results = getListOfFlights(url);
+        List<Flight> results = getListOfFlights(url);
 
         if (results != null && results.size() > 0) {
-            for (FlightEntity flight : results) {
+            for (Flight flight : results) {
                 System.out.println(flight.toString());
             }
         }
@@ -40,7 +40,7 @@ public class WebScraper {
      * @throws ParseException
      * @throws IOException
      */
-    public static List<FlightEntity> getListOfFlights(String url) throws ParseException, IOException {
+    public static List<Flight> getListOfFlights(String url) throws ParseException, IOException {
 
         //Get IATA Code From Value
         String subFromUrl   = url.substring(url.indexOf("D_City=") + 7);
@@ -71,7 +71,7 @@ public class WebScraper {
 
         //Get Page Document
         Document doc = Jsoup.connect(url).get();
-        List<FlightEntity> flights = new ArrayList();
+        List<Flight> flights = new ArrayList();
 
         if (doc != null) {
             Elements table = doc.select("table.avadaytable");
@@ -83,7 +83,7 @@ public class WebScraper {
                 if (trRowInfo1 != null) {
                     for (int i = 0; i < trRowInfo1.size(); i++) {
 
-                        FlightEntity flight = new FlightEntity();
+                        Flight flight = new Flight();
                         
                         // Alot of the information, we can just as easely generate
                         flight.setIataFrom(iataFrom);

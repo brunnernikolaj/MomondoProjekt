@@ -5,7 +5,7 @@
  */
 package utility;
 
-import entity.AirportEntity;
+import entity.Airport;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,9 +28,9 @@ public class AirportScraper {
     
     // We just fetch them manually, by running this class
     public static void main(String[] args) {
-        List<AirportEntity> airports = new AirportScraper().fetchAiportData();
+        List<Airport> airports = new AirportScraper().fetchAiportData();
         
-        for (AirportEntity airport : airports) 
+        for (Airport airport : airports) 
             System.out.println("The aiport with IATA: " + airport.getIATAcode() + "was fetched");
     }
     
@@ -44,10 +44,10 @@ public class AirportScraper {
      * 
      * @return List of AirportEntities 
      */
-    public static List<AirportEntity> fetchAiportData() {
+    public static List<Airport> fetchAiportData() {
         
         BufferedReader in = null;
-        List<AirportEntity> airports = new ArrayList();
+        List<Airport> airports = new ArrayList();
         
         try {
             
@@ -58,7 +58,7 @@ public class AirportScraper {
             while ((inputLine = in.readLine()) != null) {   
                 String[] values = inputLine.split(",");
                 
-                AirportEntity airport = new AirportEntity();
+                Airport airport = new Airport();
                 airport.setId(Integer.parseInt(values[0]));
                 airport.setName(values[1]);
                 airport.setCity(values[2]);
