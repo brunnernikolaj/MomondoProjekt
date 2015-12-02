@@ -5,8 +5,7 @@
  */
 package searchengine;
 
-import dto.FlightDto;
-import entity.FlightEntity;
+import entity.Flight;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

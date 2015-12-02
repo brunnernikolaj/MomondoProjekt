@@ -15,4 +15,14 @@ hs_err_pid*
 /nbproject
 build.xml
 /build/
+<<<<<<< HEAD
 /dist/
+=======
+/dist/
+
+persistence.xml
+context.xml
+
+node_modules/
+bower_components/
+>>>>>>> 5a5bab75c6a7e27722e31c0967691f28da648414

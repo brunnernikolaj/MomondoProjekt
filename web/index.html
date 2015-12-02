@@ -5,17 +5,18 @@
         <title>{{ctrl.title}}</title>
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">   
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">  
         <link rel="stylesheet" href="app/app.css">   
-            
+        
         <!-- Bower dependencies -->
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
         <script src='bower_components/angular-animate/angular-animate.min.js'></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="bower_components/components-font-awesome/css/font-awesome.min.css"></script>
+
         
         <!-- App views / pages -->
-        <script src="app/frontpage/frontpage.js"></script>
         <script src="app/view2/view2.js"></script>
         <script src="app/view3/view3.js"></script>
         
@@ -49,6 +50,16 @@
                     </ul>
                     <div>
                         <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown" uib-dropdown is-open="status.isopen">
+                              <a id="single-button" type="button" class="" uib-dropdown-toggle ng-disabled="disabled">
+                                Sprog <i class="fa fa-language"></i> <span class="caret"></span>
+                              </a>
+                              <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                                <li role="menuitem"><a href="#">Dansk</a></li>
+                                <li role="menuitem"><a href="#">English</a></li>
+                                <li role="menuitem"><a href="#">Svenska</a></li>
+                              </ul>
+                            </li>
                             <li ng-show="ctrl.authenticated"><a href="#/">Hi {{ctrl.username}}</a></li>
                             <li ng-show="ctrl.authenticated"><a href="#/" ng-click="ctrl.doLogout()">Logout</a></li> 
                             <li ng-show="!ctrl.authenticated"><a href="#/login">Login</a></li>

@@ -6,7 +6,6 @@
 package searchengine;
 
 import com.google.gson.Gson;
-import dto.FlightDto;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +24,7 @@ import us.monoid.web.Resty;
  *
  * @author Nikolaj
  */
+
 class SearchTask implements Callable<JSONObject> {
 
     private FlightRequest request;
@@ -36,6 +36,7 @@ class SearchTask implements Callable<JSONObject> {
     }
 
     @Override
+
     public JSONObject call() throws Exception {
 
         String apiUrl = url + request.getApiString();
@@ -43,7 +44,6 @@ class SearchTask implements Callable<JSONObject> {
         Resty r = new Resty();
 
         return  r.json(apiUrl).object();
-
     }
 
 }
