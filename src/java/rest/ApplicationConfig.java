@@ -25,7 +25,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
-        resources.add(rest.FlightinfoResource.class);
+        resources.add(rest.SearchService.class);
         resources.add(rest.JFFlights.class);
         resources.add(rest.User.class);
         resources.add(security.JWTAuthenticationFilter.class);

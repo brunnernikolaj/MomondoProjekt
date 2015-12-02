@@ -68,8 +68,16 @@ public class FlightRequest {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         df.setTimeZone(tz);
         String timeAsISO = df.format(this.date);
-        
+
         return String.format("/api/flightinfo/%s/%s/%s", fromIATA, timeAsISO, ticketAmount);
     }
 
+    public String getApiStringWithDestination() {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(tz);
+        String timeAsISO = df.format(this.date);
+
+        return String.format("/api/flightinfo/%s/%s/%s/%s", fromIATA, toIATA, timeAsISO, ticketAmount);
+    }
 }

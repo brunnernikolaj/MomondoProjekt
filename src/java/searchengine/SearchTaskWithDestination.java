@@ -5,7 +5,6 @@
  */
 package searchengine;
 
-import java.util.concurrent.Callable;
 import requests.FlightRequest;
 import us.monoid.json.JSONObject;
 import us.monoid.web.Resty;
@@ -14,19 +13,18 @@ import us.monoid.web.Resty;
  *
  * @author Nikolaj
  */
+public class SearchTaskWithDestination extends AbstractSearchTask{
 
-public class SearchTask extends AbstractSearchTask{
-
-    public SearchTask(String url, FlightRequest request) {
+    public SearchTaskWithDestination(String url, FlightRequest request) {
         super(url, request);
     }
 
     @Override
     public JSONObject call() throws Exception {
-
-        String apiUrl = url + request.getApiString();
+         String apiUrl = url + request.getApiStringWithDestination();
         Resty r = new Resty();
         return  r.json(apiUrl).object();
+        
     }
-
+    
 }
