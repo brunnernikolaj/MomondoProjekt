@@ -5,9 +5,21 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Tahoma, sans-serif;
   font-weight: 400; }
 
+a {
+  color: #1abc9c; }
+  a:hover, a:focus {
+    color: #17a689; }
+
 h1, h2, h3, h4, h5 {
   font-family: "Raleway", "Helvetica Neue", Tahoma, sans-serif;
   font-weight: 500; }
+
+.btn-primary {
+  background-color: #1abc9c;
+  border-color: #17a689; }
+  .btn-primary:hover, .btn-primary:focus {
+    background-color: #28e1bd;
+    border-color: #17a689; }
 
 .navbar-inverse {
   background-color: #2e2e2e;
@@ -24,6 +36,21 @@ h1, h2, h3, h4, h5 {
     color: #2e2e2e; }
     .navbar-inverse .navbar-nav li.dropdown ul li a:focus, .navbar-inverse .navbar-nav li.dropdown ul li a:hover {
       color: #fefefe; }
+
+.stats-bg {
+  background-color: #2e2e2e;
+  margin-top: 40px;
+  margin-bottom: 15px; }
+  .stats-bg .stats {
+    padding-top: 30px;
+    padding-bottom: 40px;
+    text-align: center;
+    color: #fefefe; }
+    .stats-bg .stats h1 {
+      color: #1abc9c; }
+    .stats-bg .stats h4 small {
+      display: block;
+      margin-top: 5px; }
 
 .jumbotron {
   height: 540px;
@@ -52,11 +79,6 @@ h1, h2, h3, h4, h5 {
       border-radius: 5px; }
     .jumbotron .container-fluid form.form-horizontal .input-group {
       margin-top: 5px; }
-    .jumbotron .container-fluid form.form-horizontal .btn-primary {
-      background-color: #1abc9c;
-      border-color: #148f77; }
-      .jumbotron .container-fluid form.form-horizontal .btn-primary:hover, .jumbotron .container-fluid form.form-horizontal .btn-primary:focus {
-        background-color: #28e1bd; }
 
 .frontpage-catcher {
   text-align: center; }
@@ -66,17 +88,10 @@ h1, h2, h3, h4, h5 {
 .frontpage-facts {
   text-align: center; }
 
-.stats-bg {
-  background-color: #2e2e2e;
-  margin-top: 40px;
-  margin-bottom: 15px; }
-  .stats-bg .stats {
-    padding-top: 30px;
-    padding-bottom: 40px;
-    text-align: center;
-    color: #fefefe; }
-    .stats-bg .stats h1 {
-      color: #1abc9c; }
-    .stats-bg .stats h4 small {
-      display: block;
-      margin-top: 5px; }
+.loginForm {
+  margin-top: 80px; }
+  .loginForm .panel-primary {
+    border-color: #1abc9c; }
+    .loginForm .panel-primary .panel-heading {
+      background-color: #1abc9c;
+      border-color: #1abc9c; }
