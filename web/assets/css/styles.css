@@ -41,16 +41,15 @@ h1, h2, h3, h4, h5 {
     right: 0;
     color: #fefefe; }
     .jumbotron .container-fluid form.form-horizontal label {
-      margin-bottom: -5px;
-      margin-left: 6px;
+      margin-left: 4px;
       padding: 5px 10px;
       background-color: #1abc9c;
-      -webkit-border-top-left-radius: 5px;
-      -webkit-border-top-right-radius: 5px;
-      -moz-border-radius-topleft: 5px;
-      -moz-border-radius-topright: 5px;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px; }
+      -webkit-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border-radius: 5px; }
     .jumbotron .container-fluid form.form-horizontal .input-group {
       margin-top: 5px; }
     .jumbotron .container-fluid form.form-horizontal .btn-primary {
