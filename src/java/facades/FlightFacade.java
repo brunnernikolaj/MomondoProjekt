@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package facades;
 
 import entity.Flight;
@@ -11,25 +6,49 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.TemporalType;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import static utility.WebScraper.getListOfFlights;
 
 /**
- *
+ * Flight facade class.
+ * 
+ * This class handles communication between our rest API and the
+ * data concerning the flights. 
+ * 
+ * Most queries are handled by the generic DataManager and the rest is
+ * handled here, mostly with named queries made in the entity classes.
+ * 
  * @author casper
+ * @Date: 1/12 2015
  */
 public class FlightFacade extends DataManager<Flight, Integer> {
     
+    /**
+     * Instance of self. 
+     * 
+     * Instantiated as null as default.
+     */
     public static FlightFacade instance = null;
     
+    /**
+     * Private constructor.
+     */
     private FlightFacade() {
     }
     
+    /**
+     * Singleton facade.
+     * 
+     * This class is used as a singleton. This could have some performance 
+     * issues, but for now while we aren't sure, we will use it like this.
+     * 
+     * @author: Casper Schultz
+     * @Date: 2/12 2015
+     * 
+     * @return instance as a singleton 
+     */
     public static FlightFacade getInstance() {
         if (instance == null) {
             instance = new FlightFacade();
