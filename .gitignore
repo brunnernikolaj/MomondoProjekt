@@ -18,6 +18,7 @@ build.xml
 /dist/
 
 persistence.xml
+context.xml
 
 node_modules/
 bower_components/
