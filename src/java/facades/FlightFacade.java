@@ -9,7 +9,6 @@ import entity.FlightEntity;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -24,15 +23,11 @@ import static utility.WebScraper.getListOfFlights;
  *
  * @author casper
  */
-public class FlightFacade {
+public class FlightFacade extends DataManager<FlightEntity, Integer> {
     
     public static FlightFacade instance = null;
-    EntityManager em;
-    EntityTransaction transaction;
     
     private FlightFacade() {
-        em = Persistence.createEntityManagerFactory("MomondoProjektPU").createEntityManager();
-        transaction = em.getTransaction();
     }
     
     public static FlightFacade getInstance() {
@@ -66,7 +61,7 @@ public class FlightFacade {
         Date nextDay = dt.plus(Period.days(1)).toDate();
         
         // Now we want to check if we have any results in the database, by looking up
-        flights = em.createNamedQuery("FlightEntity.findFlights")
+        flights = manager.createNamedQuery("FlightEntity.findFlights")
         .setParameter("origin", from)
         .setParameter("destination", to)
         .setParameter("theDay", dt.toDate(), TemporalType.DATE)
@@ -82,7 +77,7 @@ public class FlightFacade {
             
             try { 
                 flights = getFlightsFromNorweigian(from, to, dt);
-                this.saveFlights(flights);
+                this.createFromList(flights);
             } catch (ParseException | IOException e) {
                 System.out.println(e.getStackTrace());
             } 
@@ -92,24 +87,6 @@ public class FlightFacade {
         return flights;
     }
     
-    /**
-     * Saves a list of flights in the database.
-     * 
-     * @Author: Casper Schultz
-     * @Date: 2/12 2015
-     * 
-     * @param flights   The list of flight objects that is to be saved.
-     */
-    private void saveFlights(List<FlightEntity> flights) {
-        // Now save the flights
-        if (flights != null || flights.size() > 0) {
-            transaction.begin();
-            flights.stream().forEach((flight) -> {
-                em.persist(flight);
-            });
-            transaction.commit();
-        }
-    }
     
     /**
      * Fetches flights from Norwegian. 
