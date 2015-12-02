@@ -64,3 +64,18 @@ h1, h2, h3, h4, h5 {
 
 .frontpage-facts {
   text-align: center; }
+
+.stats-bg {
+  background-color: #2e2e2e;
+  margin-top: 40px;
+  margin-bottom: 15px; }
+  .stats-bg .stats {
+    padding-top: 30px;
+    padding-bottom: 40px;
+    text-align: center;
+    color: #fefefe; }
+    .stats-bg .stats h1 {
+      color: #1abc9c; }
+    .stats-bg .stats h4 small {
+      display: block;
+      margin-top: 5px; }

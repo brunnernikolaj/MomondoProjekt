@@ -109,18 +109,19 @@ h1, h2, h3, h4, h5 {
 	text-align: center;
 }
 
-// UPCOMING UPDATE !!
-// .steps {
-// 	.step-circle {
-// 		margin-right: 10px;
-// 		height:40px;
-// 		width:40px;
-// 		// @include border-radius(50%);
-// 		border-color: $pridark;
-// 		color:$primary;
-// 		&.active {
-// 			background-color: $primary;
-// 			color: $pridark;
-// 		}
-// 	}
-// }
+.stats-bg {
+	background-color:$primary-black;
+	margin-top:40px;
+	margin-bottom:15px;
+	.stats {
+		padding-top:30px;
+		padding-bottom:40px;
+		text-align: center;
+		color: $primary-white;
+		h1 { color: $primary;}
+		h4 small {
+			display: block;
+			margin-top:5px;
+		}
+	}
+}
