@@ -3,6 +3,11 @@ package rest;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 @javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends Application {
@@ -21,12 +26,12 @@ public class ApplicationConfig extends Application {
    * If required, comment out calling this method in getClasses().
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
-    resources.add(rest.Admin.class);
+    resources.add(rest.JFFlights.class);
     resources.add(rest.User.class);
     resources.add(security.JWTAuthenticationFilter.class);
     resources.add(security.Login.class);
     resources.add(security.NotAuthorizedExceptionMapper.class);
-    resources.add(security.RolesAllowedFilter.class);
+        resources.add(security.RolesAllowedFilter.class);
   }
   
 }
