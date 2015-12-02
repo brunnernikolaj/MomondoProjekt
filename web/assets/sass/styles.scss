@@ -14,15 +14,6 @@ $prilight: lighten($primary, 10%);
 $font-stack: 'Open Sans', 'Helvetica Neue', Tahoma, sans-serif;
 $font-head: 'Raleway', 'Helvetica Neue', Tahoma, sans-serif;
 
-// Mixins - Need to import this, from another file
-// Usage: .box { @include border-radius(10px);}
-@mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-      -ms-border-radius: $radius;
-          border-radius: $radius;
-}
-
 body {
 	font-family: $font-stack;
 	font-weight: 400;
@@ -138,6 +129,25 @@ h1, h2, h3, h4, h5 {
 
 .frontpage-facts {
 	text-align: center;
+}
+
+.signupForm {
+	margin-top:80px;
+	form.form-horizontal {
+		label {
+			color: $primary-white;
+			margin:10px 0;
+			padding:5px 10px;
+			background-color:$primary;
+			-webkit-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+			border-radius: 5px;
+		}
+		.btn { margin-top:30px;}
+	}
 }
 
 .loginForm {

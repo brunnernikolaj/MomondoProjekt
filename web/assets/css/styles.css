@@ -88,6 +88,22 @@ h1, h2, h3, h4, h5 {
 .frontpage-facts {
   text-align: center; }
 
+.signupForm {
+  margin-top: 80px; }
+  .signupForm form.form-horizontal label {
+    color: #fefefe;
+    margin: 10px 0;
+    padding: 5px 10px;
+    background-color: #1abc9c;
+    -webkit-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-radius: 5px; }
+  .signupForm form.form-horizontal .btn {
+    margin-top: 30px; }
+
 .loginForm {
   margin-top: 80px; }
   .loginForm .panel-primary {
