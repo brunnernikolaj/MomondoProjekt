@@ -37,6 +37,9 @@ angular.module('myApp', [
     .when('/doc', {
       templateUrl: 'aap/templates/documentation.html'
     })
+    .when('/searchresult', {
+      templateUrl: 'app/templates/searchresult.html'
+    })
     .when('/', {
         templateUrl: 'app/templates/frontpage.html',
         controller: 'FrontpageCtrl',
