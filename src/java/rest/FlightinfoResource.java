@@ -19,7 +19,7 @@ import javax.ws.rs.PUT;
  *
  * @author Nikolaj
  */
-@Path("flightinfo")
+@Path("/flightinfo")
 public class FlightinfoResource {
 
     @Context
@@ -33,13 +33,15 @@ public class FlightinfoResource {
 
     /**
      * Retrieves representation of an instance of conf.FlightinfoResource
+     * @param from
      * @return an instance of java.lang.String
      */
     @GET
+    @Path("/{from}/{day}/{seats}")
     @Produces("application/json")
-    public String getJson() {
+    public String getJson(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats) {
         //TODO return proper representation object
-        throw new UnsupportedOperationException();
+        return "lol";
     }
 
     /**
