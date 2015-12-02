@@ -11,8 +11,8 @@ angular.module('myApp.controllers', ['myApp.security'])
     
     var self = this;
     
-    self.title = "My better seed";
-    self.project = "InfoApp";
+    self.title = "JustFly";
+    self.project = "JustFly";
     
     self.authenticated = LoginFactory.isLoggedIn();
     self.username = LoginFactory.getUsername();
