@@ -39,7 +39,9 @@ h1, h2, h3, h4, h5 {
 		li {
 			a {
 				color: $primary-white;
-				font-size:24px;
+				i.fa {
+					font-size:24px;
+				}
 			}
 			a:focus, a:hover {
 				background-color: darken($primary-black, 4%);
