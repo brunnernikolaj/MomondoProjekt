@@ -28,7 +28,7 @@ import searchengine.SearchTaskWithDestination;
  *
  * @author Nikolaj
  */
-@Path("/flightinfo")
+@Path("/search")
 public class SearchService {
 
     @Context
