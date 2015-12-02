@@ -1,4 +1,68 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+@import url(https://fonts.googleapis.com/css?family=Raleway:500);
+@import url(_mixin);
 body {
-  padding: 50px 0;
-  margin: 0;
-  min-height: 100%; }
+  font-family: "Open Sans", "Helvetica Neue", Tahoma, sans-serif;
+  font-weight: 400; }
+
+h1, h2, h3, h4, h5 {
+  font-family: "Raleway", "Helvetica Neue", Tahoma, sans-serif;
+  font-weight: 500; }
+
+.navbar-inverse {
+  background-color: #2e2e2e;
+  color: #fefefe; }
+  .navbar-inverse .navbar-nav li a {
+    color: #fefefe;
+    font-size: 24px; }
+  .navbar-inverse .navbar-nav li a:focus, .navbar-inverse .navbar-nav li a:hover {
+    background-color: #242424; }
+  .navbar-inverse .navbar-nav li.active a {
+    background-color: #242424; }
+  .navbar-inverse .navbar-nav li.dropdown ul li a {
+    color: #2e2e2e; }
+    .navbar-inverse .navbar-nav li.dropdown ul li a:focus, .navbar-inverse .navbar-nav li.dropdown ul li a:hover {
+      color: #fefefe; }
+
+.jumbotron {
+  height: 540px;
+  background-image: url("../img/big_background.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative; }
+  .jumbotron .container-fluid {
+    position: absolute;
+    background-color: rgba(46, 46, 46, 0.4);
+    bottom: 40px;
+    padding-top: 25px;
+    padding-bottom: 30px;
+    left: 0;
+    right: 0;
+    color: #fefefe; }
+    .jumbotron .container-fluid form.form-horizontal label {
+      margin-bottom: -5px;
+      margin-left: 6px;
+      padding: 5px 10px;
+      background-color: #1abc9c;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px; }
+    .jumbotron .container-fluid form.form-horizontal .input-group {
+      margin-top: 5px; }
+    .jumbotron .container-fluid form.form-horizontal .btn-primary {
+      background-color: #1abc9c;
+      border-color: #148f77; }
+      .jumbotron .container-fluid form.form-horizontal .btn-primary:hover, .jumbotron .container-fluid form.form-horizontal .btn-primary:focus {
+        background-color: #28e1bd; }
+
+.frontpage-catcher {
+  text-align: center; }
+  .frontpage-catcher h1 {
+    text-transform: uppercase; }
+
+.frontpage-facts {
+  text-align: center; }
