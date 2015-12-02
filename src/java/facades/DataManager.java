@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -131,5 +132,24 @@ public class DataManager<T, PK> {
         }
 
         return null;
+    }
+    
+    /**
+     * Deletes all rows in a table.
+     * 
+     * NOTICE!!! We use a specific way of naming
+     * the tables! If this isn't done correctly, the
+     * method won't work!
+     * 
+     * @Author: Casper Schultz
+     * @Date: 2/12 2015
+     * 
+     * @param entity 
+     */
+    public void deleteAll(T entity) {
+        // We use a specific convention for naming the tables. 
+        String table = entity.getClass().getName().toUpperCase() + "S";
+        Query q = manager.createNativeQuery("DELETE FROM " + table);
+        q.executeUpdate();
     }
 }
