@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import requests.FlightRequest;
 import searchengine.SearchEngine;
+import us.monoid.json.JSONArray;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Tester {
         
         FlightRequest request = new FlightRequest("CPH", "ABE", date, 1);
         
-        List<FlightDto> list = search.search(request);
+        JSONArray list = search.search(request);
         
         System.out.println("lol");
     }
