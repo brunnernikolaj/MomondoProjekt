@@ -5,13 +5,13 @@
  */
 package tester;
 
-import dto.FlightDTO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import requests.FlightRequest;
 import searchengine.SearchEngine;
+import us.monoid.json.JSONArray;
 
 /**
  *
@@ -26,7 +26,9 @@ public class Tester {
         
         FlightRequest request = new FlightRequest("CPH", "ABE", date, 1);
         
-        List<FlightDTO> list = search.search(request);
+
+        JSONArray list = search.search(request);
+
         
         System.out.println("lol");
     }

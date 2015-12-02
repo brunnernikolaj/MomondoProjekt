@@ -6,7 +6,6 @@
 package searchengine;
 
 import com.google.gson.Gson;
-import dto.FlightDTO;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,7 +24,8 @@ import us.monoid.web.Resty;
  *
  * @author Nikolaj
  */
-class SearchTask implements Callable<List<FlightDTO>> {
+
+class SearchTask implements Callable<JSONObject> {
 
     private FlightRequest request;
     private String url;
@@ -36,35 +36,14 @@ class SearchTask implements Callable<List<FlightDTO>> {
     }
 
     @Override
-    public List<FlightDTO> call() throws Exception {
+
+    public JSONObject call() throws Exception {
 
         String apiUrl = url + request.getApiString();
 
         Resty r = new Resty();
 
-        JSONArray json = (JSONArray) r.json(apiUrl).get("flights");
-
-        List<FlightDTO> dtos = new ArrayList<>();
-
-        for (int i = 0; i < json.length(); i++) {
-            JSONObject object = (JSONObject) json.get(i);
-
-            TimeZone tz = TimeZone.getTimeZone("UTC");
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            df.setTimeZone(tz);
-            Date time = df.parse((String) object.get("date"));
-
-            dtos.add(new FlightDTO(
-                    (String) object.get("origin"),
-                    (String) object.get("destination"),
-                    (Double) object.get("priceTotal"),
-                    (String) object.get("flightId"),
-                    (int) object.get("numberOfSeats"),
-                    time, 
-                    (int) object.get("travelTime")));
-        }
-        
-        return dtos;
+        return  r.json(apiUrl).object();
     }
 
 }

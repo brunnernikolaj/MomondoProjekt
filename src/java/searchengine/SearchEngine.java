@@ -5,7 +5,6 @@
  */
 package searchengine;
 
-import dto.FlightDTO;
 import entity.Flight;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +20,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import requests.FlightRequest;
+import us.monoid.json.JSONArray;
+import us.monoid.json.JSONObject;
+import us.monoid.web.JSONResource;
 
 /**
  *
@@ -36,22 +38,22 @@ public class SearchEngine {
 
     private List<String> urls = Arrays.asList("http://angularairline-plaul.rhcloud.com");
 
-    public List<FlightDTO> search(FlightRequest request) throws InterruptedException {
+    public JSONArray search(FlightRequest request) throws InterruptedException {
         try {
             Stream<SearchTask> tasks = urls.stream().map(url -> new SearchTask(url, request));
 
-            List<Future<List<FlightDTO>>> temp = tasks.map(task -> threadPool.submit(task)).collect(Collectors.toList());
+            List<Future<JSONObject>> temp = tasks.map(task -> threadPool.submit(task)).collect(Collectors.toList());
 
             threadPool.shutdown();
             threadPool.awaitTermination(20, TimeUnit.SECONDS);
 
-            List<List<FlightDTO>> temp1 = new ArrayList<>();
+            JSONArray temp1 = new JSONArray();
             
-            for (Future<List<FlightDTO>> list : temp){
-                temp1.add(list.get());
+            for (Future<JSONObject> list : temp){
+                temp1.put(list.get());
             }
             
-            return temp1.stream().flatMap(l -> l.stream()).collect(Collectors.toList());
+            return temp1;
 
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);
