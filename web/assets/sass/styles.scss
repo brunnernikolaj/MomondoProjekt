@@ -8,28 +8,36 @@ $primary-white: #fefefe;
 $primary-lightgrey: #efefef;
 
 $primary: #1abc9c;
-$pridark: darken($primary, 10%);
+$pridark: darken($primary, 5%);
 $prilight: lighten($primary, 10%);
 
 $font-stack: 'Open Sans', 'Helvetica Neue', Tahoma, sans-serif;
 $font-head: 'Raleway', 'Helvetica Neue', Tahoma, sans-serif;
 
-// Mixins - Need to import this, from another file
-// Usage: .box { @include border-radius(10px);}
-@mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-      -ms-border-radius: $radius;
-          border-radius: $radius;
-}
-
 body {
 	font-family: $font-stack;
 	font-weight: 400;
 }
+
+a {
+	color: $primary;
+	&:hover, &:focus {
+		color: $pridark;
+	}
+}
+
 h1, h2, h3, h4, h5 {
 	font-family: $font-head;
 	font-weight: 500;
+}
+
+.btn-primary {
+	background-color: $primary;
+	border-color: $pridark;
+	&:hover, &:focus {
+		background-color: $prilight;
+		border-color: $pridark;
+	}
 }
 
 .navbar-inverse {
@@ -39,7 +47,9 @@ h1, h2, h3, h4, h5 {
 		li {
 			a {
 				color: $primary-white;
-				font-size:24px;
+				i.fa {
+					font-size:24px;
+				}
 			}
 			a:focus, a:hover {
 				background-color: darken($primary-black, 4%);
@@ -57,6 +67,23 @@ h1, h2, h3, h4, h5 {
 					}
 				}
 			}
+		}
+	}
+}
+
+.stats-bg {
+	background-color:$primary-black;
+	margin-top:40px;
+	margin-bottom:15px;
+	.stats {
+		padding-top:30px;
+		padding-bottom:40px;
+		text-align: center;
+		color: $primary-white;
+		h1 { color: $primary;}
+		h4 small {
+			display: block;
+			margin-top:5px;
 		}
 	}
 }
@@ -79,48 +106,109 @@ h1, h2, h3, h4, h5 {
 		color:$primary-white;
 		form.form-horizontal {
 			label {
-				margin-bottom:-5px;
-				margin-left:6px;
 				padding:5px 10px;
 				background-color:$primary;
-				-webkit-border-top-left-radius: 5px;
-				-webkit-border-top-right-radius: 5px;
-				-moz-border-radius-topleft: 5px;
-				-moz-border-radius-topright: 5px;
-				border-top-left-radius: 5px;
-				border-top-right-radius: 5px;
+				-webkit-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
+				border-radius: 5px;
 			}
-			.input-group { margin-top:5px;}
-			.btn-primary {
-				background-color: $primary;
-				border-color: $pridark;
-				&:hover, &:focus {
-					background-color: $prilight;
-				}
+			.input-group {
+				margin-top:5px;
 			}
 		}
 	}
 }
+.searchresult {
+	margin-top:-4px;
+	background-image: url("../img/big_background.jpg");
+	background-size:cover;
+	background-position:center center;
+	background-repeat: no-repeat;
+	.container-fluid {
+		margin-top:60px;
+		background-color: rgba($primary-black, .4);
+		padding-top:25px;
+		padding-bottom:30px;
+		position: relative;
+		left:0;
+		right:0;
+		color:$primary-white;
+		form.form-horizontal {
+			label {
+				padding:5px 10px;
+				background-color:$primary;
+				-webkit-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
+				border-radius: 5px;
+			}
+			.input-group {
+				margin-top:5px;
+			}
+		}
+	}
+}
+.filters {
+	margin-top:40px;
+	min-height:280px;
+	.panel-primary {
+		border-color: $primary;
+		.panel-heading {
+			background-color: $primary;
+			border-color: $primary;
+		}
+	}
+}
+.results {
+	margin-top:40px;
+	height:auto;
+	.resultset {
+		border:1px solid $primary-lightgrey;
+		min-height:120px;
+		height:auto;
+	}
+}
+
 .frontpage-catcher {
 	text-align:center;
 	h1 { text-transform: uppercase;}
 }
+
 .frontpage-facts {
 	text-align: center;
 }
 
-// UPCOMING UPDATE !!
-// .steps {
-// 	.step-circle {
-// 		margin-right: 10px;
-// 		height:40px;
-// 		width:40px;
-// 		// @include border-radius(50%);
-// 		border-color: $pridark;
-// 		color:$primary;
-// 		&.active {
-// 			background-color: $primary;
-// 			color: $pridark;
-// 		}
-// 	}
-// }
+.signupForm {
+	margin-top:80px;
+	form.form-horizontal {
+		label {
+			color: $primary-white;
+			margin:10px 0;
+			padding:5px 10px;
+			background-color:$primary;
+			-webkit-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+			border-radius: 5px;
+		}
+		.btn { margin-top:30px;}
+	}
+}
+
+.loginForm {
+	margin-top:80px;
+	.panel-primary {
+		border-color: $primary;
+		.panel-heading {
+			background-color: $primary;
+			border-color: $primary;
+		}
+	}
+}

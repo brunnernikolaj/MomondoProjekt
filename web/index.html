@@ -50,7 +50,8 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#/"><i class="fa fa-plane"></i></a></li>
-                        <li><a href="#/view2"><i class="fa fa-file-text-o"></i></a></li>
+                        <li><a href="#/doc"><i class="fa fa-file-text-o"></i></a></li>
+                        <li><a href="#/searchresult"><i class="fa fa-search"></i> Result</a></li>
                     </ul>
                     <div>
                         <ul class="nav navbar-nav navbar-right">
@@ -78,11 +79,33 @@
         </div>
         <div ng-view></div>
 
-        <div class="container"> 
-          <hr>
 
+        <div class="container-fluid stats-bg">
+          <div class="container">
+            <div class="row stats">
+              <div class="col-sm-3">
+                <h1><i class="fa fa-calendar-check-o"></i></h1>
+                <h4>180.291 <small>Reservations</small></h4>
+              </div>
+              <div class="col-sm-3">
+                <h1><i class="fa fa-plane"></i></h1>
+                <h4>99.237 <small>Km travelled</small></h4>
+              </div>
+              <div class="col-sm-3">
+                <h1><i class="fa fa-users"></i></h1>
+                <h4>1.022.293 <small>Passengers</small></h4>
+              </div>
+              <div class="col-sm-3">
+                <h1><i class="fa fa-glass"></i></h1>
+                <h4>99.237 <small>Drinks Served</small></h4>
+              </div>
+            </div><!-- /.row.stats -->
+          </div><!-- /.container -->
+        </div><!-- /.container-fluid -->
+
+        <div class="container">
           <footer>
-            <p>&copy; JustFly 2014</p>
+            <p>&copy; JustFly 2015</p>
           </footer>
         </div>
     </body>
