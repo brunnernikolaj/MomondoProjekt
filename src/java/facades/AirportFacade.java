@@ -25,8 +25,7 @@ public class AirportFacade extends DataManager<Airport, Integer> {
     /**
      * Constructor.
      * 
-     * Checks if any airports exists in the database, and 
-     * if not, we scrape it from the web. 
+     * Fetches airports on startup.
      * 
      * @Author: Casper Schultz
      * @Date: 2/12 2015
@@ -63,7 +62,7 @@ public class AirportFacade extends DataManager<Airport, Integer> {
      * @return          Airport entity if found / otherwise null
      */
     public Airport getAirportByIATA(String IATA) {
-        this.saveAirports();
+        
         try {
             
             Airport airport = (Airport) manager.createNamedQuery("Airport.findAirportByIATA")
@@ -77,15 +76,24 @@ public class AirportFacade extends DataManager<Airport, Integer> {
         }
     }
     
+    
+    /**
+     * Saves airports in the database.
+     * 
+     * Fetches the airport by using the web scraper and then saves 
+     * the results in the database.
+     * 
+     * @author: Casper Schultz
+     * @Date: 3/12 2015
+     */
     private void saveAirports() {
-        
-        deleteAll("AIRPORTS");
         
         try {
             manager.createNamedQuery("Airport.findAirportByIATA")
             .setParameter("IATAcode", "CPH")
             .getSingleResult();
         } catch (NoResultException e) {
+            deleteAll("AIRPORTS");
             List<Airport> airports = AirportScraper.fetchAiportData();
             for (Airport a : airports)
                 System.out.println(a.getCity());
