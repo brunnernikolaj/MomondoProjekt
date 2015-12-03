@@ -25,6 +25,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import org.joda.time.DateTime;
 
 /**
  * REST Web Service
@@ -75,7 +76,7 @@ public class FlightService {
         // We validate the input data, to make sure its a valid IATA code
         // and that the date has been formatted correctly
         if (airportFacade.getAirportByIATA(from) == null || airportFacade.getAirportByIATA(to) == null)
-            return "Should print some error here.";
+            return "Invalid IATA code(s)";
         
         if (!day.matches("([0-9]{4})-([0-9]{2})-([0-9]{2})"))
             return "Invalid date format";
@@ -84,12 +85,30 @@ public class FlightService {
         List<Flight> flights = facade.getJFFlights(from, to, day, seats);
         
         // We need to conert the list to a json list in order to store it in the json object
-        JsonElement element = gson.toJsonTree(flights, new TypeToken<List<Flight>>() {}.getType());
-        JsonArray jsonArray = element.getAsJsonArray();
+        //JsonElement element = gson.toJsonTree(flights, new TypeToken<List<Flight>>() {}.getType());
+        JsonArray jsonArray = new JsonArray(); //element.getAsJsonArray();
         
         // We build the object
         JsonObject json = new JsonObject();
         json.addProperty("airline", "Just Fly");
+        
+        for (Flight flight : flights) {
+            
+            JsonObject obj = new JsonObject();
+            obj.addProperty("origin", flight.getIataFrom());
+            obj.addProperty("destination", flight.getIataTo());
+            obj.addProperty("flightNumber", flight.getFlightNumber());
+            obj.addProperty("noOfSeats", flight.getNoOfSeats());
+            obj.addProperty("travelTime", flight.getTravelTime());
+            obj.addProperty("price", flight.getPrice() * seats);
+            
+            DateTime date = new DateTime(flight.getTravelDate());
+            
+            obj.addProperty("travelDate", date.toString());
+            
+            jsonArray.add(obj);
+        }
+        
         json.add("flights", jsonArray);
         
         return gson.toJson(json);
