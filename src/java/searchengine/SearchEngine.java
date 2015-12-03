@@ -15,6 +15,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -36,24 +38,30 @@ public class SearchEngine {
         threadPool = Executors.newFixedThreadPool(8);
     }
 
-    private List<String> urls = Arrays.asList("http://angularairline-plaul.rhcloud.com");
+    private final Stream<String> urls = Stream.of("http://angularairline-plaul.rhcloud.com");
 
-    public JSONArray search(FlightRequest request) throws InterruptedException {
+    public <T extends AbstractSearchTask> JSONArray  search(Function<String,T> ctor) throws InterruptedException {
+        
+        //Create a new SearchTask for each url. Then submit each task to the threadpool.
+        //Finally convert to a list because otherwise submit won't be called until after shutdown() 
+        List<Future<JSONObject>> tasks = urls
+                .map(ctor)
+                .map(task -> threadPool.submit(task))
+                .collect(Collectors.toList());
+
+        threadPool.shutdown();
+        threadPool.awaitTermination(20, TimeUnit.SECONDS);
+
         try {
-            Stream<SearchTask> tasks = urls.stream().map(url -> new SearchTask(url, request));
 
-            List<Future<JSONObject>> temp = tasks.map(task -> threadPool.submit(task)).collect(Collectors.toList());
+            JSONArray flightsInfo = new JSONArray();
 
-            threadPool.shutdown();
-            threadPool.awaitTermination(20, TimeUnit.SECONDS);
-
-            JSONArray temp1 = new JSONArray();
-            
-            for (Future<JSONObject> list : temp){
-                temp1.put(list.get());
+            //Create a json array containing all airlines and associated flights
+            for (Future<JSONObject> flightList : tasks) {
+                flightsInfo.put(flightList.get());
             }
-            
-            return temp1;
+
+            return flightsInfo;
 
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);

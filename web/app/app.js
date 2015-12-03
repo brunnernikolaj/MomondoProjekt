@@ -31,6 +31,15 @@ angular.module('myApp', [
     .when('/login', {
       templateUrl: 'app/templates/loginForm.html'
     })
+    .when('/signup', {
+      templateUrl: 'app/templates/signupForm.html'
+    })
+    .when('/doc', {
+      templateUrl: 'aap/templates/documentation.html'
+    })
+    .when('/searchresult', {
+      templateUrl: 'app/templates/searchresult.html'
+    })
     .when('/', {
         templateUrl: 'app/templates/frontpage.html',
         controller: 'FrontpageCtrl',

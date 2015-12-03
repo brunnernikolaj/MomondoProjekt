@@ -144,12 +144,13 @@ public class DataManager<T, PK> {
      * @Author: Casper Schultz
      * @Date: 2/12 2015
      * 
-     * @param entity 
+     * @param table      name of the table to delete contents from. 
      */
-    public void deleteAll(T entity) {
-        // We use a specific convention for naming the tables. 
-        String table = entity.getClass().getName().toUpperCase() + "S";
+    public void deleteAll(String table) {
+        // We use a specific convention for naming the tables.
+        transaction.begin();
         Query q = manager.createNativeQuery("DELETE FROM " + table);
         q.executeUpdate();
+        transaction.commit();
     }
 }

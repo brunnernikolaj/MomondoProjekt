@@ -1,5 +1,214 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+@import url(https://fonts.googleapis.com/css?family=Raleway:500);
+
+@import url(_mixin);
+
+$primary-black: #2e2e2e;
+$primary-white: #fefefe;
+$primary-lightgrey: #efefef;
+
+$primary: #1abc9c;
+$pridark: darken($primary, 5%);
+$prilight: lighten($primary, 10%);
+
+$font-stack: 'Open Sans', 'Helvetica Neue', Tahoma, sans-serif;
+$font-head: 'Raleway', 'Helvetica Neue', Tahoma, sans-serif;
+
 body {
-	padding:50px 0;
-	margin:0;
-	min-height:100%;
+	font-family: $font-stack;
+	font-weight: 400;
+}
+
+a {
+	color: $primary;
+	&:hover, &:focus {
+		color: $pridark;
+	}
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: $font-head;
+	font-weight: 500;
+}
+
+.btn-primary {
+	background-color: $primary;
+	border-color: $pridark;
+	&:hover, &:focus {
+		background-color: $prilight;
+		border-color: $pridark;
+	}
+}
+
+.navbar-inverse {
+	background-color: $primary-black;
+	color: $primary-white;
+	.navbar-nav {
+		li {
+			a {
+				color: $primary-white;
+				i.fa {
+					font-size:24px;
+				}
+			}
+			a:focus, a:hover {
+				background-color: darken($primary-black, 4%);
+			}
+			&.active {
+				a {
+					background-color: darken($primary-black, 4%);
+				}
+			}
+			&.dropdown {
+				ul li a {
+					color: $primary-black;
+					&:focus, &:hover {
+						color: $primary-white;
+					}
+				}
+			}
+		}
+	}
+}
+
+.stats-bg {
+	background-color:$primary-black;
+	margin-top:40px;
+	margin-bottom:15px;
+	.stats {
+		padding-top:30px;
+		padding-bottom:40px;
+		text-align: center;
+		color: $primary-white;
+		h1 { color: $primary;}
+		h4 small {
+			display: block;
+			margin-top:5px;
+		}
+	}
+}
+
+.jumbotron {
+	height:540px;
+	background-image: url("../img/big_background.jpg");
+	background-size:cover;
+	background-position:center center;
+	background-repeat: no-repeat;
+	position: relative;
+	.container-fluid {
+		position:absolute;
+		background-color: rgba($primary-black, .4);
+		bottom:40px;
+		padding-top:25px;
+		padding-bottom:30px;
+		left:0;
+		right:0;
+		color:$primary-white;
+		form.form-horizontal {
+			label {
+				padding:5px 10px;
+				background-color:$primary;
+				-webkit-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
+				border-radius: 5px;
+			}
+			.input-group {
+				margin-top:5px;
+			}
+		}
+	}
+}
+.searchresult {
+	margin-top:-4px;
+	background-image: url("../img/big_background.jpg");
+	background-size:cover;
+	background-position:center center;
+	background-repeat: no-repeat;
+	.container-fluid {
+		margin-top:60px;
+		background-color: rgba($primary-black, .4);
+		padding-top:25px;
+		padding-bottom:30px;
+		position: relative;
+		left:0;
+		right:0;
+		color:$primary-white;
+		form.form-horizontal {
+			label {
+				padding:5px 10px;
+				background-color:$primary;
+				-webkit-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
+				border-radius: 5px;
+			}
+			.input-group {
+				margin-top:5px;
+			}
+		}
+	}
+}
+.filters {
+	margin-top:40px;
+	min-height:280px;
+	.panel-primary {
+		border-color: $primary;
+		.panel-heading {
+			background-color: $primary;
+			border-color: $primary;
+		}
+	}
+}
+.results {
+	margin-top:40px;
+	height:auto;
+	.resultset {
+		border:1px solid $primary-lightgrey;
+		min-height:120px;
+		height:auto;
+	}
+}
+
+.frontpage-catcher {
+	text-align:center;
+	h1 { text-transform: uppercase;}
+}
+
+.frontpage-facts {
+	text-align: center;
+}
+
+.signupForm {
+	margin-top:80px;
+	form.form-horizontal {
+		label {
+			color: $primary-white;
+			margin:10px 0;
+			padding:5px 10px;
+			background-color:$primary;
+			-webkit-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+			border-radius: 5px;
+		}
+		.btn { margin-top:30px;}
+	}
+}
+
+.loginForm {
+	margin-top:80px;
+	.panel-primary {
+		border-color: $primary;
+		.panel-heading {
+			background-color: $primary;
+			border-color: $primary;
+		}
+	}
 }

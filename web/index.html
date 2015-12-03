@@ -6,15 +6,20 @@
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">  
-        <link rel="stylesheet" href="app/app.css">   
+        <link rel="stylesheet" href="app/app.css">
         
         <!-- Bower dependencies -->
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
         <script src='bower_components/angular-animate/angular-animate.min.js'></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-        <script src="bower_components/components-font-awesome/css/font-awesome.min.css"></script>
+        <!--<script src="bower_components/components-font-awesome/css/font-awesome.css"></script>-->
 
+        <!-- Alternative fix for font-awesome bug - "Unexpected token ILLEGAL" -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- Custom css -->
+        <link rel="stylesheet" href="assets/css/styles.css">
         
         <!-- App views / pages -->
         <script src="app/view2/view2.js"></script>
@@ -44,15 +49,15 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="#/view2">Company info</a></li>
-                        <li><a href="#/view2">Exchange rates</a></li>
-                        <li><a href="#/view3">All users</a></li>
+                        <li class="active"><a href="#/"><i class="fa fa-plane"></i></a></li>
+                        <li><a href="#/doc"><i class="fa fa-file-text-o"></i></a></li>
+                        <li><a href="#/searchresult"><i class="fa fa-search"></i> Result</a></li>
                     </ul>
                     <div>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown" uib-dropdown is-open="status.isopen">
                               <a id="single-button" type="button" class="" uib-dropdown-toggle ng-disabled="disabled">
-                                Sprog <i class="fa fa-language"></i> <span class="caret"></span>
+                                <i class="fa fa-flag-o"></i> <i class="fa fa-angle-down"></i>
                               </a>
                               <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
                                 <li role="menuitem"><a href="#">Dansk</a></li>
@@ -61,17 +66,47 @@
                               </ul>
                             </li>
                             <li ng-show="ctrl.authenticated"><a href="#/">Hi {{ctrl.username}}</a></li>
-                            <li ng-show="ctrl.authenticated"><a href="#/" ng-click="ctrl.doLogout()">Logout</a></li> 
-                            <li ng-show="!ctrl.authenticated"><a href="#/login">Login</a></li>
+                            <li ng-show="ctrl.authenticated"><a href="#/" ng-click="ctrl.doLogout()"><i class="fa fa-sign-out"> <i class="fa fa-user"></i></i></a></li> 
+                            <li ng-show="!ctrl.authenticated"><a href="#/login"><i class="fa fa-user"> </i><i class="fa fa-sign-in"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <div class="container" style="margin-top: 80px;">
-            <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
-            <div ng-view></div>
+        <div class="container">
+            <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>            
+        </div>
+        <div ng-view></div>
+
+
+        <div class="container-fluid stats-bg">
+          <div class="container">
+            <div class="row stats">
+              <div class="col-sm-3">
+                <h1><i class="fa fa-calendar-check-o"></i></h1>
+                <h4>180.291 <small>Reservations</small></h4>
+              </div>
+              <div class="col-sm-3">
+                <h1><i class="fa fa-plane"></i></h1>
+                <h4>99.237 <small>Km travelled</small></h4>
+              </div>
+              <div class="col-sm-3">
+                <h1><i class="fa fa-users"></i></h1>
+                <h4>1.022.293 <small>Passengers</small></h4>
+              </div>
+              <div class="col-sm-3">
+                <h1><i class="fa fa-glass"></i></h1>
+                <h4>99.237 <small>Drinks Served</small></h4>
+              </div>
+            </div><!-- /.row.stats -->
+          </div><!-- /.container -->
+        </div><!-- /.container-fluid -->
+
+        <div class="container">
+          <footer>
+            <p>&copy; JustFly 2015</p>
+          </footer>
         </div>
     </body>
 </html>

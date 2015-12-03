@@ -60,11 +60,11 @@ public class AirportScraper {
                 
                 Airport airport = new Airport();
                 airport.setId(Integer.parseInt(values[0]));
-                airport.setName(values[1]);
-                airport.setCity(values[2]);
-                airport.setCountry(values[3]);
-                airport.setIATAcode(values[4]);
-                airport.setICAOcode(values[5]);
+                airport.setName(values[1].replaceAll("\"",""));
+                airport.setCity(values[2].replaceAll("\"",""));
+                airport.setCountry(values[3].replaceAll("\"",""));
+                airport.setIATAcode(values[4].replaceAll("\"",""));
+                airport.setICAOcode(values[5].replaceAll("\"",""));
                 airport.setLatitude(values[6]);
                 airport.setLongitude(values[7]);
                 airport.setAltitude(values[8]);
