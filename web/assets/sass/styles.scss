@@ -121,6 +121,58 @@ h1, h2, h3, h4, h5 {
 		}
 	}
 }
+.searchresult {
+	margin-top:-4px;
+	background-image: url("../img/big_background.jpg");
+	background-size:cover;
+	background-position:center center;
+	background-repeat: no-repeat;
+	.container-fluid {
+		margin-top:60px;
+		background-color: rgba($primary-black, .4);
+		padding-top:25px;
+		padding-bottom:30px;
+		position: relative;
+		left:0;
+		right:0;
+		color:$primary-white;
+		form.form-horizontal {
+			label {
+				padding:5px 10px;
+				background-color:$primary;
+				-webkit-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
+				border-radius: 5px;
+			}
+			.input-group {
+				margin-top:5px;
+			}
+		}
+	}
+}
+.filters {
+	margin-top:40px;
+	min-height:280px;
+	.panel-primary {
+		border-color: $primary;
+		.panel-heading {
+			background-color: $primary;
+			border-color: $primary;
+		}
+	}
+}
+.results {
+	margin-top:40px;
+	height:auto;
+	.resultset {
+		border:1px solid $primary-lightgrey;
+		min-height:120px;
+		height:auto;
+	}
+}
 
 .frontpage-catcher {
 	text-align:center;
