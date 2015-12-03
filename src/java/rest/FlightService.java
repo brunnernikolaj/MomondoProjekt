@@ -12,9 +12,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import entity.Flight;
+import facades.AirportFacade;
 import facades.FlightFacade;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -30,17 +32,18 @@ import javax.ws.rs.core.MediaType;
  * @author casper
  */
 @Path("flight")
-public class JFFlights {
+public class FlightService {
 
     @Context
     private UriInfo context;
     private Gson gson;
     FlightFacade facade = FlightFacade.getInstance();
+    AirportFacade airportFacade = AirportFacade.getInstance();
     
     /**
      * Creates a new instance of JFFlights
      */
-    public JFFlights() {
+    public FlightService() {
         gson = new GsonBuilder().setPrettyPrinting().create();
     }
     
@@ -71,8 +74,11 @@ public class JFFlights {
         
         // We validate the input data, to make sure its a valid IATA code
         // and that the date has been formatted correctly
+        if (airportFacade.getAirportByIATA(from) == null || airportFacade.getAirportByIATA(to) == null)
+            return "Should print some error here.";
         
-        
+        if (!day.matches("([0-9]{4})-([0-9]{2})-([0-9]{2})"))
+            return "Invalid date format";
         
         // Fetch the flights
         List<Flight> flights = facade.getJFFlights(from, to, day, seats);
