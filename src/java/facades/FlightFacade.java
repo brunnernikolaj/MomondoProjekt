@@ -87,8 +87,6 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         .setParameter("theNextDay", nextDay, TemporalType.DATE)
         .getResultList();
         
-        System.out.println("Today: " + dt.toDate() + " - Tommorow: " + nextDay);
-        
         // If no flights where found, we try to lookup the flights at Norweigian
         if (flights == null || flights.size() < 1) {
             
