@@ -45,12 +45,6 @@ public class FlightService {
         gson = new GsonBuilder().setPrettyPrinting().create();
     }
     
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getFlights() {
-        return gson.toJson("BlaBla");
-    }
-    
     /**
      * Returns flights from Just Fly (our) company.
      * 
@@ -74,9 +68,6 @@ public class FlightService {
         // and that the date has been formatted correctly
         if (airportFacade.getAirportByIATA(from) == null || airportFacade.getAirportByIATA(to) == null)
             return "Invalid IATA code(s)";
-        
-        if (!day.matches("([0-9]{4})-([0-9]{2})-([0-9]{2})"))
-            return "Invalid date format";
         
         // Fetch the flights
         List<Flight> flights = facade.getJFFlights(from, to, day, seats);

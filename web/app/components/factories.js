@@ -15,9 +15,11 @@ angular.module('myApp.factories', [])
         })
 
 
-        .factory('SearchFactory', ["$http", function (http) {
-
-                var search = function search(from, time, seats) {
+        .factory('FlightFactoty', ["$http", function (http) {
+                    
+                var search = {};
+                    
+                search.searchWithNoDestination = function(from, time, seats) {
                     var url = "api/search/" + from + "/" + time + "/" + seats;
 
                     return http.get(url).then(function (result) {
@@ -25,17 +27,12 @@ angular.module('myApp.factories', [])
                     });
                 };
 
-                var search = function searchWithDestination(from, to, time, seats) {
-                    var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
+                search.searchWithDestination = function(from, to, time, seats) {
+                    var url = "api/flight/" + from + "/" + to + "/" + time + "/" + seats;
 
-                    return http.get(url).then(function (result) {
-                        return result.data;
-                    });
+                    return http.get(url);
                 };
 
 
-                return {
-                    search: search,
-                    searchWithDestination: searchWithDestination
-                };
+                return search;
             }]);

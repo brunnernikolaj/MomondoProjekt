@@ -70,19 +70,28 @@ angular.module('myApp.controllers', ['myApp.security'])
          * 
          * @returns {undefined}
          */
-        .controller("SearchCtrl", ['$scope', function($scope) {
-               
+        .controller("SearchCtrl", ['$scope', 'FlightFactoty', function($scope, FlightFactoty) {
+
             // handle incomming data
             $scope.searchFlights = function() {
                 
-                if ($scope.search.to !== undefined && $scope.search.from !== undefined && $scope.search.date !== undefined && $scope.search.date !== null && $scope.search.seats !== undefined) {
-                    console.log($scope.search);
-                } else {
+                //if ($scope.search.to !== undefined && $scope.search.from !== undefined && $scope.search.date !== undefined && $scope.search.date !== null && $scope.search.seats !== undefined) {
+                  //  console.log($scope.search);
                     
-                }
+                    var date = new Date($scope.search.date).toISOString();
+                    
+                    FlightFactoty.searchWithDestination("CPH", "ARN", date, 2).then(function (result) {
+                        
+                        $scope.results = result.data;
+                        console.log($scope.results);
+                    });
+                    
+                //} else {
+                //    console.log("All fields are required")
+                //}
             };
             
-            // Handle 
+            // Handle results
             
             
                         
