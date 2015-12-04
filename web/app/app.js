@@ -41,6 +41,9 @@ angular.module('myApp', [
       templateUrl: 'app/templates/searchresult.html',
       controller: 'SearchCtrl',
     })
+    .when('/booking', {
+      templateUrl: 'app/templates/booking.html'
+    })
     .when('/', {
         templateUrl: 'app/templates/frontpage.html',
         controller: 'FrontpageCtrl',

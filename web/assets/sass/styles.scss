@@ -169,6 +169,129 @@ h1, h2, h3, h4, h5 {
 	} // .container-fluid
 } // .searchresult
 
+.chosenbooking {
+	margin-top:-4px;
+	background-image: url("../img/big_background.jpg");
+	background-size:cover;
+	background-position:center center;
+	background-repeat: no-repeat;
+	.container-fluid {
+		margin-top:60px;
+		padding-top:25px;
+		padding-bottom:30px;
+		position: relative;
+		left:0;
+		right:0;
+		color:$primary-white;
+		.container {
+			background-color: rgba($primary-black, .4);
+			.departure {
+				padding-top:15px;
+				padding-bottom:15px;
+				.company, .departureinfo, .arrivalinfo, .traveltime, .flightnr {
+					min-height:72px;
+				}
+				.selskab {
+					margin-bottom:10px;
+					.selskabsnavn {
+						font-size:12px;
+						font-weight: 300;
+						color: $primary-lightgrey;
+					}
+				}
+				.company {
+					text-align:center;
+					border-right:1px solid $primary-lightgrey;
+					img {
+						margin: 0 auto;
+					}
+					p {
+						font-size:12px;
+						-webkit-hyphens: auto;
+				  		-moz-hyphens: auto;
+				  		-ms-hyphens: auto;
+				  		hyphens: auto;
+				  		word-break: break-all;
+					}
+				} // .company
+				.departureinfo, .arrivalinfo {
+					h4 small {
+						display: block;
+						color: $primary-white;
+						margin-top:5px;
+					}
+				}
+				.departureinfo {
+					text-align:right;
+				}
+				.traveltime {
+					text-align: center;
+					border: 1px solid $primary-lightgrey;
+					border-top:none;
+					border-bottom:none;
+					.timeline {
+						height:4px;
+						width:90%;
+						margin:4px auto;
+						background-color:$primary;
+					}
+					p {
+						text-transform: uppercase;
+						font-size:12px;
+					}
+				} // .traveltime
+				.flightnr {
+					text-align: center;
+					border-left: 1px solid $primary-lightgrey;
+				} // .flightnr
+			} // .departure
+
+			.pricearea {
+				position: relative;
+				background-color: rgba($primary, 0.2);
+				text-align: right;
+				@media (min-width:767px) {
+					min-height:145px;
+					-webkit-border-top-right-radius: 5px;
+					-webkit-border-bottom-right-radius: 5px;
+					-moz-border-top-right-radius: 5px;
+					-moz-border-bottom-right-radius: 5px;
+					border-top-right-radius: 5px;
+					border-bottom-right-radius: 5px;
+				}
+				@media (max-width:767px) {
+					min-height:200px;
+					-webkit-border-bottom-left-radius: 5px;
+					-webkit-border-bottom-right-radius: 5px;
+					-moz-border-bottom-left-radius: 5px;
+					-moz-border-bottom-right-radius: 5px;
+					border-bottom-left-radius: 5px;
+					border-bottom-right-radius: 5px;
+				}
+				.prices {
+					position: absolute;
+					bottom:45px;
+					width:100%;
+					text-align: right;
+					.grouppassengers {
+						font-size:14px;
+					}
+					.singlepassenger {
+						font-size:20px;
+					}
+				}
+				.btn {
+					width:90%;
+					position: absolute;
+					bottom:10px;
+					left: 5%;
+					right: 5%;
+				}
+			} // .pricearea
+		} // .container
+	} // .container-fluid
+}
+
 .container	{
 	.filters {
 		margin-top:40px;
@@ -245,7 +368,7 @@ h1, h2, h3, h4, h5 {
 						font-size:12px;
 					}
 				}
-			} // .departure, .return
+			} // .departure
 
 			.pricearea {
 				position: relative;
@@ -289,7 +412,7 @@ h1, h2, h3, h4, h5 {
 					left: 5%;
 					right: 5%;
 				}
-			}
+			} // .pricearea
 		} // .resultset
 	} // .results
 } // .container
@@ -302,9 +425,7 @@ h1, h2, h3, h4, h5 {
 .frontpage-facts {
 	text-align: center;
 }
-
-.signupForm {
-	margin-top:80px;
+.signupForm, .bookingform {
 	form.form-horizontal {
 		label {
 			color: $primary-white;
@@ -321,6 +442,24 @@ h1, h2, h3, h4, h5 {
 		.btn { margin-top:30px;}
 	} // form.form-horizontal
 } // .signupForm
+
+.signupForm {
+	margin-top:80px;
+}
+.bookingform {
+	margin-top:20px;
+	.passengersinfo {
+		h4 {
+			margin-bottom:5px;
+		}
+		label {
+			margin: 0 0 10px 0 !important;
+		}
+	}
+	.bookingbtn .btn {
+		width:94%;
+	}
+}
 
 .loginForm {
 	margin-top:80px;
