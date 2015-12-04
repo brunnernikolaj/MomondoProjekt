@@ -17,16 +17,25 @@ angular.module('myApp.factories', [])
 
         .factory('SearchFactory', ["$http", function (http) {
 
-            var search = function search(from,time,seats) {
-                var url = "api/search/" + from + "/" + time + "/" + seats; 
-                
-                return http.get(url).then(function (result) {
-                    return result.data;
-                });
-            };
-            
-            
-            return {
-                search: search
-            };
-        }]);
+                var search = function search(from, time, seats) {
+                    var url = "api/search/" + from + "/" + time + "/" + seats;
+
+                    return http.get(url).then(function (result) {
+                        return result.data;
+                    });
+                };
+
+                var search = function searchWithDestination(from, to, time, seats) {
+                    var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
+
+                    return http.get(url).then(function (result) {
+                        return result.data;
+                    });
+                };
+
+
+                return {
+                    search: search,
+                    searchWithDestination: searchWithDestination
+                };
+            }]);

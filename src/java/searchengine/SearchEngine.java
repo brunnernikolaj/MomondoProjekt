@@ -20,6 +20,7 @@ public class SearchEngine {
         threadPool = Executors.newFixedThreadPool(8);
     }
 
+
 //    private final Stream<String> urls = Stream.of("http://angularairline-plaul.rhcloud.com");
 //
 //    public <T extends AbstractSearchTask> JSONArray  search(Function<String,T> ctor) throws InterruptedException {
@@ -50,5 +51,6 @@ public class SearchEngine {
 //        }
 //        return null;
 //    }
+
 
 }

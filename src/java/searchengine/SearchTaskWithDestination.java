@@ -5,7 +5,11 @@
  */
 package searchengine;
 
+import com.sun.media.jfxmedia.logging.Logger;
+import java.io.IOException;
+import java.util.logging.Level;
 import requests.FlightRequest;
+import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
 import us.monoid.web.Resty;
 
@@ -13,7 +17,7 @@ import us.monoid.web.Resty;
  *
  * @author Nikolaj
  */
-public class SearchTaskWithDestination extends AbstractSearchTask{
+public class SearchTaskWithDestination extends AbstractSearchTask {
 
     public SearchTaskWithDestination(String url, FlightRequest request) {
         super(url, request);
@@ -21,10 +25,17 @@ public class SearchTaskWithDestination extends AbstractSearchTask{
 
     @Override
     public JSONObject call() throws Exception {
-         String apiUrl = url + request.getApiStringWithDestination();
-        Resty r = new Resty();
-        return  r.json(apiUrl).object();
-        
+        String apiUrl = request.getApiStringWithDestination();
+        JSONObject json = null;
+
+        try {
+            json = new Resty().json(apiUrl).object();
+        } catch (IOException | JSONException ex) {
+            java.util.logging.Logger.getLogger(SearchTaskWithDestination.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return json;
+
     }
-    
+
 }
