@@ -1,6 +1,8 @@
 package facades;
 
 import entity.Flight;
+import entity.Passenger;
+import entity.Reservation;
 import exceptions.FlightException;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -39,6 +41,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
      * Private constructor.
      */
     private FlightFacade() {
+        
     }
     
     /**
@@ -57,6 +60,25 @@ public class FlightFacade extends DataManager<Flight, Integer> {
             instance = new FlightFacade();
         }
         return instance;
+    }
+    
+    public Reservation saveReservation(Reservation reservation) throws FlightException {
+        
+        if (reservation.getPassengers().size() <= 0)
+            throw new FlightException("An error occured and we could not procedd with the reservation", Response.Status.INTERNAL_SERVER_ERROR, 4);
+        
+        transaction.begin();
+        manager.persist(reservation);
+        
+        // We also store the reservation with each passenger.
+        for (Passenger passenger : reservation.getPassengers()) {
+            passenger.addReservation(reservation);
+            manager.persist(passenger);
+        }
+        
+        transaction.commit();
+        
+        return reservation;
     }
     
     /**
