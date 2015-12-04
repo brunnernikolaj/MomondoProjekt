@@ -5,26 +5,8 @@
  */
 package searchengine;
 
-import entity.Flight;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import requests.FlightRequest;
-import us.monoid.json.JSONArray;
-import us.monoid.json.JSONObject;
-import us.monoid.web.JSONResource;
 
 /**
  *

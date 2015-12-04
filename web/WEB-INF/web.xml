@@ -9,4 +9,7 @@
             30
         </session-timeout>
     </session-config>
+     <listener>
+    <listener-class>deploy.DeploymentConfiguration</listener-class>
+   </listener>
 </web-app>
