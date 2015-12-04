@@ -3,6 +3,7 @@ package exceptions;
 import com.google.gson.JsonObject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  * Exception mapper for rest exceptions.
@@ -10,6 +11,7 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @author casper
  * @Date: 4/12 2015
  */
+@Provider
 public class RestExceptionMapper implements ExceptionMapper<RestException> {
     
     /**
