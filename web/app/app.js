@@ -38,7 +38,8 @@ angular.module('myApp', [
       templateUrl: 'aap/templates/documentation.html'
     })
     .when('/searchresult', {
-      templateUrl: 'app/templates/searchresult.html'
+      templateUrl: 'app/templates/searchresult.html',
+      controller: 'SearchCtrl',
     })
     .when('/booking', {
       templateUrl: 'app/templates/booking.html'

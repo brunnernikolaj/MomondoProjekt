@@ -1,43 +1,23 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "main": "",
-  "authors": [
-    "Casper Schultz"
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/brunnernikolaj/MomondoProjekt",
-  "moduleType": [
-    "node"
-  ],
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-    "dependencies": {
-    "angular": "~1.4.0",
-    "angular-route": "~1.4.0",
-    "bootstrap": "3.3.4"
-  },
-    "devDependencies": {
-    "angular-bootstrap": "~0.14.3",
-    "angular-animate": "~1.4.8"
-  },
   "name": "font-awesome",
   "description": "Font Awesome",
-  "keywords": [],
-  "homepage": "http://fontawesome.io",
-  "dependencies": {},
-  "devDependencies": {},
-  "license": ["OFL-1.1", "MIT", "CC-BY-3.0"],
   "main": [
     "less/font-awesome.less",
     "scss/font-awesome.scss"
   ],
+  "authors": [
+    "Casper Schultz"
+  ],
+  "license": [
+    "OFL-1.1",
+    "MIT",
+    "CC-BY-3.0"
+  ],
+  "homepage": "http://fontawesome.io",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
   "ignore": [
     "*/.*",
     "*.json",
@@ -46,5 +26,10 @@
     "Gemfile",
     "Gemfile.lock",
     "*.md"
-  ]
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "ng-autocomplete": "*"
+  },
+  "keywords": []
 }

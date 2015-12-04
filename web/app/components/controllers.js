@@ -60,7 +60,33 @@ angular.module('myApp.controllers', ['myApp.security'])
                         self.flights = flattened;
                     });
                 }
-            }]);
+            }])
+        
+        /**
+         * Search form controller.
+         * 
+         * @Author: Casper Schultz
+         * @Date: 4/12 2015
+         * 
+         * @returns {undefined}
+         */
+        .controller("SearchCtrl", ['$scope', function($scope) {
+               
+            // handle incomming data
+            $scope.searchFlights = function() {
+                
+                if ($scope.search.to !== undefined && $scope.search.from !== undefined && $scope.search.date !== undefined && $scope.search.date !== null && $scope.search.seats !== undefined) {
+                    console.log($scope.search);
+                } else {
+                    
+                }
+            };
+            
+            // Handle 
+            
+            
+                        
+        }]);
 
 
 

@@ -92,6 +92,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
             
             try { 
                 flights = getFlightsFromNorweigian(from, to, dt);
+                System.out.println("Flights fetched: " + flights.size());
                 this.createFromList(flights);
             } catch (ParseException | IOException e) {
                 System.out.println(e.getStackTrace());
@@ -120,7 +121,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
      * @throws IOException 
      */
     private List<Flight> getFlightsFromNorweigian(String from, String to, DateTime date) throws ParseException, IOException {
-        System.out.println("Fetching from norweigian");
+        
         
         // We need to get the date and format it a bit
         DecimalFormat df = new DecimalFormat("00");
@@ -129,6 +130,10 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         String year = "" + date.year().getAsText();
         
         String url = "http://www.norwegian.com/uk/booking/flight-tickets/select-flight/?D_City=" + from + "&A_City=" + to + "&TripType=1&D_Day=" + day + "&D_Month=" + year + month + "&D_SelectedDay=" + day + "&R_Day=" + day + "&R_Month=" + year + month + "&R_SelectedDay=" + day + "&CurrencyCode=EUR";
+        
+        System.out.println("Fetching from norweigian");
+        System.out.println("URL: " + url);
+        
         return getListOfFlights(url);
     }
 }
