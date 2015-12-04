@@ -117,6 +117,17 @@ h1, h2, h3, h4, h5 {
 			} // label
 			.input-group {
 				margin-top:5px;
+				margin-bottom:5px;
+			}
+			@media (min-width:768px) {
+				.input-group.formbutton {
+					position: relative;
+						height:138px;
+					.btn {
+						position: absolute;
+						bottom:0;
+					}
+				}
 			}
 		} // form.form-hroizontal
 	} // .container-fluid
@@ -150,6 +161,17 @@ h1, h2, h3, h4, h5 {
 			} // label
 			.input-group {
 				margin-top:5px;
+				margin-bottom:5px;
+			}
+			@media (min-width:768px) {
+				.input-group.formbutton {
+					position: relative;
+						height:138px;
+					.btn {
+						position: absolute;
+						bottom:0;
+					}
+				}
 			}
 		} // form.form-horizontal
 	} // .container-fluid
@@ -181,7 +203,7 @@ h1, h2, h3, h4, h5 {
 			border-radius: 5px;
 			border:1px solid $primary-lightgrey;
 			margin-bottom:15px;
-			.departure, .return {
+			.departure {
 				padding-top:15px;
 				padding-bottom:15px;
 				.selskab {
@@ -232,16 +254,13 @@ h1, h2, h3, h4, h5 {
 					}
 				}
 			} // .departure, .return
-			.return {
-				border-top:1px solid $primary-lightgrey;
-			}
 
 			.pricearea {
 				position: relative;
 				background-color: rgba($primary, 0.2);
 				text-align: right;
 				@media (min-width:767px) {
-					min-height:277px;
+					min-height:145px;
 					-webkit-border-top-right-radius: 5px;
 					-webkit-border-bottom-right-radius: 5px;
 					-moz-border-top-right-radius: 5px;

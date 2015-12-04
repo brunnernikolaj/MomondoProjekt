@@ -5,7 +5,6 @@
  */
 package searchengine;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import java.io.IOException;
 import java.util.logging.Level;
 import requests.FlightRequest;

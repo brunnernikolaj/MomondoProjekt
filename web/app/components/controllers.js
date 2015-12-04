@@ -70,10 +70,14 @@ angular.module('myApp.controllers', ['myApp.security'])
          * 
          * @returns {undefined}
          */
-        .controller("SearchCtrl", [function() {
+        .controller("SearchCtrl", ['$scope', function($scope) {
                
             // handle incomming data
-            
+            $scope.searchFlights = function() {
+              
+                console.log($scope.search);
+                
+            };
             
             // Handle 
             
