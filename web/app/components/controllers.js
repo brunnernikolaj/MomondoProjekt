@@ -39,7 +39,7 @@ angular.module('myApp.controllers', ['myApp.security'])
             };
         })
 
-        .controller('FrontpageCtrl', ["SearchFactory", "InfoService", function (searchService, InfoService) {
+        .controller('FrontpageCtrl', ["FlightFactoty", function (searchService) {
 
                 var self = this;
 
@@ -80,9 +80,18 @@ angular.module('myApp.controllers', ['myApp.security'])
                     
                     var date = new Date($scope.search.date).toISOString();
                     
-                    FlightFactoty.searchWithDestination("CPH", "ARN", date, 2).then(function (result) {
+                    FlightFactoty.searchWithDestination("CPH", "SXF", date, 2).then(function (result) {
                         
-                        $scope.results = result.data;
+                        var flights = result.data.map(airline => airline.flights);
+
+                        var flattened = [];
+                        for (var i = 0; i < flights.length; ++i) {
+                            var current = flights[i];
+                            for (var j = 0; j < current.length; ++j)
+                                flattened.push(current[j]);
+                        }
+                        
+                        $scope.results = flattened;
                         console.log($scope.results);
                     });
                     

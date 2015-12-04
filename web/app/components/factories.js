@@ -28,7 +28,7 @@ angular.module('myApp.factories', [])
                 };
 
                 search.searchWithDestination = function(from, to, time, seats) {
-                    var url = "api/flight/" + from + "/" + to + "/" + time + "/" + seats;
+                    var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
 
                     return http.get(url);
                 };

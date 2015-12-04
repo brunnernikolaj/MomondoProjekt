@@ -24,7 +24,7 @@ public class SearchTaskWithDestination extends AbstractSearchTask {
 
     @Override
     public JSONObject call() throws Exception {
-        String apiUrl = request.getApiStringWithDestination();
+        String apiUrl = url + request.getApiStringWithDestination();
         JSONObject json = null;
 
         try {

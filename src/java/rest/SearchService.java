@@ -56,7 +56,7 @@ public class SearchService {
         
         FlightRequest request = new FlightRequest(from, null, time, seats);     
         
-        return ""; //searchEngine.search(x -> new SearchTask(x, request)).toString();
+        return searchEngine.search(x -> new SearchTask(x, request)).toString();
     }
     
     @GET
@@ -68,11 +68,9 @@ public class SearchService {
         FlightRequest request = new FlightRequest(from, to, time, seats);     
         System.out.println("");
         
-        for (int i = 0; i < 10; i++) {
-            
-        }
+
         
-        return ""; //searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
+        return searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
     }
 
     private Date convertToDate(String day) throws ParseException {
