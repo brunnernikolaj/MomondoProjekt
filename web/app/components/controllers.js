@@ -60,7 +60,26 @@ angular.module('myApp.controllers', ['myApp.security'])
                         self.flights = flattened;
                     });
                 }
-            }]);
+            }])
+        
+        /**
+         * Search form controller.
+         * 
+         * @Author: Casper Schultz
+         * @Date: 4/12 2015
+         * 
+         * @returns {undefined}
+         */
+        .controller("SearchCtrl", [function() {
+               
+            // handle incomming data
+            
+            
+            // Handle 
+            
+            
+                        
+        }]);
 
 
 
