@@ -80,13 +80,10 @@ h1, h2, h3, h4, h5 {
     .jumbotron .container-fluid form.form-horizontal .input-group {
       margin-top: 5px;
       margin-bottom: 5px; }
-    @media (min-width: 768px) {
-      .jumbotron .container-fluid form.form-horizontal .input-group.formbutton {
-        position: relative;
-        height: 138px; }
-        .jumbotron .container-fluid form.form-horizontal .input-group.formbutton .btn {
-          position: absolute;
-          bottom: 0; } }
+    .jumbotron .container-fluid form.form-horizontal .formbutton {
+      margin: 0 auto; }
+      .jumbotron .container-fluid form.form-horizontal .formbutton .btn {
+        margin-top: 10px; }
 
 .searchresult {
   margin-top: -4px;
@@ -115,13 +112,10 @@ h1, h2, h3, h4, h5 {
     .searchresult .container-fluid form.form-horizontal .input-group {
       margin-top: 5px;
       margin-bottom: 5px; }
-    @media (min-width: 768px) {
-      .searchresult .container-fluid form.form-horizontal .input-group.formbutton {
-        position: relative;
-        height: 138px; }
-        .searchresult .container-fluid form.form-horizontal .input-group.formbutton .btn {
-          position: absolute;
-          bottom: 0; } }
+    .searchresult .container-fluid form.form-horizontal .formbutton {
+      margin: 0 auto; }
+      .searchresult .container-fluid form.form-horizontal .formbutton .btn {
+        margin-top: 10px; }
 
 .container .filters {
   margin-top: 40px;
@@ -176,10 +170,6 @@ h1, h2, h3, h4, h5 {
         border: 1px solid #efefef;
         border-top: none;
         border-bottom: none; }
-        @media (max-width: 992px) {
-          .container .results .resultset .departure .traveltime:before {
-            display: table;
-            content: " "; } }
         .container .results .resultset .departure .traveltime .timeline {
           height: 4px;
           width: 90%;

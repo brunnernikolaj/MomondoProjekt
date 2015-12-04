@@ -74,9 +74,12 @@ angular.module('myApp.controllers', ['myApp.security'])
                
             // handle incomming data
             $scope.searchFlights = function() {
-              
-                console.log($scope.search);
                 
+                if ($scope.search.to !== undefined && $scope.search.from !== undefined && $scope.search.date !== undefined && $scope.search.date !== null && $scope.search.seats !== undefined) {
+                    console.log($scope.search);
+                } else {
+                    
+                }
             };
             
             // Handle 

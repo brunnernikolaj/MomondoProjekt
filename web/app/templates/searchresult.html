@@ -3,32 +3,37 @@
         <div class="container">
             <div class="row">
                 <form class="form-horizontal" ng-submit="searchFlights()">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <label class="control-label">Afrejse</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plane"></i></span>
                             <input type="text" class="form-control" ng-model="search.from" placeholder="Afrejse">
                         </div>
-                        <label class="control-label">Dato</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" class="form-control" ng-model="search.date" placeholder="2/12/2015">
-                        </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <label class="control-label">Destination</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plane"></i></span>
                             <input type="text" class="form-control" ng-model="search.to" placeholder="Destination">
                         </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="control-label">Dato</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="date" class="form-control" ng-model="search.date" placeholder="2/12/2015">
+                        </div>
+                    </div> 
+                    
+                    <div class="col-sm-3">
                         <label class="control-label">Passagerer</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             <input type="number" class="form-control" ng-model="search.seats" name="adults" min="0" value="0">
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="input-group col-xs-12 formbutton">
+                    <div class="col-xs-12">
+                        <div class="input-group col-sm-3 formbutton">
                             <button type="submit" id="search" class="btn btn-primary col-xs-12"><i class="fa fa-search"></i> Find Fly</button>
                         </div>
                     </div>
@@ -62,6 +67,7 @@
 
         <!-- RESULTS FROM SEARCH -->
         <div class="col-sm-8 col-md-9 results">
+            
             <div class="row resultset">
                 <div class="col-xs-12 col-sm-9">
                     <div class="clearfix departure">
