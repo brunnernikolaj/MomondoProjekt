@@ -9,29 +9,26 @@
   					  <span class="input-group-addon"><i class="fa fa-plane"></i></span>
   					  <input type="text" class="form-control" placeholder="Afrejse">
   					</div>
+            <label class="control-label">Dato</label>
     				<div class="input-group">
   					  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
   					  <input type="date" class="form-control" placeholder="2/12/2015">
   					</div>
     			</div>
     			<div class="col-sm-4">
-    				<label class="control-label">Hjemrejse</label>
+    				<label class="control-label">Destination</label>
     				<div class="input-group">
   					  <span class="input-group-addon"><i class="fa fa-plane"></i></span>
   					  <input type="text" class="form-control" placeholder="Retur">
   					</div>
-    				<div class="input-group">
-  					  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-  					  <input type="date" class="form-control" placeholder="2/12/2015">
-  					</div>
+            <label class="control-label">Passagerer</label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <input type="number" class="form-control" name="adults" min="0" value="0">
+            </div>
     			</div>
     			<div class="col-sm-4">
-						<label class="control-label">Voksne</label>
-						<div class="input-group">
-		  			  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-						  <input type="number" class="form-control" name="adults" min="0" value="0">
-						</div>
-    				<div class="input-group col-xs-12">
+    				<div class="input-group col-xs-12 formbutton">
   					  <button type="submit" id="search" class="btn btn-primary col-xs-12"><i class="fa fa-search"></i> Find Fly</button>
   					</div>
     			</div>
