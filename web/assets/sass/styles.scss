@@ -119,14 +119,10 @@ h1, h2, h3, h4, h5 {
 				margin-top:5px;
 				margin-bottom:5px;
 			}
-			@media (min-width:768px) {
-				.input-group.formbutton {
-					position: relative;
-						height:138px;
-					.btn {
-						position: absolute;
-						bottom:0;
-					}
+			.formbutton {
+				margin:0 auto;
+				.btn {
+					margin-top:10px;
 				}
 			}
 		} // form.form-hroizontal
@@ -163,14 +159,10 @@ h1, h2, h3, h4, h5 {
 				margin-top:5px;
 				margin-bottom:5px;
 			}
-			@media (min-width:768px) {
-				.input-group.formbutton {
-					position: relative;
-						height:138px;
-					.btn {
-						position: absolute;
-						bottom:0;
-					}
+			.formbutton {
+				margin:0 auto;
+				.btn {
+					margin-top:10px;
 				}
 			}
 		} // form.form-horizontal
