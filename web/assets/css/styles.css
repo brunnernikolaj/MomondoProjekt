@@ -128,7 +128,8 @@ h1, h2, h3, h4, h5 {
     -moz-border-radius: 5px;
     border-radius: 5px;
     border-radius: 5px;
-    border: 1px solid #efefef; }
+    border: 1px solid #efefef;
+    margin-bottom: 15px; }
     .container .results .resultset .departure, .container .results .resultset .return {
       padding-top: 15px;
       padding-bottom: 15px; }
