@@ -33,6 +33,12 @@ public class Passenger {
     @Column(name = "LASTNAME")
     private String lastname;
     
+    @Column(name = "PHONE")
+    private String phone;
+    
+    @Column(name = "EMAIL")
+    private String email;
+    
     @ManyToMany(mappedBy = "passengers", cascade = CascadeType.ALL)
     @JoinColumn(name = "RESERVATION_ID")
     private List<Reservation> reservations;
@@ -80,5 +86,21 @@ public class Passenger {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
