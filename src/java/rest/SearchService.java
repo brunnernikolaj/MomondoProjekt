@@ -56,7 +56,7 @@ public class SearchService {
         
         FlightRequest request = new FlightRequest(from, null, time, seats);     
         
-        return searchEngine.search(x -> new SearchTask(x, request)).toString();
+        return ""; //searchEngine.search(x -> new SearchTask(x, request)).toString();
     }
     
     @GET
@@ -72,7 +72,7 @@ public class SearchService {
             
         }
         
-        return searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
+        return ""; //searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
     }
 
     private Date convertToDate(String day) throws ParseException {

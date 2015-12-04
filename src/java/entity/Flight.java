@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "FLIGHTS")
 @NamedQueries({
-    @NamedQuery(name = "FlightEntity.findFlights", query = "SELECT p FROM FlightEntity p WHERE p.origin = :origin AND p.destination = :destination AND p.travelDate >= :theDay AND p.travelDate < :theNextDay")})
+    @NamedQuery(name = "Flight.findFlights", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.destination = :destination AND p.travelDate >= :theDay AND p.travelDate < :theNextDay")})
 public class Flight {
     
     @Id

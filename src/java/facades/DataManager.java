@@ -5,6 +5,7 @@
  */
 package facades;
 
+import deploy.DeploymentConfiguration;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,7 +29,7 @@ public class DataManager<T, PK> {
     Class<T> entityType;
     
     public DataManager() {
-        manager = Persistence.createEntityManagerFactory("MomondoProjektPU").createEntityManager();
+        manager = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME).createEntityManager();
         transaction = manager.getTransaction();
 
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
@@ -65,9 +66,8 @@ public class DataManager<T, PK> {
         // Now save the flights
         if (entities != null || entities.size() > 0) {
             transaction.begin();
-            entities.stream().forEach((entity) -> {
+            for (T entity : entities) 
                 manager.persist(entity);
-            });
             transaction.commit();
         }
     }
@@ -144,12 +144,13 @@ public class DataManager<T, PK> {
      * @Author: Casper Schultz
      * @Date: 2/12 2015
      * 
-     * @param entity 
+     * @param table      name of the table to delete contents from. 
      */
-    public void deleteAll(T entity) {
-        // We use a specific convention for naming the tables. 
-        String table = entity.getClass().getName().toUpperCase() + "S";
+    public void deleteAll(String table) {
+        // We use a specific convention for naming the tables.
+        transaction.begin();
         Query q = manager.createNativeQuery("DELETE FROM " + table);
         q.executeUpdate();
+        transaction.commit();
     }
 }

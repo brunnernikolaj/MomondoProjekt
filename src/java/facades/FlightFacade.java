@@ -80,19 +80,15 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         Date nextDay = dt.plus(Period.days(1)).toDate();
         
         // Now we want to check if we have any results in the database, by looking up
-        flights = manager.createNamedQuery("FlightEntity.findFlights")
+        flights = manager.createNamedQuery("Flight.findFlights")
         .setParameter("origin", from)
         .setParameter("destination", to)
         .setParameter("theDay", dt.toDate(), TemporalType.DATE)
         .setParameter("theNextDay", nextDay, TemporalType.DATE)
         .getResultList();
         
-        System.out.println("Today: " + dt.toDate() + " - Tommorow: " + nextDay);
-        
         // If no flights where found, we try to lookup the flights at Norweigian
         if (flights == null || flights.size() < 1) {
-            
-            System.out.println("Fetching from Norweigian");
             
             try { 
                 flights = getFlightsFromNorweigian(from, to, dt);
