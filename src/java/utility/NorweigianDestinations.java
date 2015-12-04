@@ -1,13 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utility;
 
+import java.util.Random;
+
 /**
- *
- * @author casper
+ * Utility class for Norwegian destinations.
+ * 
+ * Norweigian only supports some destinations. In order to spare time
+ * when validating, scraping data etc, we store some data and helper methods 
+ * here that can make the job easier.
+ * 
+ * @Author: Casper Schultz
+ * @Date: 4/12 2015
  */
 public class NorweigianDestinations {
     
@@ -15,6 +18,9 @@ public class NorweigianDestinations {
     
     /**
      * Checks if a given destination is supported.
+     * 
+     * @Author: Casper Schultz
+     * @Date: 4/12 2015
      * 
      * @param dest
      * @return 
@@ -29,4 +35,21 @@ public class NorweigianDestinations {
         
         return false;
     }
+    
+    
+    /**
+     * Fetches a random destination.
+     * 
+     * @Author: Casper Schultz
+     * @Date: 4/12 2015
+     * 
+     * @return      destination as IATA code
+     */
+    public static String getRandomDestination() {
+        
+        Random rand = new Random();
+        String dest = DESTINATIONS[rand.nextInt(DESTINATIONS.length)];
+        return dest;
+    }
+
 }
