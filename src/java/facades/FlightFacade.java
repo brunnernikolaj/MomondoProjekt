@@ -1,14 +1,17 @@
 package facades;
 
 import entity.Flight;
+import exceptions.FlightException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.TemporalType;
+import javax.ws.rs.core.Response;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import utility.NorweigianDestinations;
 import static utility.WebScraper.getListOfFlights;
 
 /**
@@ -71,9 +74,9 @@ public class FlightFacade extends DataManager<Flight, Integer> {
      * @param date              The date as object to search for
      * @param seats             The number of seats required
      * @return                  List of flight objects that match the criteria
-     * @throws ParseException 
+     * @throws                  exceptions.FlightException
      */
-    public List<Flight> getJFFlights(String from, String to, String date, int seats) throws ParseException {
+    public List<Flight> getJFFlights(String from, String to, String date, int seats) throws FlightException {
         
         List<Flight> flights;
         DateTime dt = new DateTime(date);
@@ -88,6 +91,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         .getResultList();
         
         // If no flights where found, we try to lookup the flights at Norweigian
+        // and store them for the next time.
         if (flights == null || flights.size() < 1) {
             
             try { 
@@ -95,9 +99,70 @@ public class FlightFacade extends DataManager<Flight, Integer> {
                 System.out.println("Flights fetched: " + flights.size());
                 this.createFromList(flights);
             } catch (ParseException | IOException e) {
-                System.out.println(e.getStackTrace());
+                throw new FlightException("An internal server error occured", Response.Status.INTERNAL_SERVER_ERROR, 4);
             } 
         } 
+        
+        if (flights.size() < 1) {
+            throw new FlightException("We have no flights that day from that destination", Response.Status.NO_CONTENT, 1);
+        }
+        
+        // Return results
+        return flights;
+    }
+    
+    
+    /**
+     * Returns internal flights from destination.
+     * 
+     * Our scraper that scrapes Norwegian (and their website) only supports
+     * scraping flights that also has a to destination. We could just return
+     * nothing, but in order to return as much data as possible, we just
+     * fetch from a random destination.
+     * 
+     * @Author: Casper Schultz
+     * @Date: 4/12 2015
+     * 
+     * @param from          From destination as IATA code
+     * @param date          Date as String
+     * @param seats         Number of seats requested
+     * @return              List of flight objects.
+     */
+    public List<Flight> getJFFlightsFrom(String from, String date, int seats) throws FlightException {
+        
+        List<Flight> flights;
+        DateTime dt = new DateTime(date);
+        Date nextDay = dt.plus(Period.days(1)).toDate();
+        
+        // Now we want to check if we have any results in the database, by looking up
+        flights = manager.createNamedQuery("Flight.findFlightsFrom")
+        .setParameter("origin", from)
+        .setParameter("theDay", dt.toDate(), TemporalType.DATE)
+        .setParameter("theNextDay", nextDay, TemporalType.DATE)
+        .getResultList();
+        
+        // If no flights where found, we try to lookup the flights at Norweigian
+        if (flights == null || flights.size() < 1) {
+            
+            try { 
+                
+                // We fetch a random supported destination.
+                String destination;
+                do {
+                    destination = NorweigianDestinations.getRandomDestination();
+                } while (destination.equals(from));
+                
+                flights = getFlightsFromNorweigian(from, destination, dt);
+                this.createFromList(flights);
+                
+            } catch (ParseException | IOException e) {
+                throw new FlightException("An internal server error occured", Response.Status.INTERNAL_SERVER_ERROR, 4);
+            } 
+        } 
+        
+        if (flights.size() < 1) {
+            throw new FlightException("We have no flights that day from that destination", Response.Status.NO_CONTENT, 1);
+        }
         
         // Return results
         return flights;
@@ -136,4 +201,5 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         
         return getListOfFlights(url);
     }
+
 }

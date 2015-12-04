@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import entity.Flight;
+import exceptions.FlightException;
 import facades.AirportFacade;
 import facades.FlightFacade;
 import java.io.IOException;
@@ -22,14 +23,16 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.joda.time.DateTime;
+import utility.NorweigianDestinations;
 
 /**
  * REST Web Service
  *
  * @author casper
  */
-@Path("flight")
+@Path("flightinfo")
 public class FlightService {
 
     @Context
@@ -43,6 +46,45 @@ public class FlightService {
      */
     public FlightService() {
         gson = new GsonBuilder().setPrettyPrinting().create();
+    }
+    
+    @GET
+    @Path("/{from}/{day}/{seats}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getFlightsFrom(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats) throws FlightException {
+        
+        // We validate the input data, to make sure its a valid IATA code
+        // and that the date has been formatted correctly
+        if (! NorweigianDestinations.validDestination(from))
+            throw new FlightException("We do not support flights to the given IATA destination", Response.Status.NO_CONTENT, 1);
+        
+        // Fetch the flights
+        List<Flight> flights = facade.getJFFlightsFrom(from, day, seats);
+
+        JsonArray jsonArray = new JsonArray(); 
+        JsonObject json = new JsonObject();
+        json.addProperty("airline", "Just Fly");
+        
+        for (Flight flight : flights) {
+            
+            JsonObject obj = new JsonObject();
+            obj.addProperty("origin", flight.getIataFrom());
+            obj.addProperty("destination", flight.getIataTo());
+            obj.addProperty("flightNumber", flight.getFlightNumber());
+            obj.addProperty("noOfSeats", flight.getNoOfSeats());
+            obj.addProperty("travelTime", flight.getTravelTime());
+            obj.addProperty("price", flight.getPrice() * seats);
+            
+            DateTime date = new DateTime(flight.getTravelDate());
+            
+            obj.addProperty("travelDate", date.toString());
+            
+            jsonArray.add(obj);
+        }
+        
+        json.add("flights", jsonArray);
+        
+        return gson.toJson(json);
     }
     
     /**
@@ -62,12 +104,13 @@ public class FlightService {
     @GET
     @Path("/{from}/{to}/{day}/{seats}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getFlights(@PathParam("from") String from, @PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats) throws ParseException, IOException {
+    public String getFlightsToFrom(@PathParam("from") String from, @PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats) throws FlightException {
         
         // We validate the input data, to make sure its a valid IATA code
         // and that the date has been formatted correctly
-        if (airportFacade.getAirportByIATA(from) == null || airportFacade.getAirportByIATA(to) == null)
-            return "Invalid IATA code(s)";
+        if (! NorweigianDestinations.validDestination(from) || ! NorweigianDestinations.validDestination(to))
+            throw new FlightException("We do not support flights to the given IATA destination", Response.Status.NO_CONTENT, 1);
+        
         
         // Fetch the flights
         List<Flight> flights = facade.getJFFlights(from, to, day, seats);
