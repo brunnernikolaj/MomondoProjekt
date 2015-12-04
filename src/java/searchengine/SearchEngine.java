@@ -40,8 +40,16 @@ public class SearchEngine {
 
     private final Stream<String> urls = Stream.of("http://angularairline-plaul.rhcloud.com");
 
-    public <T extends AbstractSearchTask> JSONArray  search(Function<String,T> ctor) throws InterruptedException {
-        
+    /**
+     * Searches all websites in the database with the provided search task.
+     * ctor is a lambda function for creating search tasks from all url's 
+     * @param <T>
+     * @param ctor
+     * @return
+     * @throws InterruptedException 
+     */
+    public <T extends AbstractSearchTask> JSONArray search(Function<String, T> ctor) throws InterruptedException {
+
         //Create a new SearchTask for each url. Then submit each task to the threadpool.
         //Finally convert to a list because otherwise submit won't be called until after shutdown() 
         List<Future<JSONObject>> tasks = urls
@@ -52,13 +60,22 @@ public class SearchEngine {
         threadPool.shutdown();
         threadPool.awaitTermination(20, TimeUnit.SECONDS);
 
+        return buildReturnList(tasks);
+    }
+
+    private JSONArray buildReturnList(List<Future<JSONObject>> tasks) {
         try {
 
             JSONArray flightsInfo = new JSONArray();
 
             //Create a json array containing all airlines and associated flights
             for (Future<JSONObject> flightList : tasks) {
-                flightsInfo.put(flightList.get());
+                JSONObject flightData = flightList.get();
+
+                if (flightData != null) {
+                    flightsInfo.put(flightData);
+                }
+
             }
 
             return flightsInfo;
