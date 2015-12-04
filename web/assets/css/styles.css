@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(https://fonts.googleapis.com/css?family=Raleway:500);
 @import url(_mixin);
@@ -108,22 +107,106 @@ h1, h2, h3, h4, h5 {
     .searchresult .container-fluid form.form-horizontal .input-group {
       margin-top: 5px; }
 
-.filters {
+.container .filters {
   margin-top: 40px;
   min-height: 280px; }
-  .filters .panel-primary {
+  .container .filters .panel-primary {
     border-color: #1abc9c; }
-    .filters .panel-primary .panel-heading {
+    .container .filters .panel-primary .panel-heading {
       background-color: #1abc9c;
       border-color: #1abc9c; }
 
-.results  {
-  margin-top: 40px;
+.container .results {
   height: auto; }
-  .results  .resultset {
-    border: 1px solid #efefef;
-    min-height: 120px;
-    height: auto; }
+  @media (min-width: 768px) {
+    .container .results {
+      margin-top: 40px; } }
+  .container .results .resultset {
+    -webkit-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #efefef; }
+    .container .results .resultset .departure, .container .results .resultset .return {
+      padding-top: 15px;
+      padding-bottom: 15px; }
+      .container .results .resultset .departure .selskab, .container .results .resultset .return .selskab {
+        margin-bottom: 10px; }
+        .container .results .resultset .departure .selskab .selskabsnavn, .container .results .resultset .return .selskab .selskabsnavn {
+          font-size: 12px;
+          font-weight: 300;
+          color: #bcbcbc; }
+      .container .results .resultset .departure .company, .container .results .resultset .return .company {
+        text-align: center;
+        border-right: 1px solid #efefef; }
+        .container .results .resultset .departure .company img, .container .results .resultset .return .company img {
+          margin: 0 auto; }
+        .container .results .resultset .departure .company p, .container .results .resultset .return .company p {
+          font-size: 12px;
+          -webkit-hyphens: auto;
+          -moz-hyphens: auto;
+          -ms-hyphens: auto;
+          hyphens: auto;
+          word-break: break-all; }
+      .container .results .resultset .departure .departureinfo h4 small, .container .results .resultset .departure .arrivalinfo h4 small, .container .results .resultset .return .departureinfo h4 small, .container .results .resultset .return .arrivalinfo h4 small {
+        display: block; }
+      .container .results .resultset .departure .departureinfo, .container .results .resultset .return .departureinfo {
+        text-align: right; }
+      .container .results .resultset .departure .traveltime, .container .results .resultset .return .traveltime {
+        text-align: center;
+        border: 1px solid #efefef;
+        border-top: none;
+        border-bottom: none; }
+        .container .results .resultset .departure .traveltime .timeline, .container .results .resultset .return .traveltime .timeline {
+          height: 4px;
+          width: 90%;
+          margin: 4px auto;
+          background-color: #1abc9c; }
+        .container .results .resultset .departure .traveltime p, .container .results .resultset .return .traveltime p {
+          text-transform: uppercase;
+          font-size: 12px; }
+    .container .results .resultset .return {
+      border-top: 1px solid #efefef; }
+    .container .results .resultset .pricearea {
+      position: relative;
+      background-color: rgba(26, 188, 156, 0.2);
+      text-align: right; }
+      @media (min-width: 767px) {
+        .container .results .resultset .pricearea {
+          min-height: 277px;
+          -webkit-border-top-right-radius: 5px;
+          -webkit-border-bottom-right-radius: 5px;
+          -moz-border-top-right-radius: 5px;
+          -moz-border-bottom-right-radius: 5px;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px; } }
+      @media (max-width: 767px) {
+        .container .results .resultset .pricearea {
+          min-height: 200px;
+          -webkit-border-bottom-left-radius: 5px;
+          -webkit-border-bottom-right-radius: 5px;
+          -moz-border-bottom-left-radius: 5px;
+          -moz-border-bottom-right-radius: 5px;
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px; } }
+      .container .results .resultset .pricearea .prices {
+        position: absolute;
+        bottom: 50px;
+        color: #707070;
+        width: 100%;
+        text-align: right; }
+        .container .results .resultset .pricearea .prices .grouppassengers {
+          font-size: 14px; }
+        .container .results .resultset .pricearea .prices .singlepassenger {
+          font-size: 20px; }
+      .container .results .resultset .pricearea .btn {
+        width: 90%;
+        position: absolute;
+        bottom: 10px;
+        left: 5%;
+        right: 5%; }
 
 .frontpage-catcher {
   text-align: center; }
