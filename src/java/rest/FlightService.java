@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import entity.Flight;
+import entity.Reservation;
 import exceptions.FlightException;
 import facades.AirportFacade;
 import facades.FlightFacade;
@@ -57,11 +58,11 @@ public class FlightService {
     @POST
     @Path("flightreservation")
     @Consumes(MediaType.APPLICATION_JSON) 
-    public String flightReservation() {
+    public String flightReservation(String json) throws FlightException {
         
+        // Call created method in facade.
         
-        
-        return "";
+        return gson.toJson("not supported yet");
     }
     
     /**
