@@ -31,7 +31,7 @@ public class AirportScraper {
         List<Airport> airports = new AirportScraper().fetchAiportData();
         
         for (Airport airport : airports) 
-            System.out.println("The aiport with IATA: " + airport.getIATAcode() + "was fetched");
+            System.out.println("The aiport with IATA: " + airport.getIATAcode() + " was fetched");
     }
     
     /**
@@ -55,22 +55,27 @@ public class AirportScraper {
             in = new BufferedReader(new InputStreamReader(oracle.openStream()));
             String inputLine;
             
-            while ((inputLine = in.readLine()) != null) {   
+            while ((inputLine = in.readLine()) != null) {  
+                
                 String[] values = inputLine.split(",");
                 
-                Airport airport = new Airport();
-                airport.setId(Integer.parseInt(values[0]));
-                airport.setName(values[1].replaceAll("\"",""));
-                airport.setCity(values[2].replaceAll("\"",""));
-                airport.setCountry(values[3].replaceAll("\"",""));
-                airport.setIATAcode(values[4].replaceAll("\"",""));
-                airport.setICAOcode(values[5].replaceAll("\"",""));
-                airport.setLatitude(values[6]);
-                airport.setLongitude(values[7]);
-                airport.setAltitude(values[8]);
-                airport.setTimezone(values[9]);
-                
-                airports.add(airport);
+                // Check if its a destination that we support.
+                if (NorweigianDestinations.validDestination(values[4].replaceAll("\"",""))) {
+
+                    Airport airport = new Airport();
+                    airport.setId(Integer.parseInt(values[0]));
+                    airport.setName(values[1].replaceAll("\"",""));
+                    airport.setCity(values[2].replaceAll("\"",""));
+                    airport.setCountry(values[3].replaceAll("\"",""));
+                    airport.setIATAcode(values[4].replaceAll("\"",""));
+                    airport.setICAOcode(values[5].replaceAll("\"",""));
+                    airport.setLatitude(values[6]);
+                    airport.setLongitude(values[7]);
+                    airport.setAltitude(values[8]);
+                    airport.setTimezone(values[9]);
+
+                    airports.add(airport);
+                }
             }
             
             in.close();

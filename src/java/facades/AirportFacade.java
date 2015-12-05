@@ -1,8 +1,11 @@
 package facades;
 
 import entity.Airport;
+import exceptions.FlightException;
+import exceptions.RestException;
 import java.util.List;
 import javax.persistence.NoResultException;
+import javax.ws.rs.core.Response;
 import utility.AirportScraper;
 
 /**
@@ -60,8 +63,9 @@ public class AirportFacade extends DataManager<Airport, Integer> {
      * 
      * @param IATA      IATA code as string to lookup
      * @return          Airport entity if found / otherwise null
+     * @throws          RestException if no airport is found.
      */
-    public Airport getAirportByIATA(String IATA) {
+    public Airport getAirportByIATA(String IATA) throws RestException {
         
         try {
             
@@ -72,7 +76,7 @@ public class AirportFacade extends DataManager<Airport, Integer> {
             return airport;
             
         } catch (NoResultException e) {
-            return null;
+            throw new RestException("We do not suply flights to the given IATA code", Response.Status.NO_CONTENT);
         }
     }
     
@@ -95,8 +99,6 @@ public class AirportFacade extends DataManager<Airport, Integer> {
         } catch (NoResultException e) {
             deleteAll("AIRPORTS");
             List<Airport> airports = AirportScraper.fetchAiportData();
-            for (Airport a : airports)
-                System.out.println(a.getCity());
             createFromList(airports);
         }
     }

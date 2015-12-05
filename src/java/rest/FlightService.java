@@ -10,26 +10,36 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import entity.Flight;
+import entity.Reservation;
+import exceptions.FlightException;
 import facades.AirportFacade;
 import facades.FlightFacade;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.CacheControl;
+import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import org.joda.time.DateTime;
+import utility.NorweigianDestinations;
 
 /**
  * REST Web Service
  *
  * @author casper
  */
-@Path("flight")
+@Path("")
 public class FlightService {
 
     @Context
@@ -45,9 +55,64 @@ public class FlightService {
         gson = new GsonBuilder().setPrettyPrinting().create();
     }
     
+    @POST
+    @Path("flightreservation")
+    @Consumes(MediaType.APPLICATION_JSON) 
+    public String flightReservation(String json) throws FlightException {
+        
+        // Call created method in facade.
+        
+        return gson.toJson("not supported yet");
+    }
+    
     /**
      * Returns flights from Just Fly (our) company.
      * 
+     * Returns flights from a given origin but without destination.
+     * 
+     * @param request
+     * @Author: Casper Schultz
+     * @Date: 2/12 2015
+     * 
+     * @param from              Travel Origin as IATA code 
+     * @param day               Day as date string formatted as: 2016-02-25
+     * @param seats             Number of seats required
+     * @return                  Json object with flights that match the criteria.
+     * @throws FlightException  
+     */
+    @GET
+    @Path("/flightinfo/{from}/{day}/{seats}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFlightsFrom(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats, @Context Request request) throws FlightException {
+        
+        // We validate the input data, to make sure its a valid IATA code
+        // and that the date has been formatted correctly
+        if (! NorweigianDestinations.validDestination(from))
+            throw new FlightException("We do not support flights to the given IATA destination", Response.Status.NO_CONTENT, 1);
+        
+        // Fetch the flights
+        List<Flight> flights = facade.getJFFlightsFrom(from, day, seats);
+        
+        // Add some caching
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(86400);
+        EntityTag etag = new EntityTag(Integer.toString(flights.hashCode()));
+        ResponseBuilder builder = request.evaluatePreconditions(etag);
+        
+        // cached resource did change -> serve updated content
+        if(builder == null) {
+            builder = Response.ok(buildJsonObject(flights, seats));
+            builder.tag(etag);
+        }
+
+        builder.cacheControl(cc);
+        return builder.build();
+    }
+    
+    /**
+     * Returns flights from Just Fly (our) company.
+     * 
+     * @param request
      * @Author: Casper Schultz
      * @Date: 2/12 2015
      * 
@@ -56,27 +121,54 @@ public class FlightService {
      * @param day               Day as date string formatted as: 2016-02-25
      * @param seats             Number of seats required
      * @return                  Json object with flights that match the criteria.
-     * @throws ParseException
-     * @throws IOException 
+     * @throws FlightException  
      */
     @GET
-    @Path("/{from}/{to}/{day}/{seats}")
+    @Path("/flightinfo/{from}/{to}/{day}/{seats}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getFlights(@PathParam("from") String from, @PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats) throws ParseException, IOException {
+    public Response getFlightsToFrom(@PathParam("from") String from, @PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats, @Context Request request) throws FlightException {
         
         // We validate the input data, to make sure its a valid IATA code
         // and that the date has been formatted correctly
-        if (airportFacade.getAirportByIATA(from) == null || airportFacade.getAirportByIATA(to) == null)
-            return "Invalid IATA code(s)";
+        if (! NorweigianDestinations.validDestination(from) || ! NorweigianDestinations.validDestination(to))
+            throw new FlightException("We do not support flights to the given IATA destination", Response.Status.NO_CONTENT, 1);
+        
         
         // Fetch the flights
         List<Flight> flights = facade.getJFFlights(from, to, day, seats);
         
-        // We need to conert the list to a json list in order to store it in the json object
-        //JsonElement element = gson.toJsonTree(flights, new TypeToken<List<Flight>>() {}.getType());
-        JsonArray jsonArray = new JsonArray(); //element.getAsJsonArray();
+         // Add some caching
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(86400);
+        EntityTag etag = new EntityTag(Integer.toString(flights.hashCode()));
+        ResponseBuilder builder = request.evaluatePreconditions(etag);
         
-        // We build the object
+        if(builder == null) {
+            builder = Response.ok(buildJsonObject(flights, seats));
+            builder.tag(etag);
+        }
+        
+        builder.cacheControl(cc);
+        return builder.build();
+    }
+    
+    
+    /**
+     * Builds Json object with flight results.
+     * 
+     * Builds a json object afther the specified format handed
+     * out in the assignment.
+     * 
+     * @Author: Casper Schultz
+     * @Date: 4/12 2015
+     * 
+     * @param flights       List of flight objects
+     * @param seats         The number of seats used to calculate the price
+     * @return              Json object as string
+     */
+    private String buildJsonObject(List<Flight> flights, int seats) {
+        
+        JsonArray jsonArray = new JsonArray(); 
         JsonObject json = new JsonObject();
         json.addProperty("airline", "Just Fly");
         
