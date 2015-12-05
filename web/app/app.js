@@ -29,7 +29,9 @@ angular.module('myApp', [
         
     $routeProvider
     .when('/login', {
-      templateUrl: 'app/templates/loginForm.html'
+      templateUrl: 'app/templates/loginForm.html',
+      controller: 'AppCtrl',
+      controllerAs : 'ctrl'
     })
     .when('/signup', {
       templateUrl: 'app/templates/signupForm.html'
