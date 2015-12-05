@@ -22,8 +22,8 @@ public class DeploymentConfiguration implements ServletContextListener{
         
         Map<String, String> env = System.getenv();
         
-        if (env.keySet().contains("OPENSHIFT_MYSQL_DB_HOST")) {
-            PU_NAME = "OpenshiftPU";
+        if (env.keySet().contains("WEBSITE_NODE_DEFAULT_VERSION")) {
+            PU_NAME = "AzurePU";
         }
     }
     

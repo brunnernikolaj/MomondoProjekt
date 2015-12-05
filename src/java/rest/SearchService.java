@@ -68,7 +68,6 @@ public class SearchService {
         FlightRequest request = new FlightRequest(from, to, time, seats);     
         System.out.println("");
         
-
         
         return searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
     }

@@ -35,7 +35,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
     /**
      * Private constructor.
      */
-    private FlightFacade() {
+    public FlightFacade() {
     }
     
     /**

@@ -5,6 +5,8 @@
  */
 package tester;
 
+import entity.Flight;
+import facades.FlightFacade;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,16 +21,9 @@ import us.monoid.json.JSONArray;
  */
 public class Tester {
     public static void main(String[] args) throws InterruptedException {
-        SearchEngine search = new SearchEngine();
+        FlightFacade facade = new  FlightFacade();
         
-        Calendar calendar = new GregorianCalendar(2016, 1, 2);
-        Date date =  calendar.getTime();
-        
-        FlightRequest request = new FlightRequest("CPH", "ABE", date, 1);
-        
-
-        //JSONArray list = search.search(request);
-
+        facade.create(new Flight());
         
         System.out.println("lol");
     }
