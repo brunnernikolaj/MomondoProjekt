@@ -9,6 +9,7 @@
 angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
+  'autocomplete',
   'ui.bootstrap',
   'myApp.security',
   'myApp.view2',

@@ -56,12 +56,12 @@ angular.module('myApp.controllers', ['myApp.security'])
                             for (var j = 0; j < current.length; ++j)
                                 flattened.push(current[j]);
                         }
-                        
+
                         self.flights = flattened;
                     });
                 }
             }])
-        
+
         /**
          * Search form controller.
          * 
@@ -70,41 +70,58 @@ angular.module('myApp.controllers', ['myApp.security'])
          * 
          * @returns {undefined}
          */
-        .controller("SearchCtrl", ['$scope', 'FlightFactoty', function($scope, FlightFactoty) {
+        .controller("SearchCtrl", ['$scope', 'FlightFactoty', function ($scope, FlightFactoty) {
+                $scope.cities = ["CPH","SXF"];
 
-            // handle incomming data
-            $scope.searchFlights = function() {
-                
-                //if ($scope.search.to !== undefined && $scope.search.from !== undefined && $scope.search.date !== undefined && $scope.search.date !== null && $scope.search.seats !== undefined) {
-                  //  console.log($scope.search);
-                    
-                    var date = new Date($scope.search.date).toISOString();
-                    
-                    FlightFactoty.searchWithDestination("CPH", "SXF", date, 2).then(function (result) {
-                        
-                        var flights = result.data.map(airline => airline.flights);
+                // gives another movie array on change
+        $scope.updateCities = function(typed){
+            // MovieRetriever could be some service returning a promise
+            $scope.cities = ["CPH","SXF"];
+      
+        }
 
-                        var flattened = [];
-                        for (var i = 0; i < flights.length; ++i) {
-                            var current = flights[i];
-                            for (var j = 0; j < current.length; ++j)
-                                flattened.push(current[j]);
+                // handle incomming data
+                $scope.searchFlights = function () {
+                    var searchQuery = $scope.search;
+
+                    var date = new Date(searchQuery.date).toISOString();
+
+                    FlightFactoty.searchWithDestination(searchQuery.from, searchQuery.to, date, searchQuery.seats).then(function (result) {
+
+
+                        if (result.data[0] != null) {
+                            var flights = result.data.map(airline => airline.flights);
+                            var flattened = [];
+                            for (var i = 0; i < flights.length; ++i) {
+                                var current = flights[i];
+                                for (var j = 0; j < current.length; ++j)
+                                    flattened.push(current[j]);
+                            }
+
+                            flattened.forEach(function (element, index) {
+                                var date = new Date(element.date);
+                                element.endDate = new Date(date.setMinutes(date.getMinutes() + element.traveltime)).toISOString();
+
+                            });
+
+                            $scope.results = flattened;
+                        } else {
+                            $scope.results = null;
                         }
-                        
-                        $scope.results = flattened;
-                        console.log($scope.results);
+
+
                     });
-                    
-                //} else {
-                //    console.log("All fields are required")
-                //}
-            };
-            
-            // Handle results
-            
-            
-                        
-        }]);
+
+                    //} else {
+                    //    console.log("All fields are required")
+                    //}
+                };
+
+                // Handle results
+
+
+
+            }]);
 
 
 
