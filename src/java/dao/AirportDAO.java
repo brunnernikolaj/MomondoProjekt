@@ -44,8 +44,8 @@ public class AirportDAO extends DataManager<Airport, Integer> {
      */
     public List<Airport> getAirportsByCity(String city) {
         
-        List<Airport> airports = this.getManager().createNamedQuery("Airport.findAirportByCity")
-            .setParameter("city", city)
+        List<Airport> airports = this.getManager().createNamedQuery("Airport.findAirportsByCity")
+            .setParameter("city", city  + "%")
             .getResultList();
         
         return airports;
