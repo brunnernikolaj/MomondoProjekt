@@ -58,24 +58,20 @@ public class AirportScraper {
             while ((inputLine = in.readLine()) != null) {  
                 
                 String[] values = inputLine.split(",");
-                
-                // Check if its a destination that we support.
-                if (NorweigianDestinations.validDestination(values[4].replaceAll("\"",""))) {
 
-                    Airport airport = new Airport();
-                    airport.setId(Integer.parseInt(values[0]));
-                    airport.setName(values[1].replaceAll("\"",""));
-                    airport.setCity(values[2].replaceAll("\"",""));
-                    airport.setCountry(values[3].replaceAll("\"",""));
-                    airport.setIATAcode(values[4].replaceAll("\"",""));
-                    airport.setICAOcode(values[5].replaceAll("\"",""));
-                    airport.setLatitude(values[6]);
-                    airport.setLongitude(values[7]);
-                    airport.setAltitude(values[8]);
-                    airport.setTimezone(values[9]);
+                Airport airport = new Airport();
+                airport.setId(Integer.parseInt(values[0]));
+                airport.setName(values[1].replaceAll("\"",""));
+                airport.setCity(values[2].replaceAll("\"",""));
+                airport.setCountry(values[3].replaceAll("\"",""));
+                airport.setIATAcode(values[4].replaceAll("\"",""));
+                airport.setICAOcode(values[5].replaceAll("\"",""));
+                airport.setLatitude(values[6]);
+                airport.setLongitude(values[7]);
+                airport.setAltitude(values[8]);
+                airport.setTimezone(values[9]);
 
-                    airports.add(airport);
-                }
+                airports.add(airport);
             }
             
             in.close();
