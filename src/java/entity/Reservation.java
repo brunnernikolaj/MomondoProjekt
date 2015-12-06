@@ -39,7 +39,7 @@ public class Reservation {
     @JoinColumn(name = "PASSENGER_ID")
     private List<Passenger> passengers;
     
-    @Column(name = "FLIGHT")
+    @JoinColumn(name = "FLIGHT")
     private Flight flight;
     
     public Reservation() {
