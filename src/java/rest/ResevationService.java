@@ -13,6 +13,7 @@ import entity.Passenger;
 import entity.Reservation;
 import exceptions.FlightException;
 import facades.FlightFacade;
+import facades.ReservationFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -25,6 +26,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
+import org.apache.commons.mail.EmailException;
+import utility.MailService;
 
 /**
  * REST Web Service
@@ -36,7 +39,8 @@ public class ResevationService {
 
     @Context
     private UriInfo context;
-    FlightFacade facade = new FlightFacade();
+    FlightFacade flightFacade = new FlightFacade();
+    ReservationFacade reservationFacade = new ReservationFacade();
     private Gson gson;
 
     /**
@@ -53,9 +57,9 @@ public class ResevationService {
      */
     @GET
     @Produces("application/json")
-    public String getXml() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    public String getXml() throws EmailException {
+        MailService.sendMail();
+        return null;
     }
 
     @POST
@@ -65,9 +69,9 @@ public class ResevationService {
         ReservationDto reservationDto = gson.fromJson(json, ReservationDto.class);
         
         Reservation reservation = toEntity(reservationDto);
-        reservation.setFlight(facade.getByFlightNumber(reservationDto.getFlightID()));
+        reservation.setFlight(flightFacade.getByFlightNumber(reservationDto.getFlightID()));
 
-        return gson.toJson(toDto(facade.saveReservation(reservation)));
+        return gson.toJson(toDto(reservationFacade.saveReservation(reservation)));
     }
 
     private ReservationDto toDto(Reservation reservation) {
@@ -81,7 +85,7 @@ public class ResevationService {
         }
 
         return new ReservationDto(
-                "abc",
+                reservation.getFlight().getFlightNumber(),
                 null,
                 null,
                 null,

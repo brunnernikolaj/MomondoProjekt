@@ -62,26 +62,6 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         return instance;
     }
 
-    public Reservation saveReservation(Reservation reservation) throws FlightException {
-
-        if (reservation.getPassengers().size() <= 0) {
-            throw new FlightException("An error occured and we could not procedd with the reservation", Response.Status.INTERNAL_SERVER_ERROR, 4);
-        }
-
-        manager.getTransaction().begin();
-        manager.persist(reservation);
-
-        // We also store the reservation with each passenger.
-        for (Passenger passenger : reservation.getPassengers()) {
-            passenger.addReservation(reservation);
-            manager.persist(passenger);
-        }
-
-        manager.getTransaction().commit();
-
-        return reservation;
-    }
-
     public Flight getByFlightNumber(String flightNumber) {
         return (Flight) manager.createNamedQuery("Flight.findFlightByFlightNumber")
                 .setParameter("flightNumber", flightNumber)

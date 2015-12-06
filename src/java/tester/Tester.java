@@ -11,20 +11,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import org.apache.commons.mail.EmailException;
 import requests.FlightRequest;
 import searchengine.SearchEngine;
 import us.monoid.json.JSONArray;
+import utility.MailService;
 
 /**
  *
  * @author Nikolaj
  */
 public class Tester {
-    public static void main(String[] args) throws InterruptedException {
-        FlightFacade facade = new  FlightFacade();
-        
-        facade.create(new Flight());
-        
-        System.out.println("lol");
+    public static void main(String[] args) throws InterruptedException, EmailException {
+        MailService.sendMail();
     }
 }
