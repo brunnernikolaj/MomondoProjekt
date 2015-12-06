@@ -11,6 +11,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -68,6 +70,7 @@ public class SearchService {
             return result;
             
         } catch (InterruptedException | ParseException ex) {
+            Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);
             throw new FlightException("An unknown error occured while searching for flights", Response.Status.INTERNAL_SERVER_ERROR, 4);
         } 
     }
@@ -98,6 +101,7 @@ public class SearchService {
             return result;
             
         } catch (InterruptedException | ParseException ex) {
+            Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);
             throw new FlightException("An unknown error occured while searching for flights", Response.Status.INTERNAL_SERVER_ERROR, 4);
         }
     }
