@@ -7,14 +7,14 @@
                         <label class="control-label">Afrejse</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plane"></i></span>
-                            <autocomplete attr-placeholder="Origin" data="cities" ng-model="search.from" on-type="updateCities" required></autocomplete>
+                            <autocomplete attr-placeholder="Origin" data="cities" on-select="pickorigin" on-type="updateCities" required></autocomplete>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <label class="control-label">Destination</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plane"></i></span>
-                            <autocomplete attr-placeholder="Destination" data="cities" ng-model="search.to" ng-init="a" on-type="updateCities"></autocomplete>
+                            <autocomplete attr-placeholder="Destination" data="cities" on-select="pickdestination" ng-init="a" on-type="updateCities"></autocomplete>
                         </div>
                     </div>
                     <div class="col-sm-3">

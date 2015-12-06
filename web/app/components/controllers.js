@@ -95,17 +95,52 @@ angular.module('myApp.controllers', ['myApp.security'])
                         return item['totalPrice'] >= min && item['totalPrice'] <= max;
                     }
                 }
-
-                $scope.cities = [];
                 
-                //For auto complete
+                var from, to;
+                $scope.cities = [];
+                $scope.airports = undefined;
+                
+                $scope.pickorigin = function(selected) {
+                    
+                    var airport = selected.split(",");
+                    airport = airport[2].trim();
+                    
+                    angular.forEach($scope.airports, function(value, key) {
+                        if (value.name === airport) {
+                            from = value.IATAcode;
+                        }
+                    });
+                }
+                
+                $scope.pickdestination = function(selected) {
+                    var airport = selected.split(",");
+                    airport = airport[2].trim();
+                    
+                    angular.forEach($scope.airports, function(value, key) {
+                        if (value.name === airport) {
+                            to = value.IATAcode;
+                        }
+                    });
+                }
+                
+                /**
+                 * Fetches a list of airports that match the given name.
+                 * 
+                 * @param {type} typed
+                 * @returns {undefined}
+                 */
                 $scope.updateCities = function (typed) {
                     
                     // We only want to fetch something, after theres atleast 3 letters
                     if (typed.length > 2) {
                         AirportFactoty.getAirportsByName(typed).then(function(res) {
                             
+                            // Used to display nice names
                             $scope.cities = [];
+                            
+                            // Used for the IATA / other codes 
+                            // We split it up, since we need both the american and the IATA code
+                            $scope.airports = res.data;
                             
                             for (var i = 0, l = res.data.length; i < l; i++) {
                                 $scope.cities.push(res.data[i].country + ", " + res.data[i].city + ", " + res.data[i].name)
@@ -120,14 +155,15 @@ angular.module('myApp.controllers', ['myApp.security'])
 
                 // handle incomming data
                 $scope.searchFlights = function () {
+                    
                     var searchQuery = $scope.search;
 
                     var date = new Date(searchQuery.date).toISOString();
 
                     if (searchQuery.to) {
-                        FlightFactoty.searchWithDestination(searchQuery.from, searchQuery.to, date, searchQuery.seats).then(unpackFlights);
+                        FlightFactoty.searchWithDestination(from, to, date, searchQuery.seats).then(unpackFlights);
                     } else {
-                        FlightFactoty.searchWithNoDestination(searchQuery.from, date, searchQuery.seats).then(unpackFlights);
+                        FlightFactoty.searchWithNoDestination(from, date, searchQuery.seats).then(unpackFlights);
                     }
 
                 };
