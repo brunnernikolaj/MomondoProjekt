@@ -378,6 +378,28 @@ h1, h2, h3, h4, h5 {
   width: 100%;
   padding:0.4em;
   color: #555;
+  text-transform: uppercase;
+}
+
+.autocomplete input{
+  font-size: 14px;
+  width: 100%;
+  padding:0.4em;
+  color: #555;
+  text-transform: uppercase;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    text-transform: none;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   text-transform: none;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  text-transform: none;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   text-transform: none;
 }
 
 .autocomplete ul{
