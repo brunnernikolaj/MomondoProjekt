@@ -68,7 +68,7 @@ angular.module('myApp.controllers', ['myApp.security'])
          * 
          * @returns {undefined}
          */
-        .controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', function ($scope, FlightFactoty, saver) {
+        .controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', function ($scope, FlightFactoty, saver, AirportFactoty) {
                 $scope.priceSlider = {
                     min: 0,
                     max: 10,
@@ -96,10 +96,22 @@ angular.module('myApp.controllers', ['myApp.security'])
                     }
                 }
 
-                $scope.cities = ["CPH", "SXF"];
+                $scope.cities = [];
+                
                 //For auto complete
                 $scope.updateCities = function (typed) {
-                    $scope.cities = ["CPH", "SXF"];
+                    
+                    // We only want to fetch something, after theres atleast 3 letters
+                    if (typed.length > 2) {
+                        AirportFactoty.getAirportsByName(typed).then(function(res) {
+                            
+                            $scope.cities = [];
+                            
+                            for (var i = 0, l = res.data.length; i < l; i++) {
+                                $scope.cities.push(res.data[i].country + ", " + res.data[i].city + ", " + res.data[i].name)
+                            }
+                        })
+                    }
                 }
 
                 $scope.selectFlight = function (flight) {
