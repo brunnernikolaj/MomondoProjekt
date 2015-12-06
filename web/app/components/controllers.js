@@ -85,15 +85,30 @@ angular.module('myApp.controllers', ['myApp.security'])
                 }
 
                 $scope.cities = ["CPH", "SXF"];
-
-                // gives another movie array on change
+                //For auto complete
                 $scope.updateCities = function (typed) {
-                    // MovieRetriever could be some service returning a promise
                     $scope.cities = ["CPH", "SXF"];
                 }
 
+                
+                // handle incomming data
+                $scope.searchFlights = function () {
+                    var searchQuery = $scope.search;
+
+                    var date = new Date(searchQuery.date).toISOString();
+                    
+                    if (searchQuery.to){
+                        FlightFactoty.searchWithDestination(searchQuery.from, searchQuery.to, date, searchQuery.seats).then(unpackFlights);
+                    } else{
+                        FlightFactoty.searchWithNoDestination(searchQuery.from, date, searchQuery.seats).then(unpackFlights);
+                    }
+                   
+                };
+
+                //Function for unpacking resultdata from the server
                 var unpackFlights = function (result) {
                     if (result.data[0] != null) {
+                        //Select all flight arrays and then flatten them to one array
                         var flights = result.data.map(airline => airline.flights);
                         var flattened = [];
                         for (var i = 0; i < flights.length; ++i) {
@@ -104,7 +119,8 @@ angular.module('myApp.controllers', ['myApp.security'])
 
                         var maxValue = 0;
 
-                        //Add end date for each flight
+                        //Add end date for each flight, and find max price
+                        
                         flattened.forEach(function (element, index) {
                             var date = new Date(element.date);
                             element.endDate = new Date(date.setMinutes(date.getMinutes() + element.traveltime)).toISOString();
@@ -121,24 +137,6 @@ angular.module('myApp.controllers', ['myApp.security'])
                         $scope.results = null;
                     }
                 }
-
-                // handle incomming data
-                $scope.searchFlights = function () {
-                    var searchQuery = $scope.search;
-
-                    var date = new Date(searchQuery.date).toISOString();
-
-                    FlightFactoty.searchWithDestination(searchQuery.from, searchQuery.to, date, searchQuery.seats).then(unpackFlights);
-
-                    //} else {
-                    //    console.log("All fields are required")
-                    //}
-                };
-
-                // Handle results
-
-
-
             }]);
 
 

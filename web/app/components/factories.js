@@ -22,9 +22,7 @@ angular.module('myApp.factories', [])
                 search.searchWithNoDestination = function(from, time, seats) {
                     var url = "api/search/" + from + "/" + time + "/" + seats;
 
-                    return http.get(url).then(function (result) {
-                        return result.data;
-                    });
+                    return http.get(url);
                 };
 
                 search.searchWithDestination = function(from, to, time, seats) {
