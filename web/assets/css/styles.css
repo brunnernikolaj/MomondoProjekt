@@ -301,7 +301,7 @@ h1, h2, h3, h4, h5 {
         border-bottom-right-radius: 5px; } }
 .container .results .resultset .pricearea .prices {
     position: absolute;
-    /* bottom: 50px; */
+    bottom: 50px;
     color: #707070;
     width: 100%;
     text-align: right;

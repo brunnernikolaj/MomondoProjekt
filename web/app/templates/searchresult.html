@@ -24,7 +24,7 @@
                             <input type="date" class="form-control" ng-model="search.date" placeholder="2/12/2015">
                         </div>
                     </div> 
-                    
+
                     <div class="col-sm-3">
                         <label class="control-label">Passagerer</label>
                         <div class="input-group">
@@ -49,16 +49,27 @@
         <!-- SIDEBAR FOR FILTERS -->
         <div class="col-sm-4 col-md-3 filters">
             <div class="panel panel-default">
-                <div class="panel-heading">Pricerange</div>
+                <div class="panel-heading">Pricerange <small>- DKK</small></div>
                 <div class="panel-body">
-                    <p>** JQUERY SLIDER HERE **</p>
+                    <div>
+                        <rzslider
+                            rz-slider-model="priceSlider.min"
+                            rz-slider-high="priceSlider.max"
+                            rz-slider-options="priceSlider.options"></rzslider>
+                    </div>
                 </div>
             </div><!-- /pricerange panel -->
 
             <div class="panel panel-default">
-                <div class="panel-heading">Traveltime</div>
+                <div class="panel-heading">Traveltime <small>- Minutes</small></div>
                 <div class="panel-body">
-                    <p>** JQUERY SLIDER HERE **</p>
+                    <div>
+                        <div>
+                            <rzslider
+                                rz-slider-model="durationSlider.value"
+                                rz-slider-options="durationSlider.options"></rzslider>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -67,8 +78,8 @@
         <div class="not_found" ng-hide="results">No Results</div>
         <!-- RESULTS FROM SEARCH -->
         <div class="col-sm-8 col-md-9 results">
-            
-            <div class="row resultset" ng-repeat="flight in results">
+
+            <div class="row resultset" ng-repeat="flight in results | filter: filterSearch(priceSlider.min,priceSlider.max,durationSlider.value)">
                 <div class="col-xs-12 col-sm-9">
                     <div class="clearfix departure">
                         <div class="row selskab">
@@ -80,15 +91,15 @@
                             <img src="http://placehold.it/64x64" class="img-responsive">
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-3 departureinfo">
-                            <h4>{{flight.origin}} {{flight.date | date:'HH:mm'}} <small></small></h4>
+                            <h4>{{flight.origin}} {{flight.date| date:'HH:mm'}} <small></small></h4>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 traveltime">
-                            <h5 class="time">{{flight.traveltime}}m</h5>
+                            <h5 class="time">{{flight.traveltime}} m</h5>
                             <div class="timeline"></div>
                             <p>direkte</p>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-3 arrivalinfo">
-                            <h4>{{flight.endDate | date:'HH:mm'}} {{flight.destination}} <small>Aalborg</small></h4>
+                            <h4>{{flight.endDate| date:'HH:mm'}} {{flight.destination}} <small>Aalborg</small></h4>
                         </div>
                     </div><!-- /.row.departure -->
                 </div><!-- /.col-xs-12.col-sm-8 -->
@@ -100,8 +111,8 @@
                     <a href="#/booking"class="btn btn-success"><i class="fa fa-plus"></i> Book Nu</a>
                 </div>
             </div><!-- /.resultset -->
-            
-            
+
+
         </div><!-- /.results -->
         <!-- END /RESULTS FROM SEARCH -->
     </div>

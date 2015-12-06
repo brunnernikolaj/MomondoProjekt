@@ -10,6 +10,7 @@ angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
   'autocomplete',
+  'rzModule',
   'ui.bootstrap',
   'myApp.security',
   'myApp.view2',
