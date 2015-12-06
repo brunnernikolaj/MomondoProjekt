@@ -32,7 +32,7 @@ public class SearchEngine {
     }
 
 
-    private final Stream<String> urls = Stream.of("http://angularairline-plaul.rhcloud.com");
+    private final Stream<String> urls = Stream.of("http://localhost:8080","http://angularairline-plaul.rhcloud.com");
 
     public <T extends AbstractSearchTask> JSONArray  search(Function<String,T> ctor) throws InterruptedException {
         

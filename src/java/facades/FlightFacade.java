@@ -200,7 +200,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         String month = "" + df.format(date.monthOfYear().get());
         String year = "" + date.year().getAsText();
 
-        String url = "http://www.norwegian.com/uk/booking/flight-tickets/select-flight/?D_City=" + from + "&A_City=" + to + "&TripType=1&D_Day=" + day + "&D_Month=" + year + month + "&D_SelectedDay=" + day + "&R_Day=" + day + "&R_Month=" + year + month + "&R_SelectedDay=" + day + "&CurrencyCode=EUR";
+        String url = "http://www.norwegian.com/dk/booking/flight-tickets/select-flight/?D_City=" + from + "&A_City=" + to + "&TripType=1&D_Day=" + day + "&D_Month=" + year + month + "&D_SelectedDay=" + day + "&R_Day=" + day + "&R_Month=" + year + month + "&R_SelectedDay=" + day + "&CurrencyCode=DKK";
 
         System.out.println("Fetching from norweigian");
         System.out.println("URL: " + url);

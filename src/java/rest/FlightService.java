@@ -15,8 +15,12 @@ import exceptions.FlightException;
 import facades.AirportFacade;
 import facades.FlightFacade;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -169,14 +173,19 @@ public class FlightService {
             JsonObject obj = new JsonObject();
             obj.addProperty("origin", flight.getIataFrom());
             obj.addProperty("destination", flight.getIataTo());
-            obj.addProperty("flightNumber", flight.getFlightNumber());
-            obj.addProperty("noOfSeats", flight.getNoOfSeats());
-            obj.addProperty("travelTime", flight.getTravelTime());
-            obj.addProperty("price", flight.getPrice() * seats);
+            obj.addProperty("flightID", flight.getFlightNumber());
+            obj.addProperty("numberOfSeats", 2);
+            obj.addProperty("traveltime", flight.getTravelTime());
+            obj.addProperty("totalPrice", flight.getPrice().intValue() * seats);
+            
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(tz);
+        String time = df.format(flight.getTravelDate());
             
             DateTime date = new DateTime(flight.getTravelDate());
             
-            obj.addProperty("travelDate", date.toString());
+            obj.addProperty("date", time);
             
             jsonArray.add(obj);
         }

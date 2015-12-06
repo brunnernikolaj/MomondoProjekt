@@ -21,8 +21,8 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "FLIGHTS")
 @NamedQueries({
-    @NamedQuery(name = "Flight.findFlights", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.destination = :destination AND p.travelDate >= :theDay AND p.travelDate < :theNextDay"),
-    @NamedQuery(name = "Flight.findFlightsFrom", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.travelDate >= :theDay AND p.travelDate < :theNextDay"),
+    @NamedQuery(name = "Flight.findFlights", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.destination = :destination AND p.date >= :theDay AND p.date < :theNextDay"),
+    @NamedQuery(name = "Flight.findFlightsFrom", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.date >= :theDay AND p.date < :theNextDay"),
     @NamedQuery(name = "Flight.findFlightByFlightNumber", query = "SELECT p FROM Flight p WHERE p.flightNumber = :flightNumber")})
 public class Flight {
 
@@ -51,7 +51,7 @@ public class Flight {
 
     @Column(name = "TRAVELDATE")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date travelDate;
+    private Date date;
 
     public Flight() {
     }
@@ -65,11 +65,11 @@ public class Flight {
     }
 
     public Date getTravelDate() {
-        return travelDate;
+        return date;
     }
 
     public void setTravelDate(Date travelDate) {
-        this.travelDate = travelDate;
+        this.date = travelDate;
     }
 
     public String getIataFrom() {
@@ -115,7 +115,7 @@ public class Flight {
     public String toString() {
         String result = "IATA Code From = " + this.origin + ", IATA Code To = " + this.destination
                 + ", price = " + this.price + ", Flight Number = " + this.flightNumber + ", Number Of Seats = " + this.noOfSeats + ", travel Date = "
-                + this.travelDate + ", Travel Time = " + this.travelTime;
+                + this.date + ", Travel Time = " + this.travelTime;
         return result;
     }
 }

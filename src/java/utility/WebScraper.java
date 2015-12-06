@@ -21,7 +21,7 @@ public class WebScraper {
 
     public static void main(String[] args) throws Exception {
 
-        String url = "http://www.norwegian.com/uk/booking/fly/valg-flyvning/?D_City=CPH&A_City=ARN&D_Day=30&D_Month=201511&D_SelectedDay=30&R_Day=06&R_Month=201512&R_SelectedDay=06&CurrencyCode=EUR&TripType=2";
+        String url = "http://www.norwegian.com/dk/booking/fly/valg-flyvning/?D_City=CPH&A_City=ARN&D_Day=30&D_Month=201511&D_SelectedDay=30&R_Day=06&R_Month=201512&R_SelectedDay=06&CurrencyCode=EUR&TripType=2";
 
         List<Flight> results = getListOfFlights(url);
 
