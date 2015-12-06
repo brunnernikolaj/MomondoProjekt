@@ -22,35 +22,36 @@ import javax.persistence.Temporal;
 @Table(name = "FLIGHTS")
 @NamedQueries({
     @NamedQuery(name = "Flight.findFlights", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.destination = :destination AND p.travelDate >= :theDay AND p.travelDate < :theNextDay"),
-    @NamedQuery(name = "Flight.findFlightsFrom", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.travelDate >= :theDay AND p.travelDate < :theNextDay")})
+    @NamedQuery(name = "Flight.findFlightsFrom", query = "SELECT p FROM Flight p WHERE p.origin = :origin AND p.travelDate >= :theDay AND p.travelDate < :theNextDay"),
+    @NamedQuery(name = "Flight.findFlightByFlightNumber", query = "SELECT p FROM Flight p WHERE p.flightNumber = :flightNumber")})
 public class Flight {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FLIGHT_ID")
     int id;
-    
+
     @Column(name = "ORIGIN")
     private String origin;
-    
+
     @Column(name = "DESTINATION")
     private String destination;
-    
+
     @Column(name = "FLIGHT_NUMBER")
     private String flightNumber;
-    
+
     @Column(name = "NUMBER_OF_SEATS")
     private int noOfSeats;
-    
+
     @Column(name = "TRAVELTIME")
     private int travelTime;
-    
+
     @Column(name = "PRICE")
     private Double price;
-    
+
     @Column(name = "TRAVELDATE")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date travelDate;    
+    private Date travelDate;
 
     public Flight() {
     }

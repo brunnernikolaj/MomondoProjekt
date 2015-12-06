@@ -39,7 +39,7 @@ import utility.NorweigianDestinations;
  *
  * @author casper
  */
-@Path("")
+@Path("/flightinfo")
 public class FlightService {
 
     @Context
@@ -55,15 +55,7 @@ public class FlightService {
         gson = new GsonBuilder().setPrettyPrinting().create();
     }
     
-    @POST
-    @Path("flightreservation")
-    @Consumes(MediaType.APPLICATION_JSON) 
-    public String flightReservation(String json) throws FlightException {
-        
-        // Call created method in facade.
-        
-        return gson.toJson("not supported yet");
-    }
+    
     
     /**
      * Returns flights from Just Fly (our) company.
@@ -81,7 +73,7 @@ public class FlightService {
      * @throws FlightException  
      */
     @GET
-    @Path("/flightinfo/{from}/{day}/{seats}")
+    @Path("/{from}/{day}/{seats}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFlightsFrom(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats, @Context Request request) throws FlightException {
         
@@ -124,7 +116,7 @@ public class FlightService {
      * @throws FlightException  
      */
     @GET
-    @Path("/flightinfo/{from}/{to}/{day}/{seats}")
+    @Path("/{from}/{to}/{day}/{seats}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFlightsToFrom(@PathParam("from") String from, @PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats, @Context Request request) throws FlightException {
         

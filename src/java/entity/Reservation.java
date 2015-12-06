@@ -45,6 +45,11 @@ public class Reservation {
     public Reservation() {
         passengers = new ArrayList();
     }
+
+    public Reservation(List<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+    
     
     public void addPassenger(Passenger passenger) {
         passengers.add(passenger);

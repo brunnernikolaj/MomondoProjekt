@@ -46,6 +46,13 @@ public class Passenger {
     public Passenger() {
         reservations = new ArrayList<>();
     }
+
+    public Passenger(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+    
+    
     
     public void addReservation(Reservation reservation) {
         reservations.add(reservation);
