@@ -96,4 +96,13 @@ public class AirportFacade {
             dao.createFromList(airports);
         }
     }
+
+    public List<Airport> getAirportsBycity(String city) throws RestException {
+        
+        try {
+            return dao.getAirportsByCity(city);
+        } catch (NoResultException e) {
+            throw new RestException("No airport in the given city was found", Response.Status.NO_CONTENT);
+        }
+    }
 }

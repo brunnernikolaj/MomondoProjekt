@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import entity.Airport;
 import exceptions.RestException;
 import facades.AirportFacade;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -50,5 +51,14 @@ public class AirportService {
         
         Airport airport = facade.getAirportByIATA(iata);
         return gson.toJson(airport);
+    }
+    
+    @GET
+    @Path("city/{city}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAirportByCity(@PathParam("city") String city) throws RestException {
+        
+        List<Airport> airports = facade.getAirportsBycity(city);
+        return gson.toJson(airports);
     }
 }
