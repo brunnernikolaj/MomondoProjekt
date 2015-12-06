@@ -5,19 +5,21 @@
  */
 package rest;
 
+import exceptions.FlightException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
+import javax.ws.rs.core.Response;
 import requests.FlightRequest;
 import searchengine.SearchEngine;
 import searchengine.SearchTask;
@@ -44,34 +46,77 @@ public class SearchService {
     }
 
     /**
-     * Retrieves representation of an instance of conf.FlightinfoResource
-     * @param from
-     * @return an instance of java.lang.String
+     * Retrieves and returns flight results.
+     * 
+     * @Author: Nikolaj, Casper
+     * @Date: 6/12 2015
+     * 
+     * @param from              Origin as IATA code
+     * @param day               Date as ISO 8601
+     * @param seats             Number of seats to search for.
+     * @return                  Json object with results
+     * @throws FlightException 
      */
     @GET
     @Path("/{from}/{day}/{seats}")
     @Produces("application/json")
-    public String search(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats) throws ParseException, InterruptedException {
-        Date time = convertToDate(day);
+    public String search(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats) throws FlightException {
         
-        FlightRequest request = new FlightRequest(from, null, time, seats);     
-        
-        return searchEngine.search(x -> new SearchTask(x, request)).toString();
+        try {
+            Date time = convertToDate(day);
+            FlightRequest request = new FlightRequest(from, null, time, seats);
+            String result = searchEngine.search(x -> new SearchTask(x, request)).toString();
+            
+            return result;
+            
+        } catch (InterruptedException | ParseException ex) {
+            Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+            throw new FlightException("An unknown error occured while searching for flights", Response.Status.INTERNAL_SERVER_ERROR, 4);
+        } 
     }
     
+    /**
+     * Retrieves and returns flight results.
+     * 
+     * @Author: Nikolaj, Casper
+     * @Date: 6/12 2015
+     * 
+     * @param from              Origin as IATA code
+     * @param day               Date as ISO 8601
+     * @param seats             Number of seats to search for.
+     * @param to                Destination as IATA code
+     * @return                  Json object with results
+     * @throws FlightException 
+     */
     @GET
     @Path("/{from}/{to}/{day}/{seats}")
     @Produces("application/json")
-    public String searchWithDestination(@PathParam("from") String from,@PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats) throws ParseException, InterruptedException {
-        Date time = convertToDate(day);
+    public String searchWithDestination(@PathParam("from") String from,@PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats) throws FlightException {
         
-        FlightRequest request = new FlightRequest(from, to, time, seats);     
-        System.out.println("");
-        
-        
-        return searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
+        try {
+            Date time = convertToDate(day);
+            FlightRequest request = new FlightRequest(from, to, time, seats);
+            String result = searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
+            
+            return result;
+            
+        } catch (InterruptedException | ParseException ex) {
+            Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);
+            throw new FlightException("An unknown error occured while searching for flights", Response.Status.INTERNAL_SERVER_ERROR, 4);
+        }
     }
-
+    
+    
+    /**
+     * Converts a date as String to ISO 8601.
+     * 
+     * @Author: Nikolaj
+     * @Date: 6/12 2015
+     * 
+     * @param day               Date as string
+     * @return                  Date object formatted after ISO 8601
+     * @throws ParseException 
+     */
     private Date convertToDate(String day) throws ParseException {
         //TODO return proper representation object
         TimeZone tz = TimeZone.getTimeZone("UTC");
