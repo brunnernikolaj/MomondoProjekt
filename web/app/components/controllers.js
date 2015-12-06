@@ -44,9 +44,20 @@ angular.module('myApp.controllers', ['myApp.security'])
                 var self = this;
             }])
 
-        .controller('BookingCtrl', ['$scope',"flightSaver", function ($scope,saver) {
+        .controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty', function ($scope, saver,ReservationFactoty) {
                 //der er data her, der skal bare laves mere kode
                 $scope.flight = saver.get();
+                $scope.reservation = {Passengers:[]};
+                
+                for (var i = 0; i < 1; i++) {
+                    $scope.reservation.Passengers.push({});
+                }
+                
+                $scope.reserveTickets = function () {
+                    $scope.reservation.flightID = $scope.flight.flightID;
+                    $scope.reservation.numberOfSeats = $scope.flight.numberOfSeats;
+                    ReservationFactoty.reservateTickets($scope.reservation);                     
+                };
             }])
 
         /**
@@ -112,6 +123,21 @@ angular.module('myApp.controllers', ['myApp.security'])
                 //Function for unpacking resultdata from the server
                 var unpackFlights = function (result) {
                     if (result.data[0] != null) {
+                        var maxValue = 0;
+
+                        result.data.forEach(function (airline, index) {
+
+                            airline.flights.forEach(function (flight, index) {
+                                flight.airline = airline.airline;
+                                var date = new Date(flight.date);
+                                flight.endDate = new Date(date.setMinutes(date.getMinutes() + flight.traveltime)).toISOString();
+
+                                if (flight.totalPrice > maxValue) {
+                                    maxValue = flight.totalPrice;
+                                }
+                            });
+                        })
+
                         //Select all flight arrays and then flatten them to one array
                         var flights = result.data.map(airline => airline.flights);
                         var flattened = [];
@@ -121,18 +147,6 @@ angular.module('myApp.controllers', ['myApp.security'])
                                 flattened.push(current[j]);
                         }
 
-                        var maxValue = 0;
-
-                        //Add end date for each flight, and find max price
-
-                        flattened.forEach(function (element, index) {
-                            var date = new Date(element.date);
-                            element.endDate = new Date(date.setMinutes(date.getMinutes() + element.traveltime)).toISOString();
-
-                            if (element.totalPrice > maxValue) {
-                                maxValue = element.totalPrice;
-                            }
-                        });
                         $scope.priceSlider.options.ceil = maxValue;
                         $scope.priceSlider.max = maxValue;
 
