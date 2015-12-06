@@ -46,7 +46,8 @@ angular.module('myApp', [
       controller: 'SearchCtrl',
     })
     .when('/booking', {
-      templateUrl: 'app/templates/booking.html'
+      templateUrl: 'app/templates/booking.html',
+      controller: 'BookingCtrl'
     })
     .when('/', {
         templateUrl: 'app/templates/frontpage.html',

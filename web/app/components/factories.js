@@ -16,16 +16,16 @@ angular.module('myApp.factories', [])
 
 
         .factory('FlightFactoty', ["$http", function (http) {
-                    
+
                 var search = {};
-                    
-                search.searchWithNoDestination = function(from, time, seats) {
+
+                search.searchWithNoDestination = function (from, time, seats) {
                     var url = "api/search/" + from + "/" + time + "/" + seats;
 
                     return http.get(url);
                 };
 
-                search.searchWithDestination = function(from, to, time, seats) {
+                search.searchWithDestination = function (from, to, time, seats) {
                     var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
 
                     return http.get(url);
@@ -33,4 +33,20 @@ angular.module('myApp.factories', [])
 
 
                 return search;
-            }]);
+            }])
+
+        .factory('flightSaver', function () {
+            var savedData = {}
+            function set(data) {
+                savedData = data;
+            }
+            function get() {
+                return savedData;
+            }
+
+            return {
+                set: set,
+                get: get
+            }
+
+        });

@@ -42,10 +42,11 @@ angular.module('myApp.controllers', ['myApp.security'])
         .controller('FrontpageCtrl', ["FlightFactoty", function (searchService) {
 
                 var self = this;
+            }])
 
-                self.flights = [];
-
-
+        .controller('BookingCtrl', ['$scope',"flightSaver", function ($scope,saver) {
+                //der er data her, der skal bare laves mere kode
+                $scope.flight = saver.get();
             }])
 
         /**
@@ -56,7 +57,7 @@ angular.module('myApp.controllers', ['myApp.security'])
          * 
          * @returns {undefined}
          */
-        .controller("SearchCtrl", ['$scope', 'FlightFactoty', function ($scope, FlightFactoty) {
+        .controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', function ($scope, FlightFactoty, saver) {
                 $scope.priceSlider = {
                     min: 0,
                     max: 10,
@@ -75,11 +76,11 @@ angular.module('myApp.controllers', ['myApp.security'])
                     }
                 };
 
-                $scope.filterSearch = function ( min,max,duration) {
+                $scope.filterSearch = function (min, max, duration) {
                     return function (item) {
                         if (item['traveltime'] > duration)
                             return false;
-                        
+
                         return item['totalPrice'] >= min && item['totalPrice'] <= max;
                     }
                 }
@@ -90,19 +91,22 @@ angular.module('myApp.controllers', ['myApp.security'])
                     $scope.cities = ["CPH", "SXF"];
                 }
 
-                
+                $scope.selectFlight = function (flight) {
+                    saver.set(flight);
+                };
+
                 // handle incomming data
                 $scope.searchFlights = function () {
                     var searchQuery = $scope.search;
 
                     var date = new Date(searchQuery.date).toISOString();
-                    
-                    if (searchQuery.to){
+
+                    if (searchQuery.to) {
                         FlightFactoty.searchWithDestination(searchQuery.from, searchQuery.to, date, searchQuery.seats).then(unpackFlights);
-                    } else{
+                    } else {
                         FlightFactoty.searchWithNoDestination(searchQuery.from, date, searchQuery.seats).then(unpackFlights);
                     }
-                   
+
                 };
 
                 //Function for unpacking resultdata from the server
@@ -120,7 +124,7 @@ angular.module('myApp.controllers', ['myApp.security'])
                         var maxValue = 0;
 
                         //Add end date for each flight, and find max price
-                        
+
                         flattened.forEach(function (element, index) {
                             var date = new Date(element.date);
                             element.endDate = new Date(date.setMinutes(date.getMinutes() + element.traveltime)).toISOString();
