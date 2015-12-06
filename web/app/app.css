@@ -28,3 +28,9 @@ ol.list > li:before {
     content: counter(li-counter);
     counter-increment: li-counter;
 }
+
+.airline-heading{
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}

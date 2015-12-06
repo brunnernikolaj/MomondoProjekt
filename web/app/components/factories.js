@@ -35,6 +35,16 @@ angular.module('myApp.factories', [])
                 return search;
             }])
 
+            .factory('ReservationFactoty', ["$http", function (http) {
+                this.reservateTickets = function (ticketRequest) {
+                    var url = "api/flightreservation/";
+
+                    return http.post(url,ticketRequest);
+                };
+
+                return this;
+            }])
+
         .factory('flightSaver', function () {
             var savedData = {}
             function set(data) {
