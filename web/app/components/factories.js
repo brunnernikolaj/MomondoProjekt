@@ -44,7 +44,31 @@ angular.module('myApp.factories', [])
 
                 return this;
             }])
+        
+        .factory('AirportFactoty', ["$http", function (http) {
 
+                var airport = {
+                    airports: undefined
+                };
+                    
+                airport.getAirportsByName = function(name) {
+                    var url = "api/airport/city/" + name;
+                    return http.get(url);
+                }
+
+                return airport;
+            }])
+
+            .factory('ReservationFactoty', ["$http", function (http) {
+                this.reservateTickets = function (ticketRequest) {
+                    var url = "api/flightreservation/";
+
+                    return http.post(url,ticketRequest);
+                };
+
+                return this;
+            }])
+            
         .factory('flightSaver', function () {
             var savedData = {}
             function set(data) {
