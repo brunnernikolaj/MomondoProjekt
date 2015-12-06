@@ -9,13 +9,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import dtos.PassengerDto;
+import dtos.ReservationDto;
 import entity.Flight;
+import entity.Passenger;
 import entity.Reservation;
 import exceptions.FlightException;
 import facades.AirportFacade;
 import facades.FlightFacade;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
@@ -39,7 +43,7 @@ import utility.NorweigianDestinations;
  *
  * @author casper
  */
-@Path("/flightinfo")
+@Path("")
 public class FlightService {
 
     @Context
@@ -73,7 +77,7 @@ public class FlightService {
      * @throws FlightException  
      */
     @GET
-    @Path("/{from}/{day}/{seats}")
+    @Path("flightinfo/{from}/{day}/{seats}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFlightsFrom(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats, @Context Request request) throws FlightException {
         
@@ -116,7 +120,7 @@ public class FlightService {
      * @throws FlightException  
      */
     @GET
-    @Path("/{from}/{to}/{day}/{seats}")
+    @Path("flightinfo/{from}/{to}/{day}/{seats}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFlightsToFrom(@PathParam("from") String from, @PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats, @Context Request request) throws FlightException {
         
@@ -142,6 +146,49 @@ public class FlightService {
         
         builder.cacheControl(cc);
         return builder.build();
+    }
+    
+    
+    /**
+     * Processes a flight reservation.
+     * 
+     * @Author: Nikolaj
+     * @Date: 6/12 2015
+     * 
+     * @param json              Reservation as json.
+     * @return                  the reservation result.
+     * @throws FlightException  
+     */
+    @POST
+    @Path("flightreservation")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String flightReservation(String json) throws FlightException {
+
+        ReservationDto reservationDto = gson.fromJson(json, ReservationDto.class);
+        
+        Reservation reservation = toEntity(reservationDto);
+        reservation.setFlight(facade.getByFlightNumber(reservationDto.getFlightID()));
+
+        return gson.toJson(toDto(facade.saveReservation(reservation)));
+    }
+    
+    /**
+     * Converts a reservation to DTO.
+     * 
+     * @Author: Nikolaj
+     * @date: 6/12 2015
+     * 
+     * @param reservation       Reservation object to convert
+     * @return                  Reservation as DTO
+     */
+    private ReservationDto toDto(Reservation reservation) {
+        List<PassengerDto> passengers = new ArrayList<>();
+
+        for (Passenger passenger : reservation.getPassengers()) {
+            passengers.add(new PassengerDto(passenger.getFirstname(), passenger.getLastname()));
+        }
+
+        return new ReservationDto(reservation.getFlight().getFlightNumber(), null, null, null, 2, passengers);
     }
     
     
@@ -184,5 +231,25 @@ public class FlightService {
         json.add("flights", jsonArray);
         
         return gson.toJson(json);
+    }
+    
+    
+    /**
+     * Converts the badly formatted json into dto.
+     * 
+     * @Author: Nikolaj
+     * @Date: 6/12 2015
+     * 
+     * @param reservation
+     * @return 
+     */
+    private Reservation toEntity(ReservationDto reservation) {
+        List<Passenger> passengers = new ArrayList<>();
+
+        for (PassengerDto passenger : reservation.getPassengers()) {
+            passengers.add(new Passenger(passenger.getFirstName(),passenger.getLastName()));
+        }
+
+        return new Reservation(passengers);
     }
 }

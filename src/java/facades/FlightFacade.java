@@ -1,5 +1,8 @@
 package facades;
 
+import dao.AirportDAO;
+import dao.FlightDAO;
+import dao.ReservationDAO;
 import entity.Flight;
 import entity.Passenger;
 import entity.Reservation;
@@ -28,7 +31,7 @@ import static utility.WebScraper.getListOfFlights;
  * @author casper
  * @Date: 1/12 2015
  */
-public class FlightFacade extends DataManager<Flight, Integer> {
+public class FlightFacade {
 
     /**
      * Instance of self.
@@ -36,12 +39,18 @@ public class FlightFacade extends DataManager<Flight, Integer> {
      * Instantiated as null as default.
      */
     public static FlightFacade instance = null;
-
+    
+    FlightDAO flightDAO;
+    AirportDAO airportDAO;
+    ReservationDAO reservationDAO;
+    
     /**
      * Private constructor.
      */
     public FlightFacade() {
-
+        flightDAO = new FlightDAO();
+        airportDAO = new AirportDAO();
+        reservationDAO = new ReservationDAO();
     }
 
     /**
@@ -63,9 +72,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
     }
 
     public Flight getByFlightNumber(String flightNumber) {
-        return (Flight) manager.createNamedQuery("Flight.findFlightByFlightNumber")
-                .setParameter("flightNumber", flightNumber)
-                .getSingleResult();
+        return flightDAO.getByFlightNumber(flightNumber);
     }
 
     /**
@@ -92,12 +99,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         Date nextDay = dt.plus(Period.days(1)).toDate();
 
         // Now we want to check if we have any results in the database, by looking up
-        flights = manager.createNamedQuery("Flight.findFlights")
-                .setParameter("origin", from)
-                .setParameter("destination", to)
-                .setParameter("theDay", dt.toDate(), TemporalType.DATE)
-                .setParameter("theNextDay", nextDay, TemporalType.DATE)
-                .getResultList();
+        flights = flightDAO.findFlights(from, to, dt.toDate(), nextDay);
 
         // If no flights where found, we try to lookup the flights at Norweigian
         // and store them for the next time.
@@ -106,7 +108,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
             try {
                 flights = getFlightsFromNorweigian(from, to, dt);
                 System.out.println("Flights fetched: " + flights.size());
-                this.createFromList(flights);
+                flightDAO.createFromList(flights);
             } catch (ParseException | IOException e) {
                 throw new FlightException("An internal server error occured", Response.Status.INTERNAL_SERVER_ERROR, 4);
             }
@@ -143,11 +145,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
         Date nextDay = dt.plus(Period.days(1)).toDate();
 
         // Now we want to check if we have any results in the database, by looking up
-        flights = manager.createNamedQuery("Flight.findFlightsFrom")
-                .setParameter("origin", from)
-                .setParameter("theDay", dt.toDate(), TemporalType.DATE)
-                .setParameter("theNextDay", nextDay, TemporalType.DATE)
-                .getResultList();
+        flights = flightDAO.findFlights(from, dt.toDate(), nextDay);
 
         // If no flights where found, we try to lookup the flights at Norweigian
         if (flights == null || flights.size() < 1) {
@@ -161,7 +159,7 @@ public class FlightFacade extends DataManager<Flight, Integer> {
                 } while (destination.equals(from));
 
                 flights = getFlightsFromNorweigian(from, destination, dt);
-                this.createFromList(flights);
+                flightDAO.createFromList(flights);
 
             } catch (ParseException | IOException e) {
                 throw new FlightException("An internal server error occured", Response.Status.INTERNAL_SERVER_ERROR, 4);
@@ -174,6 +172,30 @@ public class FlightFacade extends DataManager<Flight, Integer> {
 
         // Return results
         return flights;
+    }
+    
+    /**
+     * 
+     * @param reservation
+     * @return
+     * @throws FlightException 
+     */
+    public Reservation saveReservation(Reservation reservation) throws FlightException {
+
+        if (reservation.getPassengers().size() <= 0) {
+            throw new FlightException("An error occured and we could not procedd with the reservation", Response.Status.INTERNAL_SERVER_ERROR, 4);
+        }
+
+        reservationDAO.create(reservation);
+
+        // We also store the reservation with each passenger.
+        for (Passenger passenger : reservation.getPassengers()) {
+            passenger.addReservation(reservation);
+        }
+
+        reservationDAO.update(reservation);
+
+        return reservation;
     }
 
     /**
