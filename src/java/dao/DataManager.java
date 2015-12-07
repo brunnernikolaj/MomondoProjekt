@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import deploy.DeploymentConfiguration;
@@ -14,8 +9,12 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
- *
- * @author casper
+ * Generic DAO class.
+ * 
+ * This class holds various methods for handling data between the 
+ * database and the system.
+ * 
+ * @author Casper Schultz
  */
 public abstract class DataManager<T, PK> {
     
@@ -31,7 +30,8 @@ public abstract class DataManager<T, PK> {
     public DataManager() {
         manager = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME).createEntityManager();
         transaction = manager.getTransaction();
-
+        
+        // We need this in order to use the generics. 
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityType = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
