@@ -97,8 +97,39 @@ public class AirportFacade {
             dao.createFromList(airports);
         }
     }
-
+    
+    
+    /**
+     * Returns a list of airports by cityname.
+     * 
+     * @Author: Casper Schultz
+     * @Date: 7/12 2015
+     * 
+     * @param           city start of city string
+     * @return          List of airports
+     * @throws FlightException 
+     */
     public List<Airport> getAirportsBycity(String city) throws FlightException {
         return dao.getAirportsByCity(city);
+    }
+    
+    
+    /**
+     * Validates that a city has an airport.
+     * 
+     * @Author: Casper Schultz
+     * @Date: 7/12 2015
+     * 
+     * @param       iata to validate as string
+     * @return      boolean true if valid / otherwise false
+     */
+    public Boolean validateAirport(String iata) {
+        
+        try {
+            dao.getAirportByIATA(iata);
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
     }
 }

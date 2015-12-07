@@ -7,6 +7,7 @@ package dao;
 
 import entity.Airport;
 import java.util.List;
+import javax.persistence.NoResultException;
 
 /**
  *

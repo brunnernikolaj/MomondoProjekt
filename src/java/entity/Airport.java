@@ -13,8 +13,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *
- * @author casper
+ * Airport entity.
+ * 
+ * @Author: Casper Schultz
  */
 @Entity
 @Table(name = "AIRPORTS")

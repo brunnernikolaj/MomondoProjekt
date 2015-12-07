@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import entity.Airport;
 import exceptions.FlightException;
 import exceptions.RestException;
@@ -53,6 +54,20 @@ public class AirportService {
         
         Airport airport = facade.getAirportByIATA(iata);
         return gson.toJson(airport);
+    }
+    
+    @GET
+    @Path("valid/{city}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String validateCity(@PathParam("city") String city) throws FlightException {
+        
+        if (city.length() < 1)
+            throw new FlightException("A minimum character length of 1 is required to fetch a list of citites", Response.Status.BAD_REQUEST, 4);
+        
+        JsonObject obj = new JsonObject();
+        obj.addProperty("valid", "" + facade.validateAirport(city));
+        
+        return gson.toJson(obj);
     }
     
     @GET
