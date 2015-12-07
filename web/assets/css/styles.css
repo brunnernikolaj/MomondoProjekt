@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(https://fonts.googleapis.com/css?family=Raleway:500);
-@import url(_mixin);
 body {
   font-family: "Open Sans", "Helvetica Neue", Tahoma, sans-serif;
   font-weight: 400; }
