@@ -29,7 +29,8 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "ng-autocomplete": "*"
+    "ng-autocomplete": "*",
+    "angular-toastr": "~1.6.0"
   },
   "keywords": []
 }
