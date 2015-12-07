@@ -471,3 +471,63 @@ h1, h2, h3, h4, h5 {
 		}
 	} // .panel-primary
 } // .loginForm
+
+.not_found{
+    margin-top: 50px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* AUTOCOMPLETE */
+
+.autocomplete{
+  width: 100%;
+  position: relative;
+  input {
+		font-size: 14px;
+		width: 100%;
+		padding:0.4em;
+		color: #555;
+		text-transform: uppercase;
+	}
+	ul{
+		padding-left:0;
+		position: absolute;
+		left: 0;
+		width: 100%;
+		border:1px solid rgba($primary-black, .5);
+		border-top:none;
+		z-index: 100;
+		max-height:280px;
+		overflow-y:scroll;
+	  li{
+		text-align: left; 
+		list-style:none;
+		width: 100%;
+		padding:0.4em;
+		background-color: $primary-white;
+		color: $primary-black;
+		&.active{
+			color:$primary-white;
+			background-color: $primary;
+		}
+		&.active .highlight {
+		  background: $pridark;
+		  color: $primary-white;
+		}
+	  }
+	}
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    text-transform: none;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   text-transform: none;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  text-transform: none;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   text-transform: none;
+}
