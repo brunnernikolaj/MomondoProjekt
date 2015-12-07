@@ -35,7 +35,7 @@ public class FlightDAO extends DataManager<Flight, Integer> {
     
     public List<Flight> findFlights(String from, Date date, Date nextDay) {
         // Now we want to check if we have any results in the database, by looking up
-        return this.getManager().createNamedQuery("Flight.findFlights")
+        return this.getManager().createNamedQuery("Flight.findFlightsFrom")
                 .setParameter("origin", from)
                 .setParameter("theDay", date, TemporalType.DATE)
                 .setParameter("theNextDay", nextDay, TemporalType.DATE)
