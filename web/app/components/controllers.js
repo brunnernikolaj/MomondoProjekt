@@ -73,7 +73,7 @@ angular.module('myApp.controllers', ['myApp.security'])
          * 
          * @returns {undefined}
          */
-        .controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', function ($scope, FlightFactoty, saver, AirportFactoty) {
+        .controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
                 $scope.priceSlider = {
                     min: 0,
                     max: 10,
@@ -162,6 +162,11 @@ angular.module('myApp.controllers', ['myApp.security'])
                 $scope.searchFlights = function () {
                     
                     var searchQuery = $scope.search;
+                    
+                    if (from == undefined || to == undefined || from == "" || to == "" || $scope.search == undefined || $scope.search.date == undefined || $scope.search.date == "") {
+                        toastr.error('Alle felter skal udfyldes', 'Fejl!');
+                        return;
+                    }
 
                     var date = new Date(searchQuery.date).toISOString();
 
