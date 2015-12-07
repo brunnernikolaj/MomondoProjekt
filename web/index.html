@@ -53,14 +53,14 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#/"><i class="fa fa-plane"></i></a></li>
-                        <li><a href="#/doc"><i class="fa fa-file-text-o"></i></a></li>
-                        <li><a href="#/searchresult"><i class="fa fa-search"></i> Result</a></li>
+                        <!-- <li><a href="#/doc"><i class="fa fa-file-text-o"></i></a></li>
+                        <li><a href="#/searchresult"><i class="fa fa-search"></i> Result</a></li> -->
                     </ul>
                     <div>
                         <ul class="nav navbar-nav navbar-right">
                             <li ng-show="ctrl.authenticated"><a href="#/">Hi {{ctrl.username}}</a></li>
                             <li ng-show="ctrl.authenticated"><a href="#/" ng-click="ctrl.doLogout()"><i class="fa fa-sign-out"> <i class="fa fa-user"></i></i></a></li> 
-                            <li ng-show="!ctrl.authenticated"><a href="#/login"><i class="fa fa-user"> </i><i class="fa fa-sign-in"></i></a></li>
+                            <li ng-show="!ctrl.authenticated"><a href="#/login"><i class="fa fa-user"> </i><!-- <i class="fa fa-sign-in"></i> --></a></li>
                         </ul>
                     </div>
                 </div>
