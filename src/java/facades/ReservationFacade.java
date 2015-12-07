@@ -12,6 +12,7 @@ import entity.Passenger;
 import entity.Reservation;
 import exceptions.FlightException;
 import java.io.IOException;
+import java.util.List;
 import javax.ws.rs.core.Response;
 import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
@@ -52,4 +53,6 @@ public class ReservationFacade extends DataManager<Reservation, Integer> {
         
         return resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", content).toObject();
     }
+    
+    
 }

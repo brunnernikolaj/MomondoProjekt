@@ -33,6 +33,11 @@ public class UserEntity {
     @CollectionTable(name = "USER_ROLES")
     List<String> roles = new ArrayList();
 
+    public UserEntity() {
+    }
+
+    
+    
     public UserEntity(String userName, String password) {
         this.userName = userName;
         this.password = password;

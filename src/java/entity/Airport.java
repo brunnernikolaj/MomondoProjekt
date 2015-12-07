@@ -46,6 +46,9 @@ public class Airport {
     @Column(name = "TIMEZONE")
     private String timezone;
 
+    public Airport() {
+    }
+    
     public int getId() {
         return id;
     }

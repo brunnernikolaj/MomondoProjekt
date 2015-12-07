@@ -163,20 +163,24 @@ angular.module('myApp.controllers', ['myApp.security'])
                     
                     var searchQuery = $scope.search;
                     
-                    if (from == undefined || to == undefined || from == "" || to == "" || $scope.search == undefined || $scope.search.date == undefined || $scope.search.date == "") {
+                    if (from == undefined || from == "" || $scope.search == undefined || $scope.search.date == undefined || $scope.search.date == "") {
                         toastr.error('', 'Alle felter skal udfyldes');
                         return;
                     }
 
                     var date = new Date(searchQuery.date).toISOString();
 
-                    if (searchQuery.to) {
+                    if (to) {
                         FlightFactoty.searchWithDestination(from, to, date, searchQuery.seats).then(unpackFlights);
                     } else {
                         FlightFactoty.searchWithNoDestination(from, date, searchQuery.seats).then(unpackFlights);
                     }
 
                 };
+
+                var showError = function (result){
+                    toastr.error("","en fejl skete");
+                }
 
                 //Function for unpacking resultdata from the server
                 var unpackFlights = function (result) {
@@ -212,7 +216,7 @@ angular.module('myApp.controllers', ['myApp.security'])
                     } else {
                         $scope.results = null;
                     }
-                }
+                };
             }]);
 
 

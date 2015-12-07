@@ -6,11 +6,15 @@
 package dao;
 
 import entity.Reservation;
+import java.util.List;
 
 /**
  *
  * @author casper
  */
 public class ReservationDAO extends DataManager<Reservation, Integer> {
-    
+    public List<Reservation> getAll(){
+        return manager.createNamedQuery("Reservation.findAllReservation")
+                .getResultList();
+    }
 }

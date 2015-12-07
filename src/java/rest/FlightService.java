@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -177,6 +179,8 @@ public class FlightService {
         Reservation reservation = toEntity(reservationDto);
         reservation.setFlight(facade.getByFlightNumber(reservationDto.getFlightID()));
 
+        reservation.setPrice(reservation.getFlight().getPrice());
+        
         return gson.toJson(toDto(facade.saveReservation(reservation)));
     }
     
@@ -218,8 +222,12 @@ public class FlightService {
     @Path("flightreservation")
     @Produces("application/json")
     public String getXml() throws EmailException {
-        MailService.sendMail();
-        return null;
+        List<ReservationDto> reservations = facade.getAllReservations()
+                .stream()
+                .map(x -> toDto(x))
+                .collect(Collectors.toList());
+        
+        return gson.toJson(reservations);
     }
     
     
@@ -239,7 +247,15 @@ public class FlightService {
             passengers.add(new PassengerDto(passenger.getFirstname(), passenger.getLastname()));
         }
 
-        return new ReservationDto(reservation.getFlight().getFlightNumber(), null, null, null, 2, passengers);
+        return new ReservationDto
+        (
+                reservation.getFlight().getFlightNumber(),
+                reservation.getReserveeName(),
+                reservation.getReserveeEmail(),
+                reservation.getReservePhone(),
+                reservation.getNumberOfSeats(),
+                passengers
+        );
     }
     
     
@@ -268,7 +284,7 @@ public class FlightService {
             obj.addProperty("origin", flight.getIataFrom());
             obj.addProperty("destination", flight.getIataTo());
             obj.addProperty("flightID", flight.getFlightNumber());
-            obj.addProperty("numberOfSeats", 2);
+            obj.addProperty("numberOfSeats", seats);
             obj.addProperty("traveltime", flight.getTravelTime());
             obj.addProperty("totalPrice", flight.getPrice().intValue() * seats);
             
@@ -306,6 +322,13 @@ public class FlightService {
             passengers.add(new Passenger(passenger.getFirstName(),passenger.getLastName()));
         }
 
-        return new Reservation(passengers);
+        return new Reservation
+        (
+                0, 
+                passengers, 
+                reservation.getReserveeName(), 
+                reservation.getReserveeEmail(), 
+                reservation.getReservePhone()
+        );
     }
 }
