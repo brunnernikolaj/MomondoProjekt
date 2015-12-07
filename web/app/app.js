@@ -50,10 +50,15 @@ angular.module('myApp', [
       controller: 'BookingCtrl'
     })
     .when('/', {
-        templateUrl: 'app/templates/frontpage.html',
-        controller: 'FrontpageCtrl',
-        controllerAs : 'forntpageCtrl'
+      templateUrl: 'app/templates/searchresult.html',
+      controller: 'SearchCtrl',
     })
+    // Make frontpage after Sprint 1, is over.
+    // .when('/', {
+    //     templateUrl: 'app/templates/frontpage.html',
+    //     controller: 'FrontpageCtrl',
+    //     controllerAs : 'forntpageCtrl'
+    // })
     .otherwise({redirectTo: '/'});
 }])
 
