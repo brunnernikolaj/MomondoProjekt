@@ -164,7 +164,7 @@ angular.module('myApp.controllers', ['myApp.security'])
                     var searchQuery = $scope.search;
                     
                     if (from == undefined || to == undefined || from == "" || to == "" || $scope.search == undefined || $scope.search.date == undefined || $scope.search.date == "") {
-                        toastr.error('Alle felter skal udfyldes', 'Fejl!');
+                        toastr.error('', 'Alle felter skal udfyldes');
                         return;
                     }
 
