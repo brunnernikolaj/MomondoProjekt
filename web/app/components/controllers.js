@@ -147,8 +147,6 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
          */
         $scope.updateCities = function (typed) {
             
-            
-            
             // We only want to fetch something, after theres atleast 3 letters
             if (typed.length > 2) {
                 AirportFactoty.getAirportsByCity(typed).then(function(res) {
@@ -183,8 +181,6 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
             }
             
             
-            
-            
             var date = new Date(searchQuery.date).toISOString();
             
             if (to) {
@@ -193,10 +189,6 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
                 FlightFactoty.searchWithNoDestination(from, date, searchQuery.seats).then(unpackFlights);
             }
         };
-
-        var showError = function (result){
-            toastr.error('Der skete en fejl');
-        }
 
         //Function for unpacking resultdata from the server
         var unpackFlights = function (result) {
