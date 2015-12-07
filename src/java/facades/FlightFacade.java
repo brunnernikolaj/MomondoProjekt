@@ -226,6 +226,9 @@ public class FlightFacade {
         return resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", content).toObject();
     }
     
+    public List<Reservation> getAllReservations(){
+        return reservationDAO.getAll();
+    }
 
     /**
      * Fetches flights from Norwegian.
