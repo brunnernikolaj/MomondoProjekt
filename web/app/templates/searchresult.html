@@ -87,7 +87,7 @@
                     <div class="clearfix departure">
                         <div class="row selskab">
                             <div class="col-xs-12">
-                                <span class="selskabsnavn"></span>
+                                <span class="selskabsnavn">{{flight.airline}}</span>
                             </div>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-2 company">
@@ -97,22 +97,22 @@
                             <h4>{{flight.origin}} {{flight.date| date:'HH:mm'}} <small></small></h4>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 traveltime">
-                            <h5 class="time">{{flight.traveltime}} m</h5>
+                            <h5 class="time">{{flight.traveltime | traveltime}}</h5>
                             <div class="timeline"></div>
                             <p>direkte</p>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-3 arrivalinfo">
-                            <h4>{{flight.endDate| date:'HH:mm'}} {{flight.destination}} <small>Aalborg</small></h4>
+                            <h4>{{flight.endDate| date:'HH:mm'}} {{flight.destination}} <small></small></h4>
                         </div>
                     </div><!-- /.row.departure -->
                 </div><!-- /.col-xs-12.col-sm-8 -->
                 <div class="col-xs-12 col-sm-3 pricearea">
-                    <p class="airline-heading">{{flight.airline}}</p>
+                    <!--<p class="airline-heading">{{flight.airline}}</p>-->
                     <div class="row prices">
                         <div class="col-xs-12 grouppassengers" ng-hide="flight.numberOfSeats <= 1">{{flight.totalPrice}} DKK <i class="fa fa-users"></i></div>
                         <div class="col-xs-12 singlepassenger">{{flight.totalPrice / flight.numberOfSeats}} DKK <i class="fa fa-user"></i></div>
                     </div>
-                    <a ng-click="selectFlight(flight)" href="#/booking"class="btn btn-success"><i class="fa fa-plus"></i> Book Nu</a>
+                    <a ng-click="selectFlight(flight)" href="#/booking" class="btn btn-success"><i class="fa fa-plus"></i> Book Nu</a>
                 </div>
             </div><!-- /.resultset -->
 
