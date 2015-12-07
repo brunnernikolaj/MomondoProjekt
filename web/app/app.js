@@ -10,16 +10,14 @@ var app = angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
   'autocomplete',
+  'toastr',
   'rzModule',
   'ui.bootstrap',
   'myApp.security',
   'myApp.view2',
   'myApp.view3',
   'myApp.filters',
-  'myApp.directives',
-  'myApp.factories',
-  'myApp.services',
-  'toastr'
+  'myApp.directives'
 ]);
 
 /**
@@ -27,7 +25,13 @@ var app = angular.module('myApp', [
  * 
  * @param {type} $routeProvider
  */
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+    
+    /**
+     * We add auth headers on every http request. See the authentication
+     * module for more info.
+     */
+    $httpProvider.interceptors.push('AuthInterceptor');
         
     $routeProvider
     .when('/login', {
@@ -61,15 +65,3 @@ app.config(['$routeProvider', function($routeProvider) {
     // })
     .otherwise({redirectTo: '/'});
 }]);
-
-/**
- * We add the filter for adding the authentication
- * header tag along with the http requests.
- * 
- * @param {type} $httpProvider
- */
-app.config(function ($httpProvider) {
-   $httpProvider.interceptors.push('AuthInterceptor');
-});
-
-

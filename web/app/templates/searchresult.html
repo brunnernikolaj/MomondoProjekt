@@ -2,10 +2,10 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
-                <form class="form-horizontal" ng-submit="searchFlights()">
+                <form class="form-horizontal">
                     <div class="col-sm-3">
                         <label class="control-label">Afrejse</label>
-                        <div class="input-group">
+                        <div class="input-group" ng-class="{ 'has-error': invalidFrom }">
                             <span class="input-group-addon"><i class="fa fa-plane"></i></span>
                             <autocomplete attr-placeholder="Origin" data="cities" on-select="pickorigin" on-type="updateCities" required></autocomplete>
                         </div>
@@ -21,7 +21,7 @@
                         <label class="control-label">Dato</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" class="form-control" ng-model="search.date" placeholder="2/12/2015" required>
+                            <input type="date" class="form-control" ng-model="search.date" placeholder="2/12/2015">
                         </div>
                     </div> 
 
@@ -29,12 +29,12 @@
                         <label class="control-label">Passagerer</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="number" class="form-control" ng-model="search.seats" name="adults" min="0" value="0" required>
+                            <input type="number" class="form-control" ng-model="search.seats" name="adults" min="0" value="0">
                         </div>
                     </div>
                     <div class="col-xs-12">
-                        <div class="input-group col-sm-3 formbutton" ng-click="searchFlights()">
-                            <button type="submit" id="search"  class="btn btn-primary col-xs-12"><i class="fa fa-search"></i> Find Fly</button>
+                        <div class="input-group col-sm-3 formbutton">
+                            <button type="submit" ng-click="searchFlights()" id="search"  class="btn btn-primary col-xs-12"><i class="fa fa-search"></i> Find Fly</button>
                         </div>
                     </div>
                 </form>
@@ -49,7 +49,7 @@
         <!-- SIDEBAR FOR FILTERS -->
         <div class="col-sm-4 col-md-3 filters">
             <div class="panel panel-default">
-                <div class="panel-heading">Pricerange <small>- DKK</small></div>
+                <div class="panel-heading">Priser <small>- EUR</small></div>
                 <div class="panel-body">
                     <div>
                         <rzslider
@@ -61,7 +61,7 @@
             </div><!-- /pricerange panel -->
 
             <div class="panel panel-default">
-                <div class="panel-heading">Traveltime <small>- Minutes</small></div>
+                <div class="panel-heading">Rejsetid <small>- Minutter</small></div>
                 <div class="panel-body">
                     <div>
                         <div>
@@ -82,7 +82,7 @@
         <!-- RESULTS FROM SEARCH -->
         <div class="col-sm-8 col-md-9 results">
 
-            <div class="row resultset" ng-repeat="flight in results | filter: filterSearch(priceSlider.min,priceSlider.max,durationSlider.value)">
+            <div class="row resultset animated fadeIn" ng-repeat="flight in results | filter: filterSearch(priceSlider.min,priceSlider.max,durationSlider.value)">
                 <div class="col-xs-12 col-sm-9">
                     <div class="clearfix departure">
                         <div class="row selskab">
@@ -94,7 +94,7 @@
                             <img src="http://placehold.it/64x64" class="img-responsive">
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-3 departureinfo">
-                            <h4>{{flight.origin}} {{flight.date| date:'HH:mm'}} <small></small></h4>
+                            <h4>{{flight.origin}} {{flight.date| date:'HH:mm'}} <small>{{flight.originCity}}</small></h4>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 traveltime">
                             <h5 class="time">{{flight.traveltime | traveltime}}</h5>
@@ -102,15 +102,15 @@
                             <p>direkte</p>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-3 arrivalinfo">
-                            <h4>{{flight.endDate| date:'HH:mm'}} {{flight.destination}} <small></small></h4>
+                            <h4>{{flight.endDate| date:'HH:mm'}} {{flight.destination}} <small>{{flight.destinationCity}}</small></h4>
                         </div>
                     </div><!-- /.row.departure -->
                 </div><!-- /.col-xs-12.col-sm-8 -->
                 <div class="col-xs-12 col-sm-3 pricearea">
                     <!--<p class="airline-heading">{{flight.airline}}</p>-->
                     <div class="row prices">
-                        <div class="col-xs-12 grouppassengers" ng-hide="flight.numberOfSeats <= 1">{{flight.totalPrice}} DKK <i class="fa fa-users"></i></div>
-                        <div class="col-xs-12 singlepassenger">{{flight.totalPrice / flight.numberOfSeats}} DKK <i class="fa fa-user"></i></div>
+                        <div class="col-xs-12 grouppassengers" ng-hide="flight.numberOfSeats <= 1">{{flight.totalPrice}} EUR <i class="fa fa-users"></i></div>
+                        <div class="col-xs-12 singlepassenger">{{flight.totalPrice / flight.numberOfSeats}} EUR <i class="fa fa-user"></i></div>
                     </div>
                     <a ng-click="selectFlight(flight)" href="#/booking" class="btn btn-success"><i class="fa fa-plus"></i> Book Nu</a>
                 </div>

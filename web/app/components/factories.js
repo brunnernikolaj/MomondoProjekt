@@ -1,104 +1,94 @@
 'use strict';
 
 /**
- * Flight website angular factories.
+ * FlightFactory
  * 
- * @param Modulename
- * @param Module dependencies
+ * @param angular http
+ * @returns Object containing flight factory methods
  */
-angular.module('myApp.factories', [])
+app.factory('FlightFactoty', ["$http", function (http) {
 
-        /**
-         * FlightFactory
-         * 
-         * @param angular http
-         * @returns Object containing flight factory methods
-         */
-        .factory('FlightFactoty', ["$http", function (http) {
+        var flight = {};
 
-                var flight = {};
+        flight.searchWithNoDestination = function (from, time, seats) {
+            var url = "api/search/" + from + "/" + time + "/" + seats;
 
-                flight.searchWithNoDestination = function (from, time, seats) {
-                    var url = "api/search/" + from + "/" + time + "/" + seats;
+            return http.get(url);
+        };
 
-                    return http.get(url);
-                };
+        flight.searchWithDestination = function (from, to, time, seats) {
+            var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
 
-                flight.searchWithDestination = function (from, to, time, seats) {
-                    var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
+            return http.get(url);
+        };
 
-                    return http.get(url);
-                };
+        return flight;
+    }]);
 
-                flight.reservateTickets = function (ticketRequest) {
-                    var url = "api/flightreservation";
-                    return http.post(url, ticketRequest);
-                };
+app.factory('ReservationFactoty', ["$http", function (http) {
 
-                flight.reservateExternalTickets = function (ticketRequest) {
-                    var url = "api/flightreservation/external";
-                    return http.post(url, ticketRequest);
-                };
+        var reservation = {};
 
-                return flight;
-            }])
+        reservation.reservateTickets = function (ticketRequest) {
+            var url = "api/flightreservation";
+            return http.post(url, ticketRequest);
+        };
 
-        .factory('ReservationFactoty', ["$http", function (http) {
-                this.reservateTickets = function (ticketRequest) {
-                    var url = "api/flightreservation";
-                    return http.post(url, ticketRequest);
-                };
+        reservation.reservateExternalTickets = function (ticketRequest) {
+            var url = "api/flightreservation/external";
+            return http.post(url, ticketRequest);
+        };
 
-                this.reservateExternalTickets = function (ticketRequest) {
-                    var url = "api/flightreservation/external";
-                    return http.post(url, ticketRequest);
-                };
+        return reservation;
+    }]);
 
-                return this;
-            }])
+/**
+ * Airport Factory.
+ * 
+ * @Author: Casper Schultz
+ * @Date: 5/12 2015
+ * 
+ * @param angular $http 
+ * @returns Object containing methods for alking with the Airport API
+ */
+app.factory('AirportFactoty', ["$http", function (http) {
 
-        /**
-         * Airport Factory.
-         * 
-         * @Author: Casper Schultz
-         * @Date: 5/12 2015
-         * 
-         * @param angular $http 
-         * @returns Object containing methods for alking with the Airport API
-         */
-        .factory('AirportFactoty', ["$http", function (http) {
+        var airport = {};
 
-                var airport = {};
-
-                /**
-                 * 
-                 * @param String name       The name of the aiprot to lookup
-                 * @returns                 Promise / airport objects.
-                 */
-                airport.getAirportsByName = function (name) {
-                    var url = "api/airport/city/" + name;
-                    return http.get(url);
-                }
-
-                return airport;
-            }])
+        airport.getAirportsByCity = function (name) {
+            var url = "api/airport/city/" + name;
+            return http.get(url);
+        }
         
-        /**
-         * Stores flightdata temporary.
-         * 
-         * @returns {data}
-         */
-        .factory('flightSaver', function () {
-            
-            var savedData = {}
-            
-            savedData.set = function(data) {
-                savedData = data;
-            }
-            
-            savedData.get = function() {
-                return savedData;
-            }
+        airport.getAirportByIATA = function(iata) {
+            var url = "api/airport/" + iata;
+            return http.get(url);
+        } 
 
-            return savedData;
-        });
+        airport.isValidAirport = function (city) {
+            var url = "api/airport/valid/" + city;
+            return http.get(url);
+        }
+
+        return airport;
+    }]);
+
+/**
+ * Stores flightdata temporary.
+ * 
+ * @returns {data}
+ */
+app.factory('flightSaver', function () {
+
+    var savedData = {}
+
+    savedData.set = function (data) {
+        savedData = data;
+    }
+
+    savedData.get = function () {
+        return savedData;
+    }
+
+    return savedData;
+});

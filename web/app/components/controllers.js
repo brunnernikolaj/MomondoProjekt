@@ -76,37 +76,39 @@ app.controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty', fun
  * @returns {undefined}
  */
 app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
-        $scope.priceSlider = {
-            min: 0,
-            max: 10,
-            options: {
-                floor: 0,
-                ceil: 0
-            }
-        };
+        
+    var from, to;
+    $scope.cities = [];
+    $scope.airports = undefined;
 
-        $scope.durationSlider = {
-            value: 200,
-            options: {
-                floor: 0,
-                ceil: 450,
-                step: 5,
-            }
-        };
-
-        $scope.filterSearch = function (min, max, duration) {
-            return function (item) {
-                if (item['traveltime'] > duration)
-                    return false;
-
-                return item['totalPrice'] >= min && item['totalPrice'] <= max;
-            }
+    $scope.priceSlider = {
+        min: 0,
+        max: 10,
+        options: {
+            floor: 0,
+            ceil: 0
         }
+    };
 
-        var from, to;
-        $scope.cities = [];
-        $scope.airports = undefined;
+    $scope.durationSlider = {
+        value: 200,
+        options: {
+            floor: 0,
+            ceil: 450,
+            step: 5,
+        }
+    };
 
+      $scope.filterSearch = function (min, max, duration) {
+        return function (item) {
+            if (item['traveltime'] > duration)
+                return false;
+
+            return item['totalPrice'] >= min && item['totalPrice'] <= max;
+        }
+    }  
+        
+        
         $scope.pickorigin = function(selected) {
 
             var airport = selected.split(",");
@@ -129,7 +131,14 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
                 }
             });
         }
+        
+        $scope.invalidFrom = false;
+        $scope.test = function() {
+            $scope.invalidFrom = false;
+            console.log("test")
+        }
 
+        
         /**
          * Fetches a list of airports that match the given name.
          * 
@@ -137,10 +146,12 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
          * @returns {undefined}
          */
         $scope.updateCities = function (typed) {
-
+            
+            
+            
             // We only want to fetch something, after theres atleast 3 letters
             if (typed.length > 2) {
-                AirportFactoty.getAirportsByName(typed).then(function(res) {
+                AirportFactoty.getAirportsByCity(typed).then(function(res) {
 
                     // Used to display nice names
                     $scope.cities = [];
@@ -164,24 +175,27 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
         $scope.searchFlights = function () {
 
             var searchQuery = $scope.search;
-
+            
+            // Basic checking for empty values
             if (from == undefined || from == "" || $scope.search == undefined || $scope.search.date == undefined || $scope.search.date == "") {
-                toastr.error('', 'Alle felter skal udfyldes');
+                toastr.error('Alle felter skal udfyldes');
                 return;
             }
-
+            
+            
+            
+            
             var date = new Date(searchQuery.date).toISOString();
-
+            
             if (to) {
                 FlightFactoty.searchWithDestination(from, to, date, searchQuery.seats).then(unpackFlights);
             } else {
                 FlightFactoty.searchWithNoDestination(from, date, searchQuery.seats).then(unpackFlights);
             }
-
         };
 
         var showError = function (result){
-            toastr.error("","en fejl skete");
+            toastr.error('Der skete en fejl');
         }
 
         //Function for unpacking resultdata from the server
@@ -210,11 +224,56 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
                     for (var j = 0; j < current.length; ++j)
                         flattened.push(current[j]);
                 }
-
+                
+                // Filter the results
                 $scope.priceSlider.options.ceil = maxValue;
                 $scope.priceSlider.max = maxValue;
-
+                
+                // We return the result here, then append the names once they are fetched
                 $scope.results = flattened;
+                
+                // Airports we should fetch
+                var airportCodes = [];
+                
+                // First we gotta loop through and get all the different iata codes
+                // and prepare the flight object for the new data.
+                for (var i = 0, l = flattened.length;  i < l; i++) {
+                    
+                    // Prepare for populating later
+                    flattened[i].originCity = "";
+                    flattened[i].originName = "";
+                    flattened[i].destinationCity = "";
+                    flattened[i].destinationName = "";
+                    
+                    if (airportCodes.indexOf(flattened[i].origin) == -1) {
+                        airportCodes.push(flattened[i].origin);
+                    }
+                    
+                    if (airportCodes.indexOf(flattened[i].destination) == -1) {
+                        airportCodes.push(flattened[i].destination);
+                    }
+                }
+                
+                // Now we fetch the airport names.
+                for (var c = 0, d = airportCodes.length; c < d; c++) {
+                    AirportFactoty.getAirportByIATA(airportCodes[c]).then(function(res) {
+                        
+                        for (var j = 0; j < flattened.length; j++) {
+                            if (flattened[j].origin == res.data.IATAcode) {
+                                flattened[j].originName = res.data.name;
+                                flattened[j].originCity = res.data.city;
+                            }
+                            
+                            if (flattened[j].destination == res.data.IATAcode) {
+                                flattened[j].destinationName = res.data.name;
+                                flattened[j].destinationCity = res.data.city;
+                            }
+                        }
+                    });
+                }
+                
+                
+                
             } else {
                 $scope.results = null;
             }
