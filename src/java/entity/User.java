@@ -7,17 +7,20 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * User entity.
+ * 
+ * @Author: Casper Schultz
+ */
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {
     
     @Column(name = "PASSWORD")
-    private String password;  //Pleeeeease dont store me in plain text
+    private String password; 
     
     @Id
     @Column(name = "USERNAME")
