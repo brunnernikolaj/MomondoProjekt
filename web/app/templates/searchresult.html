@@ -45,9 +45,16 @@
 
 <div class="container">
     <div class="row">
-
+        
+        <div class="col-xs-12" ng-hide="results">
+            <div class="not_found">
+                <p>Der blev ikke fundet nogle afgange.</p>
+                <p>Prøv venligst igen.</p>
+            </div>
+        </div>
+        
         <!-- SIDEBAR FOR FILTERS -->
-        <div class="col-sm-4 col-md-3 filters">
+        <div class="col-sm-4 col-md-3 filters" ng-hide="results == null">
             <div class="panel panel-default">
                 <div class="panel-heading">Priser <small>- EUR</small></div>
                 <div class="panel-body">
@@ -75,10 +82,7 @@
 
         </div><!-- /.filters -->
         <!-- END /SIDEBAR FOR FILTERS -->
-        <div class="not_found" ng-hide="results">
-            <p>Der blev ikke fundet nogle afgange.</p>
-            <p>Prøv venligst igen.</p>
-        </div>
+
         <!-- RESULTS FROM SEARCH -->
         <div class="col-sm-8 col-md-9 results">
 
