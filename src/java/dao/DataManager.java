@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package facades;
+package dao;
 
 import deploy.DeploymentConfiguration;
 import java.lang.reflect.ParameterizedType;
@@ -17,10 +17,10 @@ import javax.persistence.Query;
  *
  * @author casper
  */
-public class DataManager<T, PK> {
+public abstract class DataManager<T, PK> {
     
-    EntityManager manager;
-    EntityTransaction transaction;
+    private EntityManager manager;
+    private EntityTransaction transaction;
     
     
     /**
@@ -34,6 +34,14 @@ public class DataManager<T, PK> {
 
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityType = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+    }
+    
+    public EntityManager getManager() {
+        return this.manager;
+    }
+    
+    public EntityTransaction getTransaction() {
+        return this.transaction;
     }
     
     /**
@@ -81,7 +89,7 @@ public class DataManager<T, PK> {
      * @param id    Id of the given entity to lookup
      * @return      The entity if found / otherwise null
      */
-    public T find(PK id){
+    public T find(PK id) {
         T entity = manager.find(entityType, id);
         
         if(entity != null){

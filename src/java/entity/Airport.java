@@ -19,7 +19,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AIRPORTS")
 @NamedQueries({
-    @NamedQuery(name = "Airport.findAirportByIATA", query = "SELECT p FROM Airport p WHERE p.IATAcode = :IATAcode")})
+    @NamedQuery(name = "Airport.findAirportByIATA", query = "SELECT p FROM Airport p WHERE p.IATAcode = :IATAcode"),
+    @NamedQuery(name = "Airport.findAirportByCity", query = "SELECT p FROM Airport p WHERE p.city = :city"),
+    @NamedQuery(name = "Airport.findAirportsByCity", query = "SELECT p FROM Airport p WHERE p.city LIKE :city")})
 public class Airport {
     
     @Id

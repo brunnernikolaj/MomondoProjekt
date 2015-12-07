@@ -1,7 +1,7 @@
 package facades;
 
+import dao.AirportDAO;
 import entity.Airport;
-import exceptions.FlightException;
 import exceptions.RestException;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -16,9 +16,10 @@ import utility.AirportScraper;
  * 
  * @author casper
  */
-public class AirportFacade extends DataManager<Airport, Integer> {
+public class AirportFacade {
     
     boolean airportsFetched = false;
+    AirportDAO dao;
     
     /**
      * Airport instance.
@@ -34,6 +35,7 @@ public class AirportFacade extends DataManager<Airport, Integer> {
      * @Date: 2/12 2015
      */
     private AirportFacade() {
+        dao = new AirportDAO();
         this.saveAirports();
     }
     
@@ -68,13 +70,7 @@ public class AirportFacade extends DataManager<Airport, Integer> {
     public Airport getAirportByIATA(String IATA) throws RestException {
         
         try {
-            
-            Airport airport = (Airport) manager.createNamedQuery("Airport.findAirportByIATA")
-            .setParameter("IATAcode", IATA)
-            .getSingleResult();
-            
-            return airport;
-            
+            return dao.getAirportByIATA(IATA);
         } catch (NoResultException e) {
             throw new RestException("We do not suply flights to the given IATA code", Response.Status.NO_CONTENT);
         }
@@ -93,13 +89,20 @@ public class AirportFacade extends DataManager<Airport, Integer> {
     private void saveAirports() {
         
         try {
-            manager.createNamedQuery("Airport.findAirportByIATA")
-            .setParameter("IATAcode", "CPH")
-            .getSingleResult();
+            dao.getAirportByIATA("CPH");
         } catch (NoResultException e) {
-            deleteAll("AIRPORTS");
+             dao.deleteAll("AIRPORTS");
             List<Airport> airports = AirportScraper.fetchAiportData();
-            createFromList(airports);
+            dao.createFromList(airports);
+        }
+    }
+
+    public List<Airport> getAirportsBycity(String city) throws RestException {
+        
+        try {
+            return dao.getAirportsByCity(city);
+        } catch (NoResultException e) {
+            throw new RestException("No airport in the given city was found", Response.Status.NO_CONTENT);
         }
     }
 }
