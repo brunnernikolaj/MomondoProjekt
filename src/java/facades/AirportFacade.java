@@ -2,6 +2,7 @@ package facades;
 
 import dao.AirportDAO;
 import entity.Airport;
+import exceptions.FlightException;
 import exceptions.RestException;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -97,12 +98,7 @@ public class AirportFacade {
         }
     }
 
-    public List<Airport> getAirportsBycity(String city) throws RestException {
-        
-        try {
-            return dao.getAirportsByCity(city);
-        } catch (NoResultException e) {
-            throw new RestException("No airport in the given city was found", Response.Status.NO_CONTENT);
-        }
+    public List<Airport> getAirportsBycity(String city) throws FlightException {
+        return dao.getAirportsByCity(city);
     }
 }
