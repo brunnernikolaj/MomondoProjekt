@@ -52,7 +52,9 @@ public class SearchEngine {
 
             //Create a json array containing all airlines and associated flights
             for (Future<JSONObject> flightList : tasks) {
-                flightsInfo.put(flightList.get());
+                JSONObject obj = flightList.get();
+                if (obj != null)
+                    flightsInfo.put(obj);
             }
 
             return flightsInfo;
