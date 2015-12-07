@@ -15,8 +15,6 @@ angular.module('myApp.filters', [])
             var m = (input - (h*60)); // træk timer fra minuttal
 
             var time = h + 't ' + m + 'm';
-            console.log(input);
-            console.log(time);
             return time;
         };
     });
