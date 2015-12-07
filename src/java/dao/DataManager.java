@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public abstract class DataManager<T, PK> {
     
     protected EntityManager manager;
-    private EntityTransaction transaction;
+    protected EntityTransaction transaction;
     
     
     /**
