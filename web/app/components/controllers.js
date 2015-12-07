@@ -56,7 +56,12 @@ angular.module('myApp.controllers', ['myApp.security'])
                 $scope.reserveTickets = function () {
                     $scope.reservation.flightID = $scope.flight.flightID;
                     $scope.reservation.numberOfSeats = $scope.flight.numberOfSeats;
-                    ReservationFactoty.reservateTickets($scope.reservation);                     
+                    
+                    if ($scope.flight.airline === "Just Fly"){
+                        ReservationFactoty.reservateTickets($scope.reservation)
+                    } else {
+                        ReservationFactoty.reservateExternalTickets($scope.reservation)
+                    }                    
                 };
             }])
 

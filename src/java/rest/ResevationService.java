@@ -14,6 +14,7 @@ import entity.Reservation;
 import exceptions.FlightException;
 import facades.FlightFacade;
 import facades.ReservationFacade;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -27,6 +28,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.mail.EmailException;
+import us.monoid.json.JSONException;
 import utility.MailService;
 
 /**
@@ -72,6 +74,16 @@ public class ResevationService {
         reservation.setFlight(flightFacade.getByFlightNumber(reservationDto.getFlightID()));
 
         return gson.toJson(toDto(reservationFacade.saveReservation(reservation)));
+    }
+    
+    @POST
+    @Path("/external")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String flightReservationExternal(String json) throws FlightException, IOException, JSONException {
+
+        ReservationDto reservationDto = gson.fromJson(json, ReservationDto.class);
+
+        return reservationFacade.reserveExternal(reservationDto).toString();
     }
 
     private ReservationDto toDto(Reservation reservation) {

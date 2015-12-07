@@ -37,7 +37,13 @@ angular.module('myApp.factories', [])
 
             .factory('ReservationFactoty', ["$http", function (http) {
                 this.reservateTickets = function (ticketRequest) {
-                    var url = "api/flightreservation/";
+                    var url = "api/flightreservation";
+
+                    return http.post(url,ticketRequest);
+                };
+                
+                this.reservateExternalTickets = function (ticketRequest) {
+                    var url = "api/flightreservation/external";
 
                     return http.post(url,ticketRequest);
                 };

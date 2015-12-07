@@ -16,7 +16,7 @@ public class ReservationDto {
     
     private String ReserveeName;
     private String ReserveeEmail;
-    private String ReserveePhone;
+    private String ReservePhone;
     
     private int numberOfSeats;
     
@@ -26,7 +26,7 @@ public class ReservationDto {
         this.flightID = flightId;
         this.ReserveeName = ReserveeName;
         this.ReserveeEmail = ReserveeEmail;
-        this.ReserveePhone = ReserveePhone;
+        this.ReservePhone = ReserveePhone;
         this.numberOfSeats = numberOfSeats;
         this.Passengers = Passengers;
     }
@@ -51,16 +51,16 @@ public class ReservationDto {
         return ReserveeEmail;
     }
 
-    public void setReserveeEmail(String ReserveeEmail) {
-        this.ReserveeEmail = ReserveeEmail;
+    public void setReserveeEmail(String ReserveEmail) {
+        this.ReserveeEmail = ReserveEmail;
     }
 
-    public String getReserveePhone() {
-        return ReserveePhone;
+    public String getReservePhone() {
+        return ReservePhone;
     }
 
-    public void setReserveePhone(String ReserveePhone) {
-        this.ReserveePhone = ReserveePhone;
+    public void setReservePhone(String ReservePhone) {
+        this.ReservePhone = ReservePhone;
     }
 
     public int getNumberOfSeats() {

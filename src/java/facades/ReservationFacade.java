@@ -5,11 +5,19 @@
  */
 package facades;
 
+import com.google.gson.Gson;
+import dtos.ReservationDto;
 import entity.Passenger;
 import entity.Reservation;
 import exceptions.FlightException;
+import java.io.IOException;
 import javax.ws.rs.core.Response;
-
+import us.monoid.json.JSONException;
+import us.monoid.json.JSONObject;
+import us.monoid.web.Content;
+import us.monoid.web.FormData;
+import us.monoid.web.Resty;
+import static us.monoid.web.Resty.*;
 /**
  *
  * @author Nikolaj
@@ -32,5 +40,15 @@ public class ReservationFacade extends DataManager<Reservation, Integer> {
         update(reservation);
 
         return reservation;
+    }
+    
+    public JSONObject reserveExternal(ReservationDto reservation) throws IOException, JSONException{
+        Resty resty = new Resty();
+        
+        String lol = new Gson().toJson(reservation);
+        
+        Content content = new Content("application/json",lol.getBytes());
+        
+        return resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", content).toObject();
     }
 }
