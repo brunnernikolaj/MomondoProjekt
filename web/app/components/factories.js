@@ -1,92 +1,104 @@
 'use strict';
 
-/* Place your global Factory-service in this file */
-
+/**
+ * Flight website angular factories.
+ * 
+ * @param Modulename
+ * @param Module dependencies
+ */
 angular.module('myApp.factories', [])
 
-        .factory('InfoFactory', function () {
-            var info = "Hello World from a Factory";
-            var getInfo = function getInfo() {
-                return info;
-            };
-            return {
-                getInfo: getInfo
-            };
-        })
-
-
+        /**
+         * FlightFactory
+         * 
+         * @param angular http
+         * @returns Object containing flight factory methods
+         */
         .factory('FlightFactoty', ["$http", function (http) {
 
-                var search = {};
+                var flight = {};
 
-                search.searchWithNoDestination = function (from, time, seats) {
+                flight.searchWithNoDestination = function (from, time, seats) {
                     var url = "api/search/" + from + "/" + time + "/" + seats;
 
                     return http.get(url);
                 };
 
-                search.searchWithDestination = function (from, to, time, seats) {
+                flight.searchWithDestination = function (from, to, time, seats) {
                     var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
 
                     return http.get(url);
                 };
 
+                flight.reservateTickets = function (ticketRequest) {
+                    var url = "api/flightreservation";
+                    return http.post(url, ticketRequest);
+                };
 
-                return search;
+                flight.reservateExternalTickets = function (ticketRequest) {
+                    var url = "api/flightreservation/external";
+                    return http.post(url, ticketRequest);
+                };
+
+                return flight;
             }])
 
-            .factory('ReservationFactoty', ["$http", function (http) {
+        .factory('ReservationFactoty', ["$http", function (http) {
                 this.reservateTickets = function (ticketRequest) {
                     var url = "api/flightreservation";
-
-                    return http.post(url,ticketRequest);
+                    return http.post(url, ticketRequest);
                 };
-                
+
                 this.reservateExternalTickets = function (ticketRequest) {
                     var url = "api/flightreservation/external";
-
-                    return http.post(url,ticketRequest);
+                    return http.post(url, ticketRequest);
                 };
 
                 return this;
             }])
-        
+
+        /**
+         * Airport Factory.
+         * 
+         * @Author: Casper Schultz
+         * @Date: 5/12 2015
+         * 
+         * @param angular $http 
+         * @returns Object containing methods for alking with the Airport API
+         */
         .factory('AirportFactoty', ["$http", function (http) {
 
-                var airport = {
-                    airports: undefined
-                };
-                    
-                airport.getAirportsByName = function(name) {
+                var airport = {};
+
+                /**
+                 * 
+                 * @param String name       The name of the aiprot to lookup
+                 * @returns                 Promise / airport objects.
+                 */
+                airport.getAirportsByName = function (name) {
                     var url = "api/airport/city/" + name;
                     return http.get(url);
                 }
 
                 return airport;
             }])
-
-            .factory('ReservationFactoty', ["$http", function (http) {
-                this.reservateTickets = function (ticketRequest) {
-                    var url = "api/flightreservation/";
-
-                    return http.post(url,ticketRequest);
-                };
-
-                return this;
-            }])
-            
+        
+        /**
+         * Stores flightdata temporary.
+         * 
+         * @returns {data}
+         */
         .factory('flightSaver', function () {
+            
             var savedData = {}
-            function set(data) {
+            
+            savedData.set = function(data) {
                 savedData = data;
             }
-            function get() {
+            
+            savedData.get = function() {
                 return savedData;
             }
 
-            return {
-                set: set,
-                get: get
-            }
-
+            return savedData;
         });
