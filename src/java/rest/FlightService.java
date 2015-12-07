@@ -24,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -38,7 +40,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import org.apache.commons.mail.EmailException;
 import org.joda.time.DateTime;
+import us.monoid.json.JSONException;
+import utility.MailService;
 import utility.NorweigianDestinations;
 
 /**
@@ -174,6 +179,49 @@ public class FlightService {
 
         return gson.toJson(toDto(facade.saveReservation(reservation)));
     }
+    
+    
+    /**
+     * Reserves a ticket at an external company.
+     * 
+     * @Author: Nikolaj
+     * @Date: 6/12 2015
+     * 
+     * @param json                  Reservation as json string
+     * @return                      The reserved flight as a Json String
+     * @throws FlightException  
+     */
+    @POST
+    @Path("flightreservation/external")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String flightReservationExternal(String json) throws FlightException {
+
+        try {
+            ReservationDto reservationDto = gson.fromJson(json, ReservationDto.class);
+            return facade.reserveExternal(reservationDto).toString();
+        } catch (IOException | JSONException ex) {
+            Logger.getLogger(FlightService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new FlightException("An unknown servererror occured.", Response.Status.INTERNAL_SERVER_ERROR, 4);
+        } 
+    }
+    
+    
+    /**
+     * Not sure what this is? @TODO Nikolaj??
+     * 
+     * Author: Nikolaj
+     * 
+     * @return                      Null
+     * @throws EmailException 
+     */
+    @GET
+    @Path("flightreservation")
+    @Produces("application/json")
+    public String getXml() throws EmailException {
+        MailService.sendMail();
+        return null;
+    }
+    
     
     /**
      * Converts a reservation to DTO.

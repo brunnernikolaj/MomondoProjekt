@@ -36,7 +36,7 @@ import utility.MailService;
  *
  * @author Nikolaj
  */
-@Path("flightreservation")
+@Path("unusedflightstuff")
 public class ResevationService {
 
     @Context

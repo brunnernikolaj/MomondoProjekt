@@ -1,8 +1,10 @@
 package facades;
 
+import com.google.gson.Gson;
 import dao.AirportDAO;
 import dao.FlightDAO;
 import dao.ReservationDAO;
+import dtos.ReservationDto;
 import entity.Flight;
 import entity.Passenger;
 import entity.Reservation;
@@ -16,6 +18,10 @@ import javax.persistence.TemporalType;
 import javax.ws.rs.core.Response;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import us.monoid.json.JSONException;
+import us.monoid.json.JSONObject;
+import us.monoid.web.Content;
+import us.monoid.web.Resty;
 import utility.NorweigianDestinations;
 import static utility.WebScraper.getListOfFlights;
 
@@ -197,6 +203,29 @@ public class FlightFacade {
 
         return reservation;
     }
+    
+    
+    /**
+     * Reserves a ticket at an external flight company.
+     * 
+     * @Author: Nikolaj
+     * @Date: 6/12 2015
+     * 
+     * @param reservation           Reservation DTO
+     * @return
+     * @throws IOException
+     * @throws JSONException 
+     */
+    public JSONObject reserveExternal(ReservationDto reservation) throws IOException, JSONException{
+        Resty resty = new Resty();
+        
+        String lol = new Gson().toJson(reservation);
+        
+        Content content = new Content("application/json",lol.getBytes());
+        
+        return resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", content).toObject();
+    }
+    
 
     /**
      * Fetches flights from Norwegian.
