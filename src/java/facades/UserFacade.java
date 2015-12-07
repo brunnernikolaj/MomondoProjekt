@@ -1,7 +1,7 @@
 package facades;
 
 import dao.UserDAO;
-import entity.UserEntity;
+import entity.User;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
@@ -16,15 +16,15 @@ public class UserFacade {
 
         if (dao.find("user") == null) {
             //Test Users
-            UserEntity user = new UserEntity("user", "test");
+            User user = new User("user", "test");
             user.AddRole("User");
             dao.create(user);
 
-            UserEntity admin = new UserEntity("admin", "test");
+            User admin = new User("admin", "test");
             admin.AddRole("Admin");
             dao.create(admin);
 
-            UserEntity both = new UserEntity("user_admin", "test");
+            User both = new User("user_admin", "test");
             both.AddRole("User");
             both.AddRole("Admin");
             dao.create(both);
@@ -38,12 +38,12 @@ public class UserFacade {
         return instance;
     }
 
-    public UserEntity getUserByUserId(String id) {
+    public User getUserByUserId(String id) {
         return dao.find(id);
     }
     
     
-    public String createNewUser(UserEntity user) {
+    public String createNewUser(User user) {
         user.AddRole("User");
         return dao.create(user).getUserName();
     }
@@ -51,7 +51,7 @@ public class UserFacade {
     public List<String> authenticateUser(String userName, String password) {
 
         try {
-            UserEntity user = dao.find(userName);
+            User user = dao.find(userName);
             return user != null && PasswordHash.validatePassword(password, user.getPassword()) ? user.getRoles() : null;
         } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
 

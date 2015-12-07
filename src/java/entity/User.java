@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CollectionTable;
@@ -13,16 +14,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
-public class UserEntity {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
-    private int id;
+public class User implements Serializable {
     
     @Column(name = "PASSWORD")
     private String password;  //Pleeeeease dont store me in plain text
     
+    @Id
     @Column(name = "USERNAME")
     private String userName;
     
@@ -33,17 +30,16 @@ public class UserEntity {
     @CollectionTable(name = "USER_ROLES")
     List<String> roles = new ArrayList();
 
-    public UserEntity() {
+    public User() {
     }
 
     
-    
-    public UserEntity(String userName, String password) {
+    public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
 
-    public UserEntity(String userName, String password, List<String> roles) {
+    public User(String userName, String password, List<String> roles) {
         this.userName = userName;
         this.password = password;
         this.roles = roles;
@@ -71,14 +67,6 @@ public class UserEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getEmail() {

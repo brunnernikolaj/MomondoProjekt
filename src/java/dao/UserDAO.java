@@ -5,7 +5,7 @@
  */
 package dao;
 
-import entity.UserEntity;
+import entity.User;
 import exceptions.FlightException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -18,10 +18,10 @@ import security.PasswordHash;
  *
  * @author casper
  */
-public class UserDAO extends DataManager<UserEntity, String> {
+public class UserDAO extends DataManager<User, String> {
     
     @Override
-    public UserEntity create(UserEntity user) {
+    public User create(User user) {
          
         try {
             user.setPassword(PasswordHash.createHash(user.getPassword()));

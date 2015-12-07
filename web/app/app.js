@@ -6,7 +6,7 @@
  * 
  * @param {type} param
  */
-angular.module('myApp', [
+var app = angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
   'autocomplete',
@@ -19,16 +19,15 @@ angular.module('myApp', [
   'myApp.directives',
   'myApp.factories',
   'myApp.services',
-  'myApp.controllers',
   'toastr'
-])
+]);
 
 /**
  * Route configuration for the app
  * 
  * @param {type} $routeProvider
  */
-.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function($routeProvider) {
         
     $routeProvider
     .when('/login', {
@@ -61,7 +60,7 @@ angular.module('myApp', [
     //     controllerAs : 'forntpageCtrl'
     // })
     .otherwise({redirectTo: '/'});
-}])
+}]);
 
 /**
  * We add the filter for adding the authentication
@@ -69,7 +68,7 @@ angular.module('myApp', [
  * 
  * @param {type} $httpProvider
  */
-.config(function ($httpProvider) {
+app.config(function ($httpProvider) {
    $httpProvider.interceptors.push('AuthInterceptor');
 });
 
