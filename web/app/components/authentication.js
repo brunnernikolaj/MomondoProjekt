@@ -94,7 +94,7 @@ angular.module('myApp.security', [])
      * @param {type} UrlBaseDecode
      * @returns {authentication_L36.auth}
      */
-    .factory('LoginFactory', function($http, $window, $rootScope, UrlBaseDecode) {
+    .factory('LoginFactory', function($http, $window, $rootScope, UrlBaseDecode, toastr) {
         
         var auth = {
             username: "",
@@ -142,6 +142,7 @@ angular.module('myApp.security', [])
             this.authenticated = false;
             this.admin = false;
             this.user = false;
+            toastr.success('', 'Du er nu logget ud');
             delete $window.sessionStorage.token;
             $rootScope.$broadcast('auth:loggedOut', auth);
         };
@@ -158,6 +159,7 @@ angular.module('myApp.security', [])
                 var encodedProfile = data.token.split('.')[1];
                 var profile = JSON.parse(UrlBaseDecode(encodedProfile));
                 self.username = profile.username;
+                toastr.success('', 'Du er nu logget ind');
                 
                 var roles = profile.roles.split(",");
                 roles.forEach(function (role) {
