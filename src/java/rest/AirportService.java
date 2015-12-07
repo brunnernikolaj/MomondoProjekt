@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.Airport;
+import exceptions.FlightException;
 import exceptions.RestException;
 import facades.AirportFacade;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -56,7 +58,10 @@ public class AirportService {
     @GET
     @Path("city/{city}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAirportByCity(@PathParam("city") String city) throws RestException {
+    public String getAirportByCity(@PathParam("city") String city) throws FlightException {
+        
+        if (city.length() < 1)
+            throw new FlightException("A minimum character length of 1 is required to fetch a list of citites", Response.Status.BAD_REQUEST, 4);
         
         List<Airport> airports = facade.getAirportsBycity(city);
         return gson.toJson(airports);
