@@ -47,6 +47,14 @@
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
 
+.autocomplete ul {
+  -moz-border-radius: 0px 0px 3px 3px;
+  -webkit-border-radius: 0px 0px 3px 3px;
+  border-radius: 0px 0px 3px 3px;
+  border: 1px solid #ccc !important; }
+  .autocomplete ul li:hover {
+    cursor: pointer; }
+
 /* ANIMATIONS
 ========================================
 |
