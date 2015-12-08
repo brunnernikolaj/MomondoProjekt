@@ -67,7 +67,7 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', "FlightSaver",'Rese
     $scope.reserveTickets = function () {
         $scope.reservation.flightID = $scope.flight.flightID;
         $scope.reservation.numberOfSeats = $scope.flight.numberOfSeats;
-
+        
         if ($scope.flight.airline === "Just Fly"){
             ReservationFactoty.reservateTickets($scope.reservation)
         } else {
@@ -155,28 +155,15 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'Fl
          * @returns {undefined}
          */
         $scope.updateCities = function (typed) {
-            
-            // We only want to fetch something, after theres atleast 3 letters
-            if (typed.length > 2) {
-                AirportFactoty.getAirportsByCity(typed).then(function(res) {
-
-                    // Used to display nice names
-                    $scope.cities = [];
-
-                    // Used for the IATA / other codes 
-                    // We split it up, since we need both the american and the IATA code
-                    $scope.airports = res.data;
-
-                    for (var i = 0, l = res.data.length; i < l; i++) {
-                        $scope.cities.push(res.data[i].country + ", " + res.data[i].city + ", " + res.data[i].name)
-                    }
-                })
-            }
+            AirportFactoty.getAirportNames(typed).then(function(res) {
+                if (res !== "") {
+                    $scope.cities = res;
+                }
+            });
         }
 
         $scope.selectFlight = function (flight) {
             saver.set(flight);
-            console.log(saver.get());
         };
 
         // handle incomming data
