@@ -6,7 +6,7 @@
  * @param angular http
  * @returns Object containing flight factory methods
  */
-app.factory('FlightFactoty', ["$http", function (http) {
+angular.module('myApp').factory('FlightFactoty', ["$http", function (http) {
 
         var flight = {};
 
@@ -25,7 +25,7 @@ app.factory('FlightFactoty', ["$http", function (http) {
         return flight;
     }]);
 
-app.factory('ReservationFactoty', ["$http", function (http) {
+angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) {
 
         var reservation = {};
 
@@ -51,7 +51,7 @@ app.factory('ReservationFactoty', ["$http", function (http) {
  * @param angular $http 
  * @returns Object containing methods for alking with the Airport API
  */
-app.factory('AirportFactoty', ["$http", function (http) {
+angular.module('myApp').factory('AirportFactoty', ["$http", function (http) {
 
         var airport = {};
 
@@ -78,17 +78,19 @@ app.factory('AirportFactoty', ["$http", function (http) {
  * 
  * @returns {data}
  */
-app.factory('flightSaver', function () {
+angular.module('myApp').factory('flightSaver', function () {
+    
+    var savedData = undefined;
+    
+    var data = {}
 
-    var savedData = {}
-
-    savedData.set = function (data) {
+    data.set = function (data) {
         savedData = data;
     }
 
-    savedData.get = function () {
+    data.get = function () {
         return savedData;
     }
 
-    return savedData;
+    return data;
 });

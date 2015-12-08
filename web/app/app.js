@@ -1,12 +1,14 @@
 'use strict';
 
 /**
- * Main app module and the dependencies 
- * required.
+ * Here we init the module and all its dependencies. 
+ * 
+ * To read more about the concept we are using to structure our app,
+ * read here: http://briantford.com/blog/huuuuuge-angular-apps
  * 
  * @param {type} param
  */
-var app = angular.module('myApp', [
+angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
   'autocomplete',
@@ -16,7 +18,6 @@ var app = angular.module('myApp', [
   'myApp.security',
   'myApp.view2',
   'myApp.view3',
-  'myApp.directives'
 ]);
 
 /**
@@ -24,7 +25,7 @@ var app = angular.module('myApp', [
  * 
  * @param {type} $routeProvider
  */
-app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+angular.module('myApp').config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     
     /**
      * We add auth headers on every http request. See the authentication
