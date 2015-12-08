@@ -10,6 +10,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import exceptions.FlightException;
 import facades.UserFacade;
 import java.util.Date;
 import java.util.List;
@@ -25,32 +26,38 @@ import javax.ws.rs.core.Response;
 @Path("login")
 public class Login {
 
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public String gt(){
-    return "{\"txt\" : \"TEST\"}";
-    
-  }
-  
-
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response login(String jsonString) throws JOSEException {
+  public Response login(String jsonString) throws FlightException {
       
-    JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
-    String username =  json.get("username").getAsString(); 
-    String password =  json.get("password").getAsString();
-    JsonObject responseJson = new JsonObject();
+    JsonObject json;
+    String username; 
+    String password;
+    JsonObject responseJson;
     List<String> roles;  
     
-    if ((roles=authenticate(username, password))!=null) { 
-      String token = createToken(username,roles);    
-      responseJson.addProperty("username", username);
-      responseJson.addProperty("token", token);  
-      return Response.ok(new Gson().toJson(responseJson)).build();
-    }  
-    throw new NotAuthorizedException("Ilegal username or password",Response.Status.UNAUTHORIZED);
+    try {
+        
+        json = new JsonParser().parse(jsonString).getAsJsonObject();
+        username = json.get("username").getAsString(); 
+        password = json.get("password").getAsString();
+        responseJson = new JsonObject();
+        
+        if ((roles=authenticate(username, password))!=null) { 
+            String token = createToken(username,roles);    
+            responseJson.addProperty("username", username);
+            responseJson.addProperty("token", token);  
+            return Response.ok(new Gson().toJson(responseJson)).build();
+        }
+        
+    } catch (IllegalStateException e) {
+        throw new FlightException("Username and password is required in order to login", Response.Status.BAD_REQUEST, 4);
+    } catch (JOSEException e) {
+        throw new FlightException("Unknown error occured while trying to login", Response.Status.BAD_REQUEST, 4);
+    }
+    
+    throw new NotAuthorizedException("Invalid username or password",Response.Status.UNAUTHORIZED);
   }
   
   private List<String>  authenticate(String userName, String password){

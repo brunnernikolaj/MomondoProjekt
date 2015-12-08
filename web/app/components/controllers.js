@@ -23,9 +23,14 @@ app.controller('AppCtrl', ['$scope', '$location', 'LoginFactory', function ($sco
     
     // We use angulars observer pattern to watch for login / logout events.
     $scope.$on('auth:loggedIn', function (event, args) {
+        $scope.failedLogin = false;
         $scope.authenticated = args.isLoggedIn();
         $scope.username = args.getUsername();
         $location.path('/');
+    });
+    
+    $scope.$on('auth:failedLogin', function(event, args) {
+       $scope.failedLogin = true; 
     });
 
     $scope.$on('auth:loggedOut', function (event, args) {

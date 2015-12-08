@@ -57,28 +57,6 @@ angular.module('myApp.security', [])
             return config;
           },
           responseError: function (rejection) {
-            var err = rejection.data;
-            if(err === null) {
-              $rootScope.error = "Unknown error while trying to connect to the server";
-              var err= "\n########################################################################\n"+
-              "Unknown error while trying to connect to the server\n"+
-              "Did you execute the AngularSeedClient project, and not The AngularSeedServer Project?\n"+
-              "#######################################################################\n";
-              throw err;
-              return;
-            }
-            $rootScope.error = err.error.code +": ";
-
-            if (err.error.code === 401) {
-              $rootScope.error += " You are are not Authenticated - did you log on to the system"
-            }
-            else{
-               $rootScope.error +=  err.error.message;
-            }
-            if (err.error.code === 403) {
-
-            }
-
             return $q.reject(rejection);
           }
         };
@@ -175,7 +153,8 @@ angular.module('myApp.security', [])
                 $rootScope.$broadcast('auth:loggedIn', auth);
             })
             .error(function (data) {
-              // Erase the token if the user fails to log in
+              toastr.error('Login mislykkedes');
+              $rootScope.$broadcast('auth:failedLogin', "Brugernavn og password stemmer ikke overens");
               delete $window.sessionStorage.token;
               self.authenticated = false;
               self.admin = false;
