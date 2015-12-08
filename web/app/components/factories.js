@@ -51,8 +51,9 @@ angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) 
  * @param angular $http 
  * @returns Object containing methods for alking with the Airport API
  */
-angular.module('myApp').factory('AirportFactoty', ["$http", function (http) {
-
+angular.module('myApp').factory('AirportFactoty', ["$http", "$q", function (http, $q) {
+        
+        var baseUrl = "api/airport/";
         var airport = {};
 
         airport.getAirportsByCity = function (name) {
@@ -69,6 +70,33 @@ angular.module('myApp').factory('AirportFactoty', ["$http", function (http) {
             var url = "api/airport/valid/" + city;
             return http.get(url);
         }
+        
+        airport.getAirportNames = function(str) {
+            
+            // We wont call the server, if the string is less then 3 long
+            // But we return an empty promise instead
+            if (str.length < 3) {
+                return $q.when("");
+            }
+            
+            /**
+             * The then function returns a promise by itself, so
+             * we can actually handle data in here, and then return the promise.
+             */
+            var promise = http.get("api/airport/city/" + str).then(function(response) {
+                
+                // We run through the list, and get the info needed
+                var airports = [];
+                
+                for (var i = 0, l = response.data.length; i < l; i++) {
+                    airports.push(response.data[i].country + ", " + response.data[i].city + ", " + response.data[i].name);
+                }
+                 
+                return airports;
+            });
+            
+            return promise;
+        }   
 
         return airport;
     }]);
@@ -78,11 +106,11 @@ angular.module('myApp').factory('AirportFactoty', ["$http", function (http) {
  * 
  * @returns {data}
  */
-angular.module('myApp').factory('flightSaver', function () {
+angular.module('myApp').factory('FlightSaver', function () {
     
-    var flightSaver = this;
+    var flightSaver = {};
     
-    var savedData = {};
+    var savedData;
 
     flightSaver.set = function (data) {
         savedData = data;

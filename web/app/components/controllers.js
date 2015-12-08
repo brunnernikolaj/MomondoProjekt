@@ -54,11 +54,17 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFact
 }]);
 
 
+<<<<<<< HEAD
 angular.module('myApp').controller('BookingCtrl', ['$scope','$location','toastr' ,"flightSaver",'ReservationFactoty','LoginFactory', function ($scope,location,toastr ,saver,ReservationFactoty,LoginFactory) {
     if (!LoginFactory.isLoggedIn()){
         toastr.error('','You need to be logged in');
         location.path('login');
     }
+=======
+angular.module('myApp').controller('BookingCtrl', ['$scope', "FlightSaver",'ReservationFactoty','LoginFactory', function ($scope, saver,ReservationFactoty,LoginFactory) {
+    
+        //der er data her, der skal bare laves mere kode
+>>>>>>> faa2a2301bf5435e6175f8b6bc012e35078514f3
     $scope.flight = saver.get();
     $scope.reservation = {Passengers:[]};
 
@@ -69,10 +75,19 @@ angular.module('myApp').controller('BookingCtrl', ['$scope','$location','toastr'
     $scope.reserveTickets = function () {
         $scope.reservation.flightID = $scope.flight.flightID;
         $scope.reservation.numberOfSeats = $scope.flight.numberOfSeats;
+<<<<<<< HEAD
         $scope.reservation.userName = LoginFactory.getUsername();
 
         ReservationFactoty.reservateExternalTickets($scope.reservation);
                    
+=======
+        
+        if ($scope.flight.airline === "Just Fly"){
+            ReservationFactoty.reservateTickets($scope.reservation)
+        } else {
+            ReservationFactoty.reservateExternalTickets($scope.reservation)
+        }                    
+>>>>>>> faa2a2301bf5435e6175f8b6bc012e35078514f3
     };
 }]);
 
@@ -84,7 +99,7 @@ angular.module('myApp').controller('BookingCtrl', ['$scope','$location','toastr'
  * 
  * @returns {undefined}
  */
-angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
+angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'FlightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
         
     var from, to;
     $scope.cities = [];
@@ -155,23 +170,11 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'fl
          * @returns {undefined}
          */
         $scope.updateCities = function (typed) {
-            
-            // We only want to fetch something, after theres atleast 3 letters
-            if (typed.length > 2) {
-                AirportFactoty.getAirportsByCity(typed).then(function(res) {
-
-                    // Used to display nice names
-                    $scope.cities = [];
-
-                    // Used for the IATA / other codes 
-                    // We split it up, since we need both the american and the IATA code
-                    $scope.airports = res.data;
-
-                    for (var i = 0, l = res.data.length; i < l; i++) {
-                        $scope.cities.push(res.data[i].country + ", " + res.data[i].city + ", " + res.data[i].name)
-                    }
-                })
-            }
+            AirportFactoty.getAirportNames(typed).then(function(res) {
+                if (res !== "") {
+                    $scope.cities = res;
+                }
+            });
         }
 
         $scope.selectFlight = function (flight) {
