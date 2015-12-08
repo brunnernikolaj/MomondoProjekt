@@ -51,7 +51,7 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFact
 }]);
 
 
-angular.module('myApp').controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty', function ($scope, saver,ReservationFactoty) {
+angular.module('myApp').controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty','LoginFactory', function ($scope, saver,ReservationFactoty,LoginFactory) {
     //der er data her, der skal bare laves mere kode
     $scope.flight = saver.get();
     $scope.reservation = {Passengers:[]};
