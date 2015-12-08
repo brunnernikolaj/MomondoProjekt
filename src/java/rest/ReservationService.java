@@ -17,6 +17,8 @@ import facades.ReservationFacade;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -36,7 +38,7 @@ import utility.MailService;
  *
  * @author Nikolaj
  */
-@Path("unusedflightstuff")
+@Path("/reservation")
 public class ReservationService {
 
     @Context
@@ -58,12 +60,28 @@ public class ReservationService {
      * @return an instance of java.lang.String
      */
     @GET
+    @Path("/user/{userName}")
     @Produces("application/json")
-    public String getXml() throws EmailException {
-        MailService.sendMail();
-        return null;
+    public String getXml(@PathParam("userName") String userName) throws EmailException {
+        List<ReservationDto> returnList = flightFacade
+                .getAllReservationsByUser(userName)
+                .stream()
+                .map(x -> toDto(x))
+                .collect(Collectors.toList());
+        
+        return gson.toJson(returnList);
     }
 
+    /**
+     * Reserves a ticket for a specific flight and user.
+     *
+     * @Author: Nikolaj
+     * @Date: 6/12 2015
+     *
+     * @param json Reservation as json string
+     * @return The reserved flight as a Json String
+     * @throws FlightException
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public String flightReservation(String json) throws FlightException {
@@ -71,21 +89,21 @@ public class ReservationService {
         ReservationDto reservationDto = gson.fromJson(json, ReservationDto.class);
         
         Reservation reservation = toEntity(reservationDto);
-        reservation.setFlight(flightFacade.getByFlightNumber(reservationDto.getFlightID()));
 
-        return gson.toJson(toDto(reservationFacade.saveReservation(reservation)));
-    }
-    
-    @POST
-    @Path("/external")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String flightReservationExternal(String json) throws FlightException, IOException, JSONException {
+        Reservation returnData = flightFacade.saveReservation(reservation, reservationDto.getFlightID(), reservationDto.getUserName());
+        
+        return gson.toJson(toDto(returnData));
+    }   
 
-        ReservationDto reservationDto = gson.fromJson(json, ReservationDto.class);
-
-        return reservationFacade.reserveExternal(reservationDto).toString();
-    }
-
+    /**
+     * Converts a reservation to DTO.
+     *
+     * @Author: Nikolaj
+     * @date: 6/12 2015
+     *
+     * @param reservation Reservation object to convert
+     * @return Reservation as DTO
+     */
     private ReservationDto toDto(Reservation reservation) {
         List<PassengerDto> passengers = new ArrayList<>();
 
@@ -98,14 +116,23 @@ public class ReservationService {
 
         return new ReservationDto(
                 reservation.getFlight().getFlightNumber(),
-                null,
-                null,
-                null,
-                2,
+                reservation.getReserveeName(),
+                reservation.getReserveeEmail(),
+                reservation.getReservePhone(),
+                reservation.getNumberOfSeats(),
                 passengers
         );
     }
     
+    /**
+     * Converts the badly formatted json into dto.
+     *
+     * @Author: Nikolaj
+     * @Date: 6/12 2015
+     *
+     * @param reservation
+     * @return
+     */
     private Reservation toEntity(ReservationDto reservation) {
         List<Passenger> passengers = new ArrayList<>();
 
@@ -116,19 +143,13 @@ public class ReservationService {
             ));
         }
 
-        return new Reservation(
-                passengers
+        return new Reservation
+        (
+                0, 
+                passengers, 
+                reservation.getReserveeName(), 
+                reservation.getReserveeEmail(), 
+                reservation.getReservePhone()
         );
-    }
-
-    /**
-     * PUT method for updating or creating an instance of ResevationService
-     *
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    public void putXml(String content) {
     }
 }

@@ -14,7 +14,13 @@ import java.util.List;
  */
 public class ReservationDAO extends DataManager<Reservation, Integer> {
     public List<Reservation> getAll(){
-        return manager.createNamedQuery("Reservation.findAllReservation")
+        return manager.createNamedQuery("Reservation.findAll")
+                .getResultList();
+    }
+    
+    public List<Reservation> getAllByUser(String userName){
+        return manager.createNamedQuery("Reservation.findAllByUser")
+                .setParameter("userName", userName)
                 .getResultList();
     }
 }

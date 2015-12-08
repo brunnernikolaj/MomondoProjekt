@@ -54,8 +54,11 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFact
 }]);
 
 
-angular.module('myApp').controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty','LoginFactory', function ($scope, saver,ReservationFactoty,LoginFactory) {
-    //der er data her, der skal bare laves mere kode
+angular.module('myApp').controller('BookingCtrl', ['$scope','$location','toastr' ,"flightSaver",'ReservationFactoty','LoginFactory', function ($scope,location,toastr ,saver,ReservationFactoty,LoginFactory) {
+    if (!LoginFactory.isLoggedIn()){
+        toastr.error('','You need to be logged in');
+        location.path('login');
+    }
     $scope.flight = saver.get();
     $scope.reservation = {Passengers:[]};
 
@@ -66,12 +69,10 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', "flightSaver",'Rese
     $scope.reserveTickets = function () {
         $scope.reservation.flightID = $scope.flight.flightID;
         $scope.reservation.numberOfSeats = $scope.flight.numberOfSeats;
+        $scope.reservation.userName = LoginFactory.getUsername();
 
-        if ($scope.flight.airline === "Just Fly"){
-            ReservationFactoty.reservateTickets($scope.reservation)
-        } else {
-            ReservationFactoty.reservateExternalTickets($scope.reservation)
-        }                    
+        ReservationFactoty.reservateExternalTickets($scope.reservation);
+                   
     };
 }]);
 

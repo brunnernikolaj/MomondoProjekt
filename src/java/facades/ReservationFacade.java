@@ -7,11 +7,14 @@ package facades;
 
 import com.google.gson.Gson;
 import dao.DataManager;
+import dtos.PassengerDto;
 import dtos.ReservationDto;
+import dtos.ReservationResponseDto;
 import entity.Passenger;
 import entity.Reservation;
 import exceptions.FlightException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Response;
 import us.monoid.json.JSONException;
@@ -44,15 +47,6 @@ public class ReservationFacade extends DataManager<Reservation, Integer> {
         return reservation;
     }
     
-    public JSONObject reserveExternal(ReservationDto reservation) throws IOException, JSONException{
-        Resty resty = new Resty();
-        
-        String lol = new Gson().toJson(reservation);
-        
-        Content content = new Content("application/json",lol.getBytes());
-        
-        return resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", content).toObject();
-    }
     
     
 }
