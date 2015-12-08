@@ -25,7 +25,7 @@ angular.module('myApp').factory('FlightFactoty', ["$http", function (http) {
         return flight;
     }]);
 
-angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) {
+angular.module('myApp').factory('ReservationFactory', ["$http", function (http) {
 
         var reservation = {};
 
@@ -35,8 +35,13 @@ angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) 
         };
 
         reservation.reservateExternalTickets = function (ticketRequest) {
-            var url = "api/flightreservation/external";
+            var url = "api/reservation";
             return http.post(url, ticketRequest);
+        };
+        
+        reservation.getByUser = function (username) {
+            var url = "api/reservation/user/" + username;
+            return http.get(url);
         };
 
         return reservation;
@@ -51,7 +56,7 @@ angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) 
  * @param angular $http 
  * @returns Object containing methods for alking with the Airport API
  */
-angular.module('myApp').factory('AirportFactoty', ["$http", "$q", function (http, $q) {
+angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http, $q) {
         
         var baseUrl = "api/airport/";
         var airport = {};
@@ -86,10 +91,10 @@ angular.module('myApp').factory('AirportFactoty', ["$http", "$q", function (http
             var promise = http.get("api/airport/city/" + str).then(function(response) {
                 
                 // We run through the list, and get the info needed
-                var airports = [];
+                var airports = {locations:[],airports:response.data};
                 
                 for (var i = 0, l = response.data.length; i < l; i++) {
-                    airports.push(response.data[i].country + ", " + response.data[i].city + ", " + response.data[i].name);
+                    airports.locations.push(response.data[i].country + ", " + response.data[i].city + ", " + response.data[i].name);
                 }
                  
                 return airports;
