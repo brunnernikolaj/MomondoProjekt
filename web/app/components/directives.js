@@ -2,7 +2,7 @@
 
 /* Place you Global Directives in this file */
 
-angular.module('myApp.directives', []).
+angular.module('myApp').
   directive('angularLinks', function () {
     return {
       restrict: 'AE',

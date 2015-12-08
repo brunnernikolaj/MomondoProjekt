@@ -7,7 +7,7 @@
  */
 'use strict';
 
-angular.module('myApp.security', [])
+angular.module('security', [])
     
     /**
      * URL base decoder

@@ -11,7 +11,7 @@
  * @param {string} Controllername
  * @param {type} Angular dependencies
  */
-app.controller('AppCtrl', ['$scope', '$location', 'LoginFactory', function ($scope, $location, LoginFactory) {
+angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFactory', function ($scope, $location, LoginFactory) {
     
     // App variables
     $scope.title = "JustFly";
@@ -51,7 +51,7 @@ app.controller('AppCtrl', ['$scope', '$location', 'LoginFactory', function ($sco
 }]);
 
 
-app.controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty', function ($scope, saver,ReservationFactoty) {
+angular.module('myApp').controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty', function ($scope, saver,ReservationFactoty) {
     //der er data her, der skal bare laves mere kode
     $scope.flight = saver.get();
     $scope.reservation = {Passengers:[]};
@@ -80,7 +80,7 @@ app.controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty', fun
  * 
  * @returns {undefined}
  */
-app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
+angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
         
     var from, to;
     $scope.cities = [];

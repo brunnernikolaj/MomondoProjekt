@@ -4,15 +4,17 @@ module.exports = function(config){
     basePath : './',
 
     files : [
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-route/angular-route.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/angular/angular.js',
+      'bower_components/angular-route/angular-route.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'app/*.js',
       'app/components/**/*.js',
       'app/components/*.js',
       'app/view*/**/*.js',
       'test/app/*.js',
       'test/app/view*/**/*.js',
-      'test/app/components/**/*.js'
+      'test/app/components/**/*.js',
+      'test/app/authentication/**/*.js'
     ],
 
     autoWatch : true,
