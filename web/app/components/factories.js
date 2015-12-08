@@ -80,23 +80,23 @@ angular.module('myApp').factory('AirportFactoty', ["$http", function (http) {
  */
 angular.module('myApp').factory('flightSaver', function () {
     
-    var savedData = undefined;
+    var flightSaver = this;
     
-    var data = {};
+    var savedData = {};
 
-    data.set = function (data) {
+    flightSaver.set = function (data) {
         savedData = data;
     };
 
-    data.get = function () {
+    flightSaver.get = function () {
         return savedData;
     };
 
 
-    return savedData;
+    return flightSaver;
 });
 
-angular.module('myApp').factory('SignupFactory',[ '$http', function (http) {
+app.factory('SignupFactory',[ '$http', function (http) {
 
     var signup = this;
 
