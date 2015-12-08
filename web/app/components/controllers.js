@@ -11,7 +11,7 @@
  * @param {string} Controllername
  * @param {type} Angular dependencies
  */
-angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFactory', function ($scope, $location, LoginFactory) {
+angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFactory', 'toastr', function ($scope, $location, LoginFactory, toastr) {
     
     // App variables
     $scope.title = "JustFly";
