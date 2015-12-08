@@ -15,7 +15,6 @@ import facades.UserFacade;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -51,7 +50,7 @@ public class Login {
             return Response.ok(new Gson().toJson(responseJson)).build();
         }
         
-    } catch (IllegalStateException e) {
+    } catch (IllegalStateException | NullPointerException e) {
         throw new FlightException("Username and password is required in order to login", Response.Status.BAD_REQUEST, 4);
     } catch (JOSEException e) {
         throw new FlightException("Unknown error occured while trying to login", Response.Status.BAD_REQUEST, 4);
