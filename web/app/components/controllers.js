@@ -56,7 +56,7 @@ app.controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty', fun
     $scope.flight = saver.get();
     $scope.reservation = {Passengers:[]};
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < $scope.flight.numberOfSeats; i++) {
         $scope.reservation.Passengers.push({});
     }
 
@@ -277,5 +277,16 @@ app.controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'Airport
         };
     }]);
 
+app.controller('SignupCtrl', ['$scope','SignupFactory','toastr', function ($scope, SignupFactory,toastr) {
 
+    $scope.user = {};
+
+    $scope.signup = function () {
+        SignupFactory.signup($scope.user).then(function (result) {
+            toastr.success(result.data);
+        }, function (error) {
+            toastr.error(error.data);
+        });       
+    };
+}]);
 

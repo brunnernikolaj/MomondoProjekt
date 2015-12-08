@@ -37,7 +37,7 @@ import utility.MailService;
  * @author Nikolaj
  */
 @Path("unusedflightstuff")
-public class ResevationService {
+public class ReservationService {
 
     @Context
     private UriInfo context;
@@ -48,7 +48,7 @@ public class ResevationService {
     /**
      * Creates a new instance of ResevationService
      */
-    public ResevationService() {
+    public ReservationService() {
         gson = new GsonBuilder().setPrettyPrinting().create();
     }
 

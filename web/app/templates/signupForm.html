@@ -4,68 +4,58 @@
             <h1><i class="fa fa-user-plus"></i> Sign Up</h1>
             <form role="form" class="form-horizontal" ng-show="!ctrl.authenticated" ng-submit="ctrl.doLogin()">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <label class="control-label">Fornavn</label>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                          <input type="text" class="form-control" placeholder="Lars">
+                          <input type="text" class="form-control" ng-model="user.firstName" placeholder="Lars">
                         </div>
 
                         <label class="control-label">Efternavn</label>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                          <input type="text" class="form-control" placeholder="Larsen">
+                          <input type="text" class="form-control" ng-model="user.lastName" placeholder="Larsen">
                         </div>
 
+                        
+                    </div>
+                    <div class="col-sm-6">
                         <label class="control-label">Telefon</label>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                          <input type="number" class="form-control" placeholder="2244 3355">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <label class="control-label">Adresse</label>
-                        <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-home"></i></span>
-                          <input type="text" class="form-control" placeholder="Kastrupvej 1A, 1. tv">
-                        </div>
-
-                        <label class="control-label">By</label>
-                        <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                          <input type="text" class="form-control" placeholder="København N.">
-                        </div>
-
-                        <label class="control-label">Postnummer</label>
-                        <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                          <input type="number" class="form-control" placeholder="2100">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <label class="control-label">Land</label>
-                        <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                          <input type="text" class="form-control" placeholder="Danmark">
+                          <input type="text" class="form-control" ng-model="user.phone" placeholder="2244 3355">
                         </div>
 
                         <label class="control-label">E-mail</label>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                          <input type="email" class="form-control" placeholder="info@justfly.dk">
-                        </div>
-
-                        <label class="control-label">Bekræft E-mail</label>
-                        <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-check"></i></span>
-                          <input type="email" class="form-control">
+                          <input type="email" class="form-control" ng-model="user.email" placeholder="info@justfly.dk">
                         </div>
                     </div>
                 </div>
+                
+                <hr>
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Bruger navn</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                          <input type="text" class="form-control" ng-model="user.userName" placeholder="navn">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Password</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                          <input type="password" class="form-control" ng-model="user.password" placeholder="password">
+                        </div>
+                    </div>
+                </div><!-- /.row -->
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-4">
                         <div class="input-group col-xs-12">
-                          <button type="submit" id="signup" class="btn btn-primary col-xs-12"><i class="fa fa-plus"></i> Sign Up</button>
+                          <button type="submit" id="signup" ng-click="signup()" class="btn btn-primary col-xs-12"><i class="fa fa-plus"></i> Sign Up</button>
                         </div>
                     </div>
                 </div>

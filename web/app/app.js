@@ -39,7 +39,8 @@ app.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
       controllerAs : 'ctrl'
     })
     .when('/signup', {
-      templateUrl: 'app/templates/signupForm.html'
+      templateUrl: 'app/templates/signupForm.html',
+      controller: 'SignupCtrl'
     })
     .when('/doc', {
       templateUrl: 'aap/templates/documentation.html'

@@ -59,11 +59,11 @@ app.factory('AirportFactoty', ["$http", function (http) {
             var url = "api/airport/city/" + name;
             return http.get(url);
         }
-        
-        airport.getAirportByIATA = function(iata) {
+
+        airport.getAirportByIATA = function (iata) {
             var url = "api/airport/" + iata;
             return http.get(url);
-        } 
+        }
 
         airport.isValidAirport = function (city) {
             var url = "api/airport/valid/" + city;
@@ -92,3 +92,15 @@ app.factory('flightSaver', function () {
 
     return savedData;
 });
+
+app.factory('SignupFactory',[ '$http', function (http) {
+
+    var signup = this;
+
+    signup.signup = function (user) {
+        var url = "api/register";
+        return http.post(url, user);
+    }
+
+    return signup;
+}]);

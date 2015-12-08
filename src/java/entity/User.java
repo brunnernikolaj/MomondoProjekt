@@ -29,6 +29,15 @@ public class User implements Serializable {
     @Column(name = "EMAIL")
     private String email;
     
+    @Column(name = "PHONE")
+    private String phone;
+    
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+    
+    @Column(name = "LAST_NAME")
+    private String lastName;
+    
     @ElementCollection
     @CollectionTable(name = "USER_ROLES")
     List<String> roles = new ArrayList();
@@ -48,6 +57,15 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public User(String password, String userName, String email, String phone, String firstName, String lastName) {
+        this.password = password;
+        this.userName = userName;
+        this.email = email;
+        this.phone = phone;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public void AddRole(String role) {
         roles.add(role);
     }
@@ -56,6 +74,30 @@ public class User implements Serializable {
         return roles;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
     public String getPassword() {
         return password;
     }

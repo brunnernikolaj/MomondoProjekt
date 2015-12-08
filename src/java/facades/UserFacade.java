@@ -12,7 +12,7 @@ public class UserFacade {
     UserDAO dao = new UserDAO();
     private static UserFacade instance = null;
 
-    private UserFacade() {
+    public UserFacade() {
 
         if (dao.find("user") == null) {
             //Test Users

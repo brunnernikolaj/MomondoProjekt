@@ -29,12 +29,13 @@ public class ApplicationConfig extends Application {
         resources.add(exceptions.RestExceptionMapper.class);
         resources.add(rest.AirportService.class);
         resources.add(rest.FlightService.class);
-        resources.add(rest.ResevationService.class);
+        resources.add(rest.ReservationService.class);
         resources.add(rest.SearchService.class);
         resources.add(rest.User.class);
         resources.add(security.JWTAuthenticationFilter.class);
         resources.add(security.Login.class);
         resources.add(security.NotAuthorizedExceptionMapper.class);
+        resources.add(security.RegisterService.class);
         resources.add(security.RolesAllowedFilter.class);
     }
 
