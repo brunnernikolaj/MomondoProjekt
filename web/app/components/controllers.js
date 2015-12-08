@@ -280,7 +280,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'fl
         };
     }]);
 
-app.controller('SignupCtrl', ['$scope','SignupFactory','toastr', function ($scope, SignupFactory,toastr) {
+angular.module('myApp').controller('SignupCtrl', ['$scope','SignupFactory','toastr', function ($scope, SignupFactory,toastr) {
 
     $scope.user = {};
 
