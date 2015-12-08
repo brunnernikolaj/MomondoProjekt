@@ -30,7 +30,8 @@
   "dependencies": {},
   "devDependencies": {
     "ng-autocomplete": "*",
-    "angular-toastr": "~1.6.0"
+    "angular-toastr": "~1.6.0",
+    "angular-mocks": "~1.4.8"
   },
   "keywords": []
 }
