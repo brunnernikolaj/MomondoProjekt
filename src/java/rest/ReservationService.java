@@ -39,6 +39,7 @@ import utility.MailService;
  * @author Nikolaj
  */
 @Path("/reservation")
+@RolesAllowed("User")
 public class ReservationService {
 
     @Context
