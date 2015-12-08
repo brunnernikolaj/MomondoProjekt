@@ -54,8 +54,9 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFact
 }]);
 
 
-angular.module('myApp').controller('BookingCtrl', ['$scope', "flightSaver",'ReservationFactoty','LoginFactory', function ($scope, saver,ReservationFactoty,LoginFactory) {
-    //der er data her, der skal bare laves mere kode
+angular.module('myApp').controller('BookingCtrl', ['$scope', "FlightSaver",'ReservationFactoty','LoginFactory', function ($scope, saver,ReservationFactoty,LoginFactory) {
+    
+        //der er data her, der skal bare laves mere kode
     $scope.flight = saver.get();
     $scope.reservation = {Passengers:[]};
 
@@ -83,7 +84,7 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', "flightSaver",'Rese
  * 
  * @returns {undefined}
  */
-angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'flightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
+angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'FlightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
         
     var from, to;
     $scope.cities = [];
@@ -175,6 +176,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'fl
 
         $scope.selectFlight = function (flight) {
             saver.set(flight);
+            console.log(saver.get());
         };
 
         // handle incomming data

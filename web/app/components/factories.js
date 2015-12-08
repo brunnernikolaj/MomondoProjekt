@@ -78,11 +78,11 @@ angular.module('myApp').factory('AirportFactoty', ["$http", function (http) {
  * 
  * @returns {data}
  */
-angular.module('myApp').factory('flightSaver', function () {
+angular.module('myApp').factory('FlightSaver', function () {
     
-    var flightSaver = this;
+    var flightSaver = {};
     
-    var savedData = {};
+    var savedData;
 
     flightSaver.set = function (data) {
         savedData = data;
