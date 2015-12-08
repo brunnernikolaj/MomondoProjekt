@@ -16,7 +16,6 @@ var app = angular.module('myApp', [
   'myApp.security',
   'myApp.view2',
   'myApp.view3',
-  'myApp.filters',
   'myApp.directives'
 ]);
 
