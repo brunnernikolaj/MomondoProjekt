@@ -15,7 +15,7 @@ angular.module('myApp', [
   'toastr',
   'rzModule',
   'ui.bootstrap',
-  'myApp.security',
+  'security',
   'myApp.view2',
   'myApp.view3',
 ]);
