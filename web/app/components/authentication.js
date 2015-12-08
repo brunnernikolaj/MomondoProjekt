@@ -72,7 +72,7 @@ angular.module('security', [])
      * @param {type} UrlBaseDecode
      * @returns {authentication_L36.auth}
      */
-    .factory('LoginFactory', function($http, $window, $rootScope, UrlBaseDecode, toastr) {
+    .factory('LoginFactory', function($http, $window, $rootScope, UrlBaseDecode) {
         
         var auth = {
             username: "",
@@ -120,7 +120,6 @@ angular.module('security', [])
             this.authenticated = false;
             this.admin = false;
             this.user = false;
-            toastr.success('', 'Du er nu logget ud');
             delete $window.sessionStorage.token;
             $rootScope.$broadcast('auth:loggedOut', auth);
         };
@@ -137,7 +136,6 @@ angular.module('security', [])
                 var encodedProfile = data.token.split('.')[1];
                 var profile = JSON.parse(UrlBaseDecode(encodedProfile));
                 self.username = profile.username;
-                toastr.success('', 'Du er nu logget ind');
                 
                 var roles = profile.roles.split(",");
                 roles.forEach(function (role) {
@@ -153,7 +151,6 @@ angular.module('security', [])
                 $rootScope.$broadcast('auth:loggedIn', auth);
             })
             .error(function (data) {
-              toastr.error('Login mislykkedes');
               $rootScope.$broadcast('auth:failedLogin', "Brugernavn og password stemmer ikke overens");
               delete $window.sessionStorage.token;
               self.authenticated = false;

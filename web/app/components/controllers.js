@@ -26,16 +26,19 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$location', 'LoginFact
         $scope.failedLogin = false;
         $scope.authenticated = args.isLoggedIn();
         $scope.username = args.getUsername();
+        toastr.success('', 'Du er nu logget ind');
         $location.path('/');
     });
     
     $scope.$on('auth:failedLogin', function(event, args) {
        $scope.failedLogin = true; 
+       toastr.error('Login mislykkedes');
     });
 
     $scope.$on('auth:loggedOut', function (event, args) {
         $scope.authenticated = args.isLoggedIn();
         $scope.username = args.getUsername();
+        toastr.success('', 'Du er nu logget ud');
         $location.path('/');
     });
     
