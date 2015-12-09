@@ -19,7 +19,7 @@ angular.module('myApp').factory('FlightFactory', ["$http", function (http) {
             // Format the date
             var date = new Date(time).toISOString();
             
-            console.log(from, to, time, seats)
+            console.log(from + " - " + to + " - " + date + " - " + seats)
             
             if (to) {
                 return searchWithDestination(from, to, date, seats).then(function(res) {
@@ -27,7 +27,6 @@ angular.module('myApp').factory('FlightFactory', ["$http", function (http) {
                 });
             } else {
                 return searchWithNoDestination(from, date, seats).then(function(res) {
-                    console.log(res)
                     return res.data;
                 });
             }
@@ -147,7 +146,7 @@ angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http
             
             // We fetch the list when a character list contains of 3 letters
             // so its safe to look up locally after.
-            if (str.length > 3) {
+            if (str.length > 3 && airports.length > 0) {
                 
                 for (var i = 0, l = airports.length; i < l; i++) {
                     if (str == airports[i].city.substring(0, str.length).toLowerCase()) {

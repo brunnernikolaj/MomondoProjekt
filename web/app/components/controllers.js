@@ -187,10 +187,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
         // handle incomming data
         $scope.searchFlights = function () {
             
-            var seats = $scope.search.seats;
-            var time = $scope.search.date;
-            
-            FlightFactory.searchForFlights(from, to, time, seats).then(function(res) {
+            FlightFactory.searchForFlights(from, to, $scope.search.date, $scope.search.seats).then(function(res) {
                 unpackFlights(res);
             });
         };
