@@ -56,20 +56,47 @@ public class ReservationService {
     }
 
     /**
-     * Retrieves representation of an instance of rest.ResevationService
+     * Get all reservations for the user with the provided username.
      *
-     * @return an instance of java.lang.String
+     * @Author: Nikolaj
+     * @Date: 9/12 2016
+     *
+     * @param username
+     * @return
      */
     @GET
-    @Path("/user/{userName}")
+    @Path("/user/{username}")
     @Produces("application/json")
-    public String getXml(@PathParam("userName") String userName) throws EmailException {
+    public String getReservationsByUser(@PathParam("username") String username) {
         List<ReservationDto> returnList = flightFacade
-                .getAllReservationsByUser(userName)
+                .getAllReservationsByUser(username)
                 .stream()
                 .map(x -> toDto(x))
                 .collect(Collectors.toList());
-        
+
+        return gson.toJson(returnList);
+    }
+
+    /**
+     * Get all reservations for every user.
+     *
+     * @Author: Nikolaj
+     * @Date: 9/12 2016
+     *
+     * @param userName
+     * @return
+     * @throws EmailException
+     */
+    @GET
+    @RolesAllowed("Admin")
+    @Produces("application/json")
+    public String getXml(@PathParam("userName") String userName) throws EmailException {
+        List<ReservationDto> returnList = flightFacade
+                .getAllReservations()
+                .stream()
+                .map(x -> toDto(x))
+                .collect(Collectors.toList());
+
         return gson.toJson(returnList);
     }
 
@@ -88,13 +115,13 @@ public class ReservationService {
     public String flightReservation(String json) throws FlightException {
 
         ReservationDto reservationDto = gson.fromJson(json, ReservationDto.class);
-        
+
         Reservation reservation = toEntity(reservationDto);
 
         Reservation returnData = flightFacade.saveReservation(reservation, reservationDto.getFlightID(), reservationDto.getUserName());
-        
+
         return gson.toJson(toDto(returnData));
-    }   
+    }
 
     /**
      * Converts a reservation to DTO.
@@ -124,7 +151,7 @@ public class ReservationService {
                 passengers
         );
     }
-    
+
     /**
      * Converts the badly formatted json into dto.
      *
@@ -144,12 +171,11 @@ public class ReservationService {
             ));
         }
 
-        return new Reservation
-        (
-                0, 
-                passengers, 
-                reservation.getReserveeName(), 
-                reservation.getReserveeEmail(), 
+        return new Reservation(
+                0,
+                passengers,
+                reservation.getReserveeName(),
+                reservation.getReserveeEmail(),
                 reservation.getReservePhone()
         );
     }
