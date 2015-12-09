@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -52,10 +54,24 @@ public class Flight {
     @Column(name = "TRAVELDATE")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
+    @OneToMany(mappedBy = "flight")
+    private List<Reservation> reservations;
 
     public Flight() {
     }
 
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public void addReservation(Reservation reservation){
+        reservations.add(reservation);
+    }
+    
     public int getTravelTime() {
         return travelTime;
     }

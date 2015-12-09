@@ -1,0 +1,45 @@
+<div class="container" style="margin-top: 40px">
+    <div class="row">
+        
+        <div class="col-xs-12" ng-hide="reservations">
+            <div class="not_found animated fadeIn">
+                <p>Der blev ikke fundet nogle afgange.</p>
+                <p>Prøv venligst igen.</p>
+            </div>
+        </div>
+        
+        <!-- SIDEBAR FOR FILTERS -->
+        <div class="col-sm-4 col-md-3 filters" ng-hide="reservations == null">
+            <div class="panel panel-default">
+                <div class="panel-heading">Priser <small>- EUR</small></div>
+                <div class="panel-body">
+                    <div>
+                       
+                    </div>
+                </div>
+            </div><!-- /pricerange panel -->
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Rejsetid <small>- Minutter</small></div>
+                <div class="panel-body">
+                    <div>
+                        <div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.filters -->
+        <!-- END /SIDEBAR FOR FILTERS -->
+
+        <!-- RESULTS FROM SEARCH -->
+        <div class="col-sm-8 col-md-9 results">
+
+            <div class="row resultset animated fadeIn" ng-repeat="reservation in reservations">
+                <p style="padding: 10px">{{reservation.flightID}}</p>
+            </div><!-- /.resultset -->
+
+
+        </div><!-- /.results -->
+        <!-- END /RESULTS FROM SEARCH -->

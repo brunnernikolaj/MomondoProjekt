@@ -8,44 +8,47 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  * User entity.
- * 
+ *
  * @Author: Casper Schultz
  */
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {
-    
+
     @Column(name = "PASSWORD")
-    private String password; 
-    
+    private String password;
+
     @Id
     @Column(name = "USERNAME")
     private String userName;
-    
+
     @Column(name = "EMAIL")
     private String email;
-    
+
     @Column(name = "PHONE")
     private String phone;
-    
+
     @Column(name = "FIRST_NAME")
     private String firstName;
-    
+
     @Column(name = "LAST_NAME")
     private String lastName;
-    
+
     @ElementCollection
     @CollectionTable(name = "USER_ROLES")
     List<String> roles = new ArrayList();
 
+    @OneToMany(mappedBy = "owner")
+    private List<Reservation> reservations = new ArrayList<>();
+
     public User() {
     }
 
-    
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
@@ -64,6 +67,24 @@ public class User implements Serializable {
         this.phone = phone;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public void addReservation(Reservation reservation) {
+        reservations.add(reservation);
+    }
+
+    public void removePassenger(Reservation reservation) {
+        if (reservations.contains(reservation)) {
+            reservations.remove(reservation);
+        }
     }
 
     public void AddRole(String role) {
@@ -97,7 +118,7 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public String getPassword() {
         return password;
     }

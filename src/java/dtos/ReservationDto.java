@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ReservationDto {
     private String flightID;
+    private String userName;
     
     private String ReserveeName;
     private String ReserveeEmail;
@@ -29,6 +30,14 @@ public class ReservationDto {
         this.ReservePhone = ReserveePhone;
         this.numberOfSeats = numberOfSeats;
         this.Passengers = Passengers;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
     
     public String getFlightID() {

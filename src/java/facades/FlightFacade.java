@@ -4,14 +4,19 @@ import com.google.gson.Gson;
 import dao.AirportDAO;
 import dao.FlightDAO;
 import dao.ReservationDAO;
+import dao.UserDAO;
+import dtos.PassengerDto;
 import dtos.ReservationDto;
+import dtos.ReservationResponseDto;
 import entity.Flight;
 import entity.Passenger;
 import entity.Reservation;
+import entity.User;
 import exceptions.FlightException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.TemporalType;
@@ -45,11 +50,12 @@ public class FlightFacade {
      * Instantiated as null as default.
      */
     public static FlightFacade instance = null;
-    
+
     FlightDAO flightDAO;
     AirportDAO airportDAO;
     ReservationDAO reservationDAO;
-    
+    UserDAO userDAO;
+
     /**
      * Private constructor.
      */
@@ -57,6 +63,7 @@ public class FlightFacade {
         flightDAO = new FlightDAO();
         airportDAO = new AirportDAO();
         reservationDAO = new ReservationDAO();
+        userDAO = new UserDAO();
     }
 
     /**
@@ -179,18 +186,34 @@ public class FlightFacade {
         // Return results
         return flights;
     }
-    
+
     /**
-     * 
+     *
      * @param reservation
      * @return
-     * @throws FlightException 
+     * @throws FlightException
      */
-    public Reservation saveReservation(Reservation reservation) throws FlightException {
+    public Reservation saveReservation(Reservation reservation, String flightId, String userName) throws FlightException {
+
+        Flight flight = getByFlightNumber(flightId);       
+        if (flight == null){
+            throw new FlightException("invalid flight id", Response.Status.BAD_REQUEST, 3);
+        }
+        
+        User user = userDAO.find(userName);
+        if (user == null){
+            throw new FlightException("invalid user id", Response.Status.BAD_REQUEST, 3);
+        }
 
         if (reservation.getPassengers().size() <= 0) {
             throw new FlightException("An error occured and we could not procedd with the reservation", Response.Status.INTERNAL_SERVER_ERROR, 4);
         }
+
+        flight.addReservation(reservation);
+        user.addReservation(reservation);
+        reservation.setFlight(flight);
+        reservation.setOwner(user);
+        reservation.setPrice(reservation.getFlight().getPrice());
 
         reservationDAO.create(reservation);
 
@@ -200,33 +223,63 @@ public class FlightFacade {
         }
 
         reservationDAO.update(reservation);
+        flightDAO.update(flight);
+        userDAO.update(user);
 
         return reservation;
     }
-    
-    
+
     /**
      * Reserves a ticket at an external flight company.
-     * 
+     *
      * @Author: Nikolaj
      * @Date: 6/12 2015
-     * 
-     * @param reservation           Reservation DTO
+     *
+     * @param reservation Reservation DTO
      * @return
      * @throws IOException
-     * @throws JSONException 
+     * @throws JSONException
      */
-    public JSONObject reserveExternal(ReservationDto reservation) throws IOException, JSONException{
+    public ReservationResponseDto reserveExternal(ReservationDto reservation) throws IOException, JSONException, FlightException {
         Resty resty = new Resty();
-        
-        String lol = new Gson().toJson(reservation);
-        
-        Content content = new Content("application/json",lol.getBytes());
-        
-        return resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", content).toObject();
+
+        String requestData = new Gson().toJson(reservation);
+
+        Content postContent = new Content("application/json", requestData.getBytes());
+
+        JSONObject data = resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", postContent).toObject();
+
+        ReservationResponseDto reservationData = new Gson().fromJson(data.toString(), ReservationResponseDto.class);
+
+        //saveReservation(toEntity(reservation));
+
+        return reservationData;
+    }
+
+    private Reservation toEntity(ReservationDto reservation) {
+        List<Passenger> passengers = new ArrayList<>();
+
+        for (PassengerDto passenger : reservation.getPassengers()) {
+            passengers.add(new Passenger(
+                    passenger.getFirstName(),
+                    passenger.getLastName()
+            ));
+        }
+
+        return new Reservation(
+                0,
+                passengers,
+                reservation.getReserveeName(),
+                reservation.getReserveeEmail(),
+                reservation.getReservePhone()
+        );
+    }
+
+    public List<Reservation> getAllReservationsByUser(String userName) {
+        return reservationDAO.getAllByUser(userName);
     }
     
-    public List<Reservation> getAllReservations(){
+    public List<Reservation> getAllReservations() {
         return reservationDAO.getAll();
     }
 

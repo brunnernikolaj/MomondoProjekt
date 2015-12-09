@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,7 +28,8 @@ import javax.persistence.Table;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Reservation.findAllReservation", query = "SELECT p FROM Reservation p")
+    @NamedQuery(name = "Reservation.findAll", query = "SELECT p FROM Reservation p"),
+    @NamedQuery(name = "Reservation.findAllByUser", query = "SELECT p FROM Reservation p WHERE p.owner.userName = :userName")
 })
 @Table(name = "RESERVATIONS")
 public class Reservation {
@@ -44,7 +46,11 @@ public class Reservation {
     @JoinColumn(name = "PASSENGER_ID")
     private List<Passenger> passengers;
     
-    @JoinColumn(name = "FLIGHT")
+    @ManyToOne
+    private User owner;
+    
+
+    @ManyToOne
     private Flight flight;
     
     private String ReserveeName;
@@ -67,14 +73,13 @@ public class Reservation {
         this.ReserveeEmail = ReserveeEmail;
         this.ReservePhone = ReservePhone;
     }
-    
-    
+   
     
     public void addPassenger(Passenger passenger) {
         passengers.add(passenger);
     }
     
-    public void removeReservation(Passenger passenger) {
+    public void removePassenger(Passenger passenger) {
         if (passengers.contains(passenger)) 
             passengers.remove(passenger);
     }
@@ -83,6 +88,16 @@ public class Reservation {
         return ReserveeName;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    
+    
     public void setReserveeName(String ReserveeName) {
         this.ReserveeName = ReserveeName;
     }
@@ -110,9 +125,7 @@ public class Reservation {
     public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
-
-    
-    
+ 
     public int getId() {
         return id;
     }

@@ -25,7 +25,7 @@ angular.module('myApp', [
  * 
  * @param {type} $routeProvider
  */
-angular.module('myApp').config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+angular.module('myApp').config(['$routeProvider', '$httpProvider','toastrConfig', function($routeProvider, $httpProvider, toastrConfig) {
     
     /**
      * We add auth headers on every http request. See the authentication
@@ -36,7 +36,7 @@ angular.module('myApp').config(['$routeProvider', '$httpProvider', function($rou
     $routeProvider
     .when('/login', {
       templateUrl: 'app/templates/loginForm.html',
-      controller: 'AppCtrl',
+      controller: 'LoginCtrl',
       controllerAs : 'ctrl'
     })
     .when('/signup', {
@@ -48,15 +48,26 @@ angular.module('myApp').config(['$routeProvider', '$httpProvider', function($rou
     })
     .when('/searchresult', {
       templateUrl: 'app/templates/searchresult.html',
-      controller: 'SearchCtrl',
+      controller: 'SearchCtrl'
     })
     .when('/booking', {
       templateUrl: 'app/templates/booking.html',
-      controller: 'BookingCtrl'
+      controller: 'BookingCtrl',
+      auth: 'User'
+    })
+     .when('/my-reservations', {
+      templateUrl: 'app/templates/my-reservations.html',
+      controller: 'MyReservationsCtrl',
+      auth: 'User'
+    })
+    .when('/admin-control', {
+      templateUrl: 'app/templates/admin.html',
+      controller: 'AdminCtrl',
+      auth: 'Admin'
     })
     .when('/', {
       templateUrl: 'app/templates/searchresult.html',
-      controller: 'SearchCtrl',
+      controller: 'SearchCtrl'
     })
     // Make frontpage after Sprint 1, is over.
     // .when('/', {
@@ -65,4 +76,12 @@ angular.module('myApp').config(['$routeProvider', '$httpProvider', function($rou
     //     controllerAs : 'forntpageCtrl'
     // })
     .otherwise({redirectTo: '/'});
+    
+    angular.extend(toastrConfig, {
+    positionClass: 'toast-bottom-left',
+    preventDuplicates: false,
+    preventOpenDuplicates: false,
+    target: 'body'
+  });
+
 }]);

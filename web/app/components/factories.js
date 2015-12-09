@@ -50,7 +50,7 @@ angular.module('myApp').factory('FlightFactory', ["$http", function (http) {
         return flight;
     }]);
 
-angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) {
+angular.module('myApp').factory('ReservationFactory', ["$http", function (http) {
 
         var reservation = {};
 
@@ -60,8 +60,18 @@ angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) 
         };
 
         reservation.reservateExternalTickets = function (ticketRequest) {
-            var url = "api/flightreservation/external";
+            var url = "api/reservation";
             return http.post(url, ticketRequest);
+        };
+        
+        reservation.getAll = function () {
+            var url = "api/reservation";
+            return http.get(url);
+        };
+        
+        reservation.getByUser = function (username) {
+            var url = "api/reservation/user/" + username;
+            return http.get(url);
         };
 
         return reservation;
@@ -77,7 +87,7 @@ angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) 
  * @param angular $q 
  * @returns Object containing methods for alking with the Airport API
  */
-angular.module('myApp').factory('AirportFactoty', ["$http", "$q", function (http, $q) {
+angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http, $q) {
         
         var airports = [];
         
