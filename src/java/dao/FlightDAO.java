@@ -6,9 +6,12 @@
 package dao;
 
 import entity.Flight;
+import exceptions.FlightException;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.TemporalType;
+import javax.ws.rs.core.Response;
 import static org.eclipse.persistence.expressions.ExpressionOperator.nextDay;
 
 /**
@@ -17,10 +20,15 @@ import static org.eclipse.persistence.expressions.ExpressionOperator.nextDay;
  */
 public class FlightDAO extends DataManager<Flight, Integer> {
     
-    public Flight getByFlightNumber(String flightNumber) {
-        return (Flight) this.getManager().createNamedQuery("Flight.findFlightByFlightNumber")
+    public Flight getByFlightNumber(String flightNumber) throws FlightException {
+        try{
+            return (Flight) this.getManager().createNamedQuery("Flight.findFlightByFlightNumber")
            .setParameter("flightNumber", flightNumber)
            .getSingleResult();
+        } catch (NoResultException ex){
+            throw new FlightException("Flight not found", Response.Status.BAD_REQUEST, 3);
+        }
+        
     }
     
     public List<Flight> findFlights(String from, String to, Date date, Date nextDay) {

@@ -23,8 +23,9 @@ public class ReservationDto {
     
     private List<PassengerDto> Passengers;
 
-    public ReservationDto(String flightId, String ReserveeName, String ReserveeEmail, String ReserveePhone, int numberOfSeats, List<PassengerDto> Passengers) {
+    public ReservationDto(String flightId,String username ,String ReserveeName, String ReserveeEmail, String ReserveePhone, int numberOfSeats, List<PassengerDto> Passengers) {
         this.flightID = flightId;
+        this.userName = username;
         this.ReserveeName = ReserveeName;
         this.ReserveeEmail = ReserveeEmail;
         this.ReservePhone = ReserveePhone;

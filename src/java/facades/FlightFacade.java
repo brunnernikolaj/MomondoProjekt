@@ -8,17 +8,21 @@ import dao.UserDAO;
 import dtos.PassengerDto;
 import dtos.ReservationDto;
 import dtos.ReservationResponseDto;
+import entity.Airport;
 import entity.Flight;
 import entity.Passenger;
 import entity.Reservation;
 import entity.User;
 import exceptions.FlightException;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.persistence.TemporalType;
 import javax.ws.rs.core.Response;
 import org.joda.time.DateTime;
@@ -59,11 +63,14 @@ public class FlightFacade {
     /**
      * Private constructor.
      */
-    public FlightFacade() {
+    private FlightFacade() {
         flightDAO = new FlightDAO();
         airportDAO = new AirportDAO();
         reservationDAO = new ReservationDAO();
         userDAO = new UserDAO();
+        
+        flightDAO.create(new Flight("CPH", "SXF", "test123", 10, 60, 100.00, new Date()));
+        flightDAO.create(new Flight("CPH", "SXF", "test1234", 1, 60, 100.00, new Date()));
     }
 
     /**
@@ -84,7 +91,7 @@ public class FlightFacade {
         return instance;
     }
 
-    public Flight getByFlightNumber(String flightNumber) {
+    public Flight getByFlightNumber(String flightNumber) throws FlightException {
         return flightDAO.getByFlightNumber(flightNumber);
     }
 
@@ -195,13 +202,13 @@ public class FlightFacade {
      */
     public Reservation saveReservation(Reservation reservation, String flightId, String userName) throws FlightException {
 
-        Flight flight = getByFlightNumber(flightId);       
-        if (flight == null){
+        Flight flight = getByFlightNumber(flightId);
+        if (flight == null) {
             throw new FlightException("invalid flight id", Response.Status.BAD_REQUEST, 3);
         }
-        
+
         User user = userDAO.find(userName);
-        if (user == null){
+        if (user == null) {
             throw new FlightException("invalid user id", Response.Status.BAD_REQUEST, 3);
         }
 
@@ -241,19 +248,41 @@ public class FlightFacade {
      * @throws JSONException
      */
     public ReservationResponseDto reserveExternal(ReservationDto reservation) throws IOException, JSONException, FlightException {
-        Resty resty = new Resty();
 
-        String requestData = new Gson().toJson(reservation);
+        Flight flight = getByFlightNumber(reservation.getFlightID());
+        
+        if (flight.getNoOfSeats() < reservation.getNumberOfSeats()){
+            throw new FlightException("Not enough tickets", Response.Status.BAD_REQUEST, 2);
+        }
+        
+        //Update number of seats on the flight;
+        flight.setNoOfSeats(flight.getNoOfSeats() - reservation.getNumberOfSeats());       
+        flightDAO.update(flight);
+        
+        Airport originAirport = airportDAO.getAirportByIATA(flight.getIataFrom());
+        Airport destinationAirport = airportDAO.getAirportByIATA(flight.getIataTo());
 
-        Content postContent = new Content("application/json", requestData.getBytes());
+        String origin = String.format("%s (%s)", originAirport.getCity(),flight.getIataFrom());
+        String destination = String.format("%s (%s)", destinationAirport.getCity(),flight.getIataTo());
+        
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(tz);
+        String time = df.format(flight.getTravelDate());
+        
+        ReservationResponseDto returnData = new ReservationResponseDto
+        (
+                reservation.getFlightID(), 
+                origin, 
+                destination,
+                time ,
+                flight.getTravelTime() , 
+                reservation.getReserveeName(), 
+                reservation.getNumberOfSeats(), 
+                reservation.getPassengers()
+        );
 
-        JSONObject data = resty.json("http://angularairline-plaul.rhcloud.com/api/flightreservation", postContent).toObject();
-
-        ReservationResponseDto reservationData = new Gson().fromJson(data.toString(), ReservationResponseDto.class);
-
-        //saveReservation(toEntity(reservation));
-
-        return reservationData;
+        return returnData;
     }
 
     private Reservation toEntity(ReservationDto reservation) {
@@ -278,7 +307,7 @@ public class FlightFacade {
     public List<Reservation> getAllReservationsByUser(String userName) {
         return reservationDAO.getAllByUser(userName);
     }
-    
+
     public List<Reservation> getAllReservations() {
         return reservationDAO.getAll();
     }

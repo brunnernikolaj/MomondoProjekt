@@ -60,6 +60,18 @@ public class Flight {
     public Flight() {
     }
 
+    public Flight(String origin, String destination, String flightNumber, int noOfSeats, int travelTime, Double price, Date date) {
+        this.origin = origin;
+        this.destination = destination;
+        this.flightNumber = flightNumber;
+        this.noOfSeats = noOfSeats;
+        this.travelTime = travelTime;
+        this.price = price;
+        this.date = date;
+    }
+
+    
+    
     public List<Reservation> getReservations() {
         return reservations;
     }

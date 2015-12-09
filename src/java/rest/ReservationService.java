@@ -44,7 +44,7 @@ public class ReservationService {
 
     @Context
     private UriInfo context;
-    FlightFacade flightFacade = new FlightFacade();
+    FlightFacade flightFacade = FlightFacade.getInstance();
     ReservationFacade reservationFacade = new ReservationFacade();
     private Gson gson;
 
@@ -144,6 +144,7 @@ public class ReservationService {
 
         return new ReservationDto(
                 reservation.getFlight().getFlightNumber(),
+                reservation.getOwner().getUserName(),
                 reservation.getReserveeName(),
                 reservation.getReserveeEmail(),
                 reservation.getReservePhone(),

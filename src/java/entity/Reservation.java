@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Reservation.findAll", query = "SELECT p FROM Reservation p"),
-    @NamedQuery(name = "Reservation.findAllByUser", query = "SELECT p FROM Reservation p WHERE p.owner.userName = :userName")
+    @NamedQuery(name = "Reservation.findAllByUser", query = "SELECT p FROM Reservation p WHERE p.owner.userName = :userName AND p.deleted = false")
 })
 @Table(name = "RESERVATIONS")
 public class Reservation {
@@ -38,6 +38,9 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RESERVATION_ID")
     private int id;
+    
+    @Column(name = "DELETED")
+    private boolean deleted = false;
     
     @Column(name = "PRICE")
     private double price;
@@ -95,8 +98,6 @@ public class Reservation {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-
-    
     
     public void setReserveeName(String ReserveeName) {
         this.ReserveeName = ReserveeName;
@@ -156,5 +157,13 @@ public class Reservation {
 
     public void setFlight(Flight flight) {
         this.flight = flight;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

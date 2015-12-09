@@ -313,13 +313,14 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'Fl
  * @Date: 7/12 2015
  * 
  */
-angular.module('myApp').controller('SignupCtrl', ['$scope', 'SignupFactory', 'toastr', function ($scope, SignupFactory, toastr) {
+angular.module('myApp').controller('SignupCtrl', ['$scope','$location', 'SignupFactory', 'toastr', function ($scope,$location, SignupFactory, toastr) {
 
         $scope.user = {};
 
         $scope.signup = function () {
             SignupFactory.signup($scope.user).then(function (result) {
                 toastr.success(result.data);
+                $location.path('/login');
             }, function (error) {
                 toastr.error(error.data);
             });

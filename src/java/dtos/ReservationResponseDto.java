@@ -20,7 +20,7 @@ public class ReservationResponseDto {
 
     private String Destination;
 
-    private Date Date;
+    private String Date;
 
     private int FlightTime;
 
@@ -30,6 +30,17 @@ public class ReservationResponseDto {
 
     private List<PassengerDto> Passengers;
 
+    public ReservationResponseDto(String flightID, String Origin, String Destination, String Date, int FlightTime, String ReserveeName, int numberOfSeats, List<PassengerDto> Passengers) {
+        this.flightID = flightID;
+        this.Origin = Origin;
+        this.Destination = Destination;
+        this.Date = Date;
+        this.FlightTime = FlightTime;
+        this.ReserveeName = ReserveeName;
+        this.numberOfSeats = numberOfSeats;
+        this.Passengers = Passengers;
+    }
+    
     public String getFlightID() {
         return flightID;
     }
@@ -54,11 +65,11 @@ public class ReservationResponseDto {
         this.Destination = Destination;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return Date;
     }
 
-    public void setDate(Date Date) {
+    public void setDate(String Date) {
         this.Date = Date;
     }
 
