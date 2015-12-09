@@ -8,20 +8,25 @@
  */
 angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q', function (http, AirportFactory, $q) {
         
-        var lastSearch = null;
-        var maxValue = 0;
+        var lastSearch = {
+            result: null,
+            from: null,
+            to: undefined,
+            time: null,
+            seats: 0,
+            max: 0
+        };
         
         var flight = {};
         
         flight.getLastSearch = function() {
-            return {
-                lastSearch: lastSearch,
-                max: maxValue
-            };
+            return lastSearch;
         }
         
         flight.unpackFlights = function(result) {
-
+            
+            var maxValue = 0;
+            
             result.forEach(function (airline, index) {
 
                 airline.flights.forEach(function (flight, index) {
@@ -44,7 +49,8 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
                     flattened.push(current[j]);
             }
             
-            lastSearch = flattened;
+            lastSearch.result = flattened;
+            lastSearch.max = maxValue;
             
             return $q.when({
                 arr: flattened,
@@ -59,8 +65,12 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
                 throw "An error occured while calling searchForFlights. one of the required arguments is undefined";
             }
             
-            // Format the date
             var date = new Date(time).toISOString();
+            
+            lastSearch.time = date;
+            lastSearch.from = from;
+            lastSearch.to = to;
+            lastSearch.seats = seats;
             
             if (to) {
                 return searchWithDestination(from, to, date, seats).then(function(res) {

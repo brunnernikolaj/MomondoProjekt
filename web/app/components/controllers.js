@@ -186,14 +186,11 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
         
         
         // If the user has already made a search, we get that on load
-        if (FlightFactory.getLastSearch().lastSearch != null) {
-
+        if (FlightFactory.getLastSearch().result != null) {
             var lastSearch = FlightFactory.getLastSearch();
-
             $scope.priceSlider.options.ceil = lastSearch.max;
             $scope.priceSlider.max = lastSearch.max;
-            $scope.results = lastSearch.lastSearch;
-            console.log($scope.results)
+            $scope.results = lastSearch.result;
         }
         
         // handle incomming data
