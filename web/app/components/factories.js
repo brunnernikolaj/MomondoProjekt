@@ -7,12 +7,20 @@
  * @returns Object containing flight factory methods
  */
 angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q', function (http, AirportFactory, $q) {
-
+        
+        var lastSearch = null;
+        var maxValue = 0;
+        
         var flight = {};
         
+        flight.getLastSearch = function() {
+            return {
+                lastSearch: lastSearch,
+                max: maxValue
+            };
+        }
+        
         flight.unpackFlights = function(result) {
-            
-            var maxValue = 0;
 
             result.forEach(function (airline, index) {
 
@@ -35,6 +43,8 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
                 for (var j = 0; j < current.length; ++j)
                     flattened.push(current[j]);
             }
+            
+            lastSearch = flattened;
             
             return $q.when({
                 arr: flattened,

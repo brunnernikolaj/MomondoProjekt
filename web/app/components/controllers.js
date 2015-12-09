@@ -183,7 +183,19 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
         $scope.selectFlight = function (flight) {
             saver.set(flight);
         };
+        
+        
+        // If the user has already made a search, we get that on load
+        if (FlightFactory.getLastSearch().lastSearch != null) {
 
+            var lastSearch = FlightFactory.getLastSearch();
+
+            $scope.priceSlider.options.ceil = lastSearch.max;
+            $scope.priceSlider.max = lastSearch.max;
+            $scope.results = lastSearch.lastSearch;
+            console.log($scope.results)
+        }
+        
         // handle incomming data
         $scope.searchFlights = function () {
             FlightFactory.searchForFlights(from, to, $scope.search.date, $scope.search.seats).then(function(res) {
@@ -247,9 +259,6 @@ angular.module('myApp').controller('MyReservationsCtrl', ['$scope', 'toastr', 'R
         ReservationFactory.getByUser(LoginFactory.getUsername()).then(function (result) {
             $scope.reservations = result.data;
         });
-
-
-
     }]);
 
 angular.module('myApp').controller('AdminCtrl', ['$scope','ReservationFactory', 'toastr',
@@ -258,6 +267,4 @@ angular.module('myApp').controller('AdminCtrl', ['$scope','ReservationFactory', 
         ReservationFactory.getAll().then(function (result) {
             $scope.reservations = result.data;
         });
-
-       
     }]);

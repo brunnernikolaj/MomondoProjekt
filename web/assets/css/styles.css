@@ -61,44 +61,18 @@
 |
 |
 */
-.animated {
-  -webkit-animation-duration: 0.4s;
-  animation-duration: 0.4s;
-  -webkit-animation-fill-mode: both; }
+.ng-enter {
+  transition: 0.75s;
+  opacity: 0; }
 
-.fadeIn {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
-  visibility: visible !important; }
+.ng-enter-stagger {
+  transition-delay: 0.1s; }
 
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
+.ng-enter-active {
+  opacity: 1; }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
-
-@-webkit-keyframes fadeOut {
-  from {
-    opacity: 1; }
-  100% {
-    opacity: 0; } }
-
-@keyframes fadeOut {
-  from {
-    opacity: 1; }
-  100% {
-    opacity: 0; } }
-
-.fadeOut {
-  -webkit-animation-name: fadeOut;
-  animation-name: fadeOut;
-  visibility: visible !important; }
+.ng-leave-active {
+  opacity: 0; }
 
 body {
   font-family: "Open Sans", "Helvetica Neue", Tahoma, sans-serif;

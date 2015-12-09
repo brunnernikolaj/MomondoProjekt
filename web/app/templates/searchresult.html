@@ -86,7 +86,7 @@
         <!-- RESULTS FROM SEARCH -->
         <div class="col-sm-8 col-md-9 results">
 
-            <div class="row resultset animated fadeIn" ng-repeat="flight in results | filter: filterSearch(priceSlider.min,priceSlider.max,durationSlider.value)">
+            <div class="row resultset" ng-repeat="flight in results | filter: filterSearch(priceSlider.min,priceSlider.max,durationSlider.value)">
                 <div class="col-xs-12 col-sm-9">
                     <div class="clearfix departure">
                         <div class="row selskab">
