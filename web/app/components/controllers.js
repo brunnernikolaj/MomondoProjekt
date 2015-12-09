@@ -149,33 +149,33 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
         /*
          * This part is for the autocomplete in the search form.
          */
-        
+
         $scope.pickorigin = function(selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
-            
+
             from = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
         }
 
         $scope.pickdestination = function (selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
-            
+
             to = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
         }
-        
+
         $scope.updateLocations = function (typed) {
-            
+
             if (typed.length < 3) {
                 $scope.locations = "";
                 return;
             }
-           
+
             AirportFactory.getAirportNiceNames(typed).then(function(res) {
                 $scope.locations = res;
             });
         };
-        
+
         /*
          * This part is for the booking of a flight
          */
@@ -186,52 +186,31 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
 
         // handle incomming data
         $scope.searchFlights = function () {
-            
             FlightFactory.searchForFlights(from, to, $scope.search.date, $scope.search.seats).then(function(res) {
-                unpackFlights(res);
+
+                if (res[0] != undefined) {
+                    unpackFlights(res);
+                } else {
+                    $scope.results = null;
+                    toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
+                }
             });
         };
 
         //Function for unpacking resultdata from the server
         var unpackFlights = function (result) {
-            
-            if (result[0] != null) {
-                var maxValue = 0;
 
-                result.forEach(function (airline, index) {
+            FlightFactory.unpackFlights(result).then(function(res) {
 
-                    airline.flights.forEach(function (flight, index) {
-                        flight.airline = airline.airline;
-                        var date = new Date(flight.date);
-                        flight.endDate = new Date(date.setMinutes(date.getMinutes() + flight.traveltime)).toISOString();
-
-                        if (flight.totalPrice > maxValue) {
-                            maxValue = flight.totalPrice;
-                        }
-                    });
-                })
-
-                //Select all flight arrays and then flatten them to one array
-                var flights = result.map(airline => airline.flights);
-                var flattened = [];
-                for (var i = 0; i < flights.length; ++i) {
-                    var current = flights[i];
-                    for (var j = 0; j < current.length; ++j)
-                        flattened.push(current[j]);
-                }
-
-                // Filter the results
-                $scope.priceSlider.options.ceil = maxValue;
-                $scope.priceSlider.max = maxValue;
+                $scope.priceSlider.options.ceil = res.max;
+                $scope.priceSlider.max = res.max;
 
                 // We return the result here, then append the names once they are fetched
-                $scope.results = flattened;
-                
-                FlightFactory.attachAirportNames(flattened);
+                $scope.results = res.arr;
 
-            } else {
-                $scope.results = null;
-            }
+                FlightFactory.attachAirportNames(res.arr);
+
+            });
         };
     }]);
 

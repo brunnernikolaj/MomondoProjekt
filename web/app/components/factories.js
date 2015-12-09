@@ -6,15 +6,48 @@
  * @param angular http
  * @returns Object containing flight factory methods
  */
-angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', function (http, AirportFactory) {
+angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q', function (http, AirportFactory, $q) {
 
         var flight = {};
         
+        flight.unpackFlights = function(result) {
+            
+            var maxValue = 0;
+
+            result.forEach(function (airline, index) {
+
+                airline.flights.forEach(function (flight, index) {
+                    flight.airline = airline.airline;
+                    var date = new Date(flight.date);
+                    flight.endDate = new Date(date.setMinutes(date.getMinutes() + flight.traveltime)).toISOString();
+
+                    if (flight.totalPrice > maxValue) {
+                        maxValue = flight.totalPrice;
+                    }
+                });
+            })
+
+            //Select all flight arrays and then flatten them to one array
+            var flights = result.map(airline => airline.flights);
+            var flattened = [];
+            for (var i = 0; i < flights.length; ++i) {
+                var current = flights[i];
+                for (var j = 0; j < current.length; ++j)
+                    flattened.push(current[j]);
+            }
+            
+            return $q.when({
+                arr: flattened,
+                max: maxValue
+            });
+        }
+        
+        
         flight.searchForFlights = function(from, to, time, seats) {
             
-            //if (from === undefined || from === "" || time === undefined || time === "" || seats === undefined || seats === "") {
-                // Not really sure yet.
-            //}
+            if (from == undefined || from == "" || time == undefined || time ==="" || seats == undefined || seats == "") {
+                throw "An error occured while calling searchForFlights. one of the required arguments is undefined";
+            }
             
             // Format the date
             var date = new Date(time).toISOString();
@@ -29,7 +62,6 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', fun
                 });
             }
         }
-        
         
         
         flight.attachAirportNames = function(flights) {
