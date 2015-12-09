@@ -39,6 +39,11 @@ angular.module('myApp').factory('ReservationFactory', ["$http", function (http) 
             return http.post(url, ticketRequest);
         };
         
+        reservation.getAll = function () {
+            var url = "api/reservation";
+            return http.get(url);
+        };
+        
         reservation.getByUser = function (username) {
             var url = "api/reservation/user/" + username;
             return http.get(url);

@@ -58,6 +58,11 @@ angular.module('myApp').config(['$routeProvider', '$httpProvider','toastrConfig'
      .when('/my-reservations', {
       templateUrl: 'app/templates/my-reservations.html',
       controller: 'MyReservationsCtrl',
+      auth: 'User'
+    })
+    .when('/admin-control', {
+      templateUrl: 'app/templates/admin.html',
+      controller: 'AdminCtrl',
       auth: 'Admin'
     })
     .when('/', {

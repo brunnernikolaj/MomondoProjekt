@@ -1,3 +1,5 @@
+/* global airline */
+
 /**
  * Main app controller
  * 
@@ -27,7 +29,7 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$rootScope', '$locatio
             $scope.authenticated = args.isLoggedIn();
             $scope.username = args.getUsername();
             toastr.success('', 'Du er nu logget ind');
-            
+
             //Send the user to the page they were trying to visit, otherwise go to front page
             if (typeof $rootScope.savedLocation !== 'undefined') {
                 $location.path($rootScope.savedLocation);
@@ -35,7 +37,7 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$rootScope', '$locatio
             } else {
                 $location.path('/');
             }
-            
+
         });
 
         $scope.$on('auth:failedLogin', function (event, args) {
@@ -51,16 +53,17 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$rootScope', '$locatio
         });
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
-            
-            if (!LoginFactory.isLoggedIn()) {
-                $rootScope.savedLocation = $location.url();
-                toastr.error('Du skal være logget ind for at forsætte');
-                $location.path('/login');
-            }           
+            if (next.auth) { //If view requires login
+                if (!LoginFactory.isLoggedIn()) {
+                    $rootScope.savedLocation = $location.url();
+                    toastr.error('Du skal være logget ind for at forsætte');
+                    $location.path('/login');
+                }
 
-            if (!LoginFactory.isRole(next.auth)) {
-                toastr.error('Du har ikke adgang til dette område');
-                $location.path('/');
+                else if (!LoginFactory.isRole(next.auth)) {
+                    toastr.error('Du har ikke adgang til dette område');
+                    $location.path('/');
+                }
             }
         });
 
@@ -69,7 +72,8 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$rootScope', '$locatio
         };
     }]);
 
-angular.module('myApp').controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'LoginFactory', 'toastr', function ($scope, $rootScope, $location, LoginFactory, toastr) {
+angular.module('myApp').controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'LoginFactory', 'toastr',
+    function ($scope, $rootScope, $location, LoginFactory, toastr) {
 
 
         // Login logout app interface for talking with the auth object.
@@ -81,7 +85,8 @@ angular.module('myApp').controller('LoginCtrl', ['$scope', '$rootScope', '$locat
         };
     }]);
 
-angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toastr', "FlightSaver", 'ReservationFactory', 'LoginFactory', function ($scope, location, toastr, saver, ReservationFactory, LoginFactory) {
+angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toastr', "FlightSaver", 'ReservationFactory', 'LoginFactory',
+    function ($scope, location, toastr, saver, ReservationFactory, LoginFactory) {
 
         $scope.flight = saver.get();
         $scope.reservation = {Passengers: []};
@@ -96,7 +101,7 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
 
             $scope.reservation.userName = LoginFactory.getUsername();
 
-            ReservationFactoty.reservateExternalTickets($scope.reservation);
+            ReservationFactory.reservateExternalTickets($scope.reservation);
 
         };
     }]);
@@ -109,7 +114,8 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
  * 
  * @returns {undefined}
  */
-angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'FlightSaver', 'AirportFactory', 'toastr', function ($scope, FlightFactoty, saver, AirportFactory, toastr) {
+angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'FlightSaver', 'AirportFactory', 'toastr',
+    function ($scope, FlightFactoty, saver, AirportFactory, toastr) {
 
         var from, to;
         $scope.cities = [];
@@ -295,6 +301,13 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'Fl
         };
     }]);
 
+/**
+ * Controller for signup form 
+ * 
+ * @Author: Nikolaj Brünner
+ * @Date: 7/12 2015
+ * 
+ */
 angular.module('myApp').controller('SignupCtrl', ['$scope', 'SignupFactory', 'toastr', function ($scope, SignupFactory, toastr) {
 
         $scope.user = {};
@@ -308,12 +321,30 @@ angular.module('myApp').controller('SignupCtrl', ['$scope', 'SignupFactory', 'to
         };
     }]);
 
-angular.module('myApp').controller('MyReservationsCtrl', ['$scope', 'toastr', 'ReservationFactory', 'LoginFactory', function ($scope, toastr, ReservationFactory, LoginFactory) {
+/**
+ * Controller for user reservation page
+ * 
+ * @Author: Nikolaj Brünner
+ * @Date: 7/12 2015 
+ * 
+ */
+angular.module('myApp').controller('MyReservationsCtrl', ['$scope', 'toastr', 'ReservationFactory', 'LoginFactory',
+    function ($scope, toastr, ReservationFactory, LoginFactory) {
 
-        ReservationFactory.getByUser(LoginFactory.getUsername()).then(function (result){
+        ReservationFactory.getByUser(LoginFactory.getUsername()).then(function (result) {
             $scope.reservations = result.data;
         });
 
+
+
+    }]);
+
+angular.module('myApp').controller('AdminCtrl', ['$scope','ReservationFactory', 'toastr',
+    function ($scope, ReservationFactory, toastr) {
+        
+        ReservationFactory.getAll().then(function (result) {
+            $scope.reservations = result.data;
+        });
 
        
     }]);
