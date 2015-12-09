@@ -79,7 +79,8 @@ ol.breadcrumb {
 
 body {
   font-family: "Open Sans", "Helvetica Neue", Tahoma, sans-serif;
-  font-weight: 400; }
+  font-weight: 400;
+  overflow-y: scroll; }
 
 a {
   color: #1abc9c; }
