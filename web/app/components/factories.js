@@ -6,7 +6,7 @@
  * @param angular http
  * @returns Object containing flight factory methods
  */
-angular.module('myApp').factory('FlightFactory', ["$http", function (http) {
+angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', function (http, AirportFactory) {
 
         var flight = {};
         
@@ -19,8 +19,6 @@ angular.module('myApp').factory('FlightFactory', ["$http", function (http) {
             // Format the date
             var date = new Date(time).toISOString();
             
-            console.log(from + " - " + to + " - " + date + " - " + seats)
-            
             if (to) {
                 return searchWithDestination(from, to, date, seats).then(function(res) {
                     return res.data;
@@ -30,6 +28,53 @@ angular.module('myApp').factory('FlightFactory', ["$http", function (http) {
                     return res.data;
                 });
             }
+        }
+        
+        
+        
+        flight.attachAirportNames = function(flights) {
+            
+            // Airports we should fetch
+            var airportCodes = [];
+
+            // First we gotta loop through and get all the different iata codes
+            // and prepare the flight object for the new data.
+            for (var i = 0, l = flights.length; i < l; i++) {
+
+                // Prepare for populating later
+                flights[i].originCity = "";
+                flights[i].originName = "";
+                flights[i].destinationCity = "";
+                flights[i].destinationName = "";
+
+                if (airportCodes.indexOf(flights[i].origin) == -1) {
+                    airportCodes.push(flights[i].origin);
+                }
+
+                if (airportCodes.indexOf(flights[i].destination) == -1) {
+                    airportCodes.push(flights[i].destination);
+                }
+            }
+
+            // Now we fetch the airport names.
+            for (var c = 0, d = airportCodes.length; c < d; c++) {
+                AirportFactory.getAirportByIATA(airportCodes[c]).then(function (res) {
+
+                    for (var j = 0; j < flights.length; j++) {
+                        if (flights[j].origin == res.data.IATAcode) {
+                            flights[j].originName = res.data.name;
+                            flights[j].originCity = res.data.city;
+                        }
+
+                        if (flights[j].destination == res.data.IATAcode) {
+                            flights[j].destinationName = res.data.name;
+                            flights[j].destinationCity = res.data.city;
+                        }
+                    }
+                });
+            }
+
+            return flights;
         }
         
         function searchWithNoDestination(from, time, seats) {

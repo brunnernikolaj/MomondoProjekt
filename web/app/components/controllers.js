@@ -226,48 +226,8 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
 
                 // We return the result here, then append the names once they are fetched
                 $scope.results = flattened;
-
-                // Airports we should fetch
-                var airportCodes = [];
-
-                // First we gotta loop through and get all the different iata codes
-                // and prepare the flight object for the new data.
-                for (var i = 0, l = flattened.length; i < l; i++) {
-
-                    // Prepare for populating later
-                    flattened[i].originCity = "";
-                    flattened[i].originName = "";
-                    flattened[i].destinationCity = "";
-                    flattened[i].destinationName = "";
-
-                    if (airportCodes.indexOf(flattened[i].origin) == -1) {
-                        airportCodes.push(flattened[i].origin);
-                    }
-
-                    if (airportCodes.indexOf(flattened[i].destination) == -1) {
-                        airportCodes.push(flattened[i].destination);
-                    }
-                }
-
-                // Now we fetch the airport names.
-                for (var c = 0, d = airportCodes.length; c < d; c++) {
-                    AirportFactory.getAirportByIATA(airportCodes[c]).then(function (res) {
-
-                        for (var j = 0; j < flattened.length; j++) {
-                            if (flattened[j].origin == res.data.IATAcode) {
-                                flattened[j].originName = res.data.name;
-                                flattened[j].originCity = res.data.city;
-                            }
-
-                            if (flattened[j].destination == res.data.IATAcode) {
-                                flattened[j].destinationName = res.data.name;
-                                flattened[j].destinationCity = res.data.city;
-                            }
-                        }
-                    });
-                }
-
-
+                
+                FlightFactory.attachAirportNames(flattened);
 
             } else {
                 $scope.results = null;
