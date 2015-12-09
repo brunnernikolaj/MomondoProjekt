@@ -18,6 +18,7 @@ $font-head: 'Raleway', 'Helvetica Neue', Tahoma, sans-serif;
 body {
 	font-family: $font-stack;
 	font-weight: 400;
+        overflow-y: scroll;
 }
 
 a {
@@ -427,7 +428,7 @@ h1, h2, h3, h4, h5 {
 	text-align: center;
 }
 .signupForm, .bookingform {
-	form.form-horizontal {
+
 		label {
 			color: $primary-white;
 			margin:10px 0;
@@ -441,7 +442,6 @@ h1, h2, h3, h4, h5 {
 			border-radius: 5px;
 		} // label
 		.btn { margin-top:30px;}
-	} // form.form-horizontal
 } // .signupForm
 
 .signupForm {

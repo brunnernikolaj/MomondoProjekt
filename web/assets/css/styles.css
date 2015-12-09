@@ -1,5 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(https://fonts.googleapis.com/css?family=Raleway:500);
+ol.breadcrumb {
+  margin-top: 30px; }
+
 #toast-container > div {
   position: relative;
   overflow: hidden;
@@ -61,48 +64,23 @@
 |
 |
 */
-.animated {
-  -webkit-animation-duration: 0.4s;
-  animation-duration: 0.4s;
-  -webkit-animation-fill-mode: both; }
+.ng-enter {
+  transition: 0.75s;
+  opacity: 0; }
 
-.fadeIn {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
-  visibility: visible !important; }
+.ng-enter-stagger {
+  transition-delay: 0.1s; }
 
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
+.ng-enter-active {
+  opacity: 1; }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
-
-@-webkit-keyframes fadeOut {
-  from {
-    opacity: 1; }
-  100% {
-    opacity: 0; } }
-
-@keyframes fadeOut {
-  from {
-    opacity: 1; }
-  100% {
-    opacity: 0; } }
-
-.fadeOut {
-  -webkit-animation-name: fadeOut;
-  animation-name: fadeOut;
-  visibility: visible !important; }
+.ng-leave-active {
+  opacity: 0; }
 
 body {
   font-family: "Open Sans", "Helvetica Neue", Tahoma, sans-serif;
-  font-weight: 400; }
+  font-weight: 400;
+  overflow-y: scroll; }
 
 a {
   color: #1abc9c; }
@@ -423,7 +401,7 @@ h1, h2, h3, h4, h5 {
 .frontpage-facts {
   text-align: center; }
 
-.signupForm form.form-horizontal label, .bookingform form.form-horizontal label {
+.signupForm label, .bookingform label {
   color: #fefefe;
   margin: 10px 0;
   padding: 5px 10px;
@@ -435,7 +413,7 @@ h1, h2, h3, h4, h5 {
   border-radius: 5px;
   border-radius: 5px; }
 
-.signupForm form.form-horizontal .btn, .bookingform form.form-horizontal .btn {
+.signupForm .btn, .bookingform .btn {
   margin-top: 30px; }
 
 .signupForm {
