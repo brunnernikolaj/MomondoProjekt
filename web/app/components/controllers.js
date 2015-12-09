@@ -101,7 +101,12 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
 
             $scope.reservation.userName = LoginFactory.getUsername();
 
-            ReservationFactory.reservateExternalTickets($scope.reservation);
+            ReservationFactory.reservateExternalTickets($scope.reservation).then(function(result) {
+                toastr.success("Dine billeter er nu bestilt");
+                location.path('/my-reservations');
+            }, function (error) {
+                toastr.error(error.statusText,"Fejl i bestilling");
+            });
 
         };
     }]);
