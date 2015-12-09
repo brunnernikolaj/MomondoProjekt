@@ -84,7 +84,7 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', "FlightSaver",'Rese
  * 
  * @returns {undefined}
  */
-angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'FlightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactoty, saver, AirportFactoty, toastr) {
+angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'FlightSaver', 'AirportFactoty', 'toastr', function ($scope, FlightFactory, saver, AirportFactoty, toastr) {
         
     var from, to;
     $scope.cities = [];
@@ -116,51 +116,39 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'Fl
             return item['totalPrice'] >= min && item['totalPrice'] <= max;
         }
     }  
-        
+        /*
+         * This part is for the autocomplete in the search form.
+         */
         
         $scope.pickorigin = function(selected) {
-
             var airport = selected.split(",");
             airport = airport[2].trim();
-
-            angular.forEach($scope.airports, function(value, key) {
-                if (value.name === airport) {
-                    from = value.IATAcode;
-                }
-            });
+            
+            from = AirportFactoty.getLocalStoredAirportByName(airport).IATAcode;
         }
 
         $scope.pickdestination = function(selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
-
-            angular.forEach($scope.airports, function(value, key) {
-                if (value.name === airport) {
-                    to = value.IATAcode;
-                }
-            });
+            
+            to = AirportFactoty.getLocalStoredAirportByName(airport).IATAcode;
         }
         
-        $scope.invalidFrom = false;
-        $scope.test = function() {
-            $scope.invalidFrom = false;
-            console.log("test")
-        }
-
-        
-        /**
-         * Fetches a list of airports that match the given name.
-         * 
-         * @param {type} typed
-         * @returns {undefined}
-         */
         $scope.updateCities = function (typed) {
-            AirportFactoty.getAirportNames(typed).then(function(res) {
-                if (res !== "") {
-                    $scope.cities = res;
-                }
+            
+            if (typed.length < 3) {
+                $scope.cities = "";
+                return;
+            }
+           
+            AirportFactoty.getAirportNiceNames(typed).then(function(res) {
+                $scope.cities = res;
             });
         }
+        
+        /*
+         * This part is for the booking of a flight
+         */
 
         $scope.selectFlight = function (flight) {
             saver.set(flight);
@@ -168,31 +156,22 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'Fl
 
         // handle incomming data
         $scope.searchFlights = function () {
-
-            var searchQuery = $scope.search;
             
-            // Basic checking for empty values
-            if (from == undefined || from == "" || $scope.search == undefined || $scope.search.date == undefined || $scope.search.date == "") {
-                toastr.error('Alle felter skal udfyldes');
-                return;
-            }
+            var seats = $scope.search.seats;
+            var time = $scope.search.date;
             
-            
-            var date = new Date(searchQuery.date).toISOString();
-            
-            if (to) {
-                FlightFactoty.searchWithDestination(from, to, date, searchQuery.seats).then(unpackFlights);
-            } else {
-                FlightFactoty.searchWithNoDestination(from, date, searchQuery.seats).then(unpackFlights);
-            }
+            FlightFactory.searchForFlights(from, to, time, seats).then(function(res) {
+                unpackFlights(res);
+            });
         };
 
         //Function for unpacking resultdata from the server
         var unpackFlights = function (result) {
-            if (result.data[0] != null) {
+            
+            if (result[0] != null) {
                 var maxValue = 0;
 
-                result.data.forEach(function (airline, index) {
+                result.forEach(function (airline, index) {
 
                     airline.flights.forEach(function (flight, index) {
                         flight.airline = airline.airline;
@@ -206,7 +185,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactoty', 'Fl
                 })
 
                 //Select all flight arrays and then flatten them to one array
-                var flights = result.data.map(airline => airline.flights);
+                var flights = result.map(airline => airline.flights);
                 var flattened = [];
                 for (var i = 0; i < flights.length; ++i) {
                     var current = flights[i];

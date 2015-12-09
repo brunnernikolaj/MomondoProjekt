@@ -6,21 +6,46 @@
  * @param angular http
  * @returns Object containing flight factory methods
  */
-angular.module('myApp').factory('FlightFactoty', ["$http", function (http) {
+angular.module('myApp').factory('FlightFactory', ["$http", function (http) {
 
         var flight = {};
-
-        flight.searchWithNoDestination = function (from, time, seats) {
+        
+        flight.searchForFlights = function(from, to, time, seats) {
+            
+            //if (from === undefined || from === "" || time === undefined || time === "" || seats === undefined || seats === "") {
+                // Not really sure yet.
+            //}
+            
+            // Format the date
+            var date = new Date(time).toISOString();
+            
+            console.log(from, to, time, seats)
+            
+            if (to) {
+                return searchWithDestination(from, to, date, seats).then(function(res) {
+                    return res.data;
+                });
+            } else {
+                return searchWithNoDestination(from, date, seats).then(function(res) {
+                    console.log(res)
+                    return res.data;
+                });
+            }
+        }
+        
+        function searchWithNoDestination(from, time, seats) {
             var url = "api/search/" + from + "/" + time + "/" + seats;
 
             return http.get(url);
         };
 
-        flight.searchWithDestination = function (from, to, time, seats) {
+        function searchWithDestination(from, to, time, seats) {
             var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
 
             return http.get(url);
         };
+        
+        
 
         return flight;
     }]);
@@ -49,54 +74,92 @@ angular.module('myApp').factory('ReservationFactoty', ["$http", function (http) 
  * @Date: 5/12 2015
  * 
  * @param angular $http 
+ * @param angular $q 
  * @returns Object containing methods for alking with the Airport API
  */
 angular.module('myApp').factory('AirportFactoty', ["$http", "$q", function (http, $q) {
         
-        var baseUrl = "api/airport/";
+        var airports = [];
+        
         var airport = {};
-
+        
+        airport.getAirports = function() {
+            return airports;
+        }
+        
         airport.getAirportsByCity = function (name) {
             var url = "api/airport/city/" + name;
             return http.get(url);
-        }
+        };
 
         airport.getAirportByIATA = function (iata) {
             var url = "api/airport/" + iata;
             return http.get(url);
-        }
+        };
 
         airport.isValidAirport = function (city) {
             var url = "api/airport/valid/" + city;
             return http.get(url);
+        };
+        
+        /**
+         * Get local stored airport by name.
+         * 
+         * @param {type} name
+         * @returns {unresolved}
+         */
+        airport.getLocalStoredAirportByName = function(name) {
+            
+            for (var i = 0, l = airports.length; i < l; i++) {
+                if (airports[i].name.toLowerCase() == name.toLowerCase()) {
+                    return airports[i];
+                }
+            }
+            
+            throw "An error occured calling getAirportByName. Trying to get airport name when no local airports are stored";
         }
         
-        airport.getAirportNames = function(str) {
+        /**
+         * Get airports from string
+         * 
+         * @param {type} str
+         * @returns {unresolved}
+         */
+        airport.getAirportNiceNames = function(str) {
             
             // We wont call the server, if the string is less then 3 long
             // But we return an empty promise instead
             if (str.length < 3) {
-                return $q.when("");
+                throw "getAirportNames expects an input of a string that is atleast 3 characters long";
             }
             
-            /**
-             * The then function returns a promise by itself, so
-             * we can actually handle data in here, and then return the promise.
-             */
-            var promise = http.get("api/airport/city/" + str).then(function(response) {
+            var airportNames = [];
+            
+            // We fetch the list when a character list contains of 3 letters
+            // so its safe to look up locally after.
+            if (str.length > 3) {
                 
-                // We run through the list, and get the info needed
-                var airports = [];
-                
-                for (var i = 0, l = response.data.length; i < l; i++) {
-                    airports.push(response.data[i].country + ", " + response.data[i].city + ", " + response.data[i].name);
+                for (var i = 0, l = airports.length; i < l; i++) {
+                    if (str == airports[i].city.substring(0, str.length).toLowerCase()) {
+                        airportNames.push(airports[i].country + ", " + airports[i].city + ", " + airports[i].name);
+                    }
                 }
                  
-                return airports;
-            });
+                return $q.when(airportNames);
+            }
+           
             
-            return promise;
-        }   
+            return airport.getAirportsByCity(str).then(function(response) {
+                
+                airports = response.data;
+                
+                for (var i = 0, l = response.data.length; i < l; i++) {
+                    airportNames.push(response.data[i].country + ", " + response.data[i].city + ", " + response.data[i].name);
+                }
+                 
+                return airportNames;
+            });
+        };   
 
         return airport;
     }]);
