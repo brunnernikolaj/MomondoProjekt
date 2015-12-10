@@ -166,9 +166,9 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
         }
     };
 
-        $scope.filterSearch = function (min, max, duration) {
+        $scope.filterSearch = function () {
             return function (item) {
-                if (item['traveltime'] > duration * 60)
+                if (item['traveltime'] > $scope.durationSlider.value * 60)
                     return false;
                 
                 var hour = new Date(item['date']).getHours();
@@ -176,11 +176,13 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
                 if(hour > $scope.timeOfDaySlider.max || $scope.timeOfDaySlider.min > hour )
                     return false;
 
-                return item['totalPrice'] >= min && item['totalPrice'] <= max;
+                var price = item['totalPrice'];
+
+                return price >= $scope.priceSlider.min && price <= $scope.priceSlider.max;
             }
-        } 
+        }; 
         /*
-         * This part is for the autocomplete in the search form.
+         * This part is for the autocomplete in the search form
          */
 
         $scope.pickorigin = function(selected) {
@@ -247,7 +249,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
 
                 $scope.priceSlider.options.ceil = res.max;
                 $scope.priceSlider.max = res.max;
-                refreshSlider();
+                refreshSliders();
 
                 // We return the result here, then append the names once they are fetched
                 $scope.results = res.arr;
@@ -257,7 +259,8 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
             });
         };
         
-        var refreshSlider = function () {
+        //Used after sliders are unhidden, to update layout 
+        var refreshSliders = function () {
             $timeout(function () {
                 $scope.$broadcast('rzSliderForceRender');
             });
