@@ -157,7 +157,7 @@ angular.module('security', [])
                             $rootScope.$broadcast('auth:failedLogin', "Brugernavn og password stemmer ikke overens");
                             delete $window.sessionStorage.token;
                             self.authenticated = false;
-                            this.roles = [];
+                            self.roles = [];
                             self.username = "";
                             self.error = data.error;
                         });
