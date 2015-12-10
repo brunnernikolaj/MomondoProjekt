@@ -274,11 +274,17 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
  * @Date: 7/12 2015
  * 
  */
-angular.module('myApp').controller('SignupCtrl', ['$scope','$location', 'SignupFactory', 'toastr', function ($scope,$location, SignupFactory, toastr) {
+angular.module('myApp').controller('SignupCtrl', ['$scope','$location', 'SignupFactory', 'toastr', 
+    function ($scope,$location, SignupFactory, toastr) {
 
         $scope.user = {};
 
         $scope.signup = function () {
+            if (!form.$valid){
+                toastr.error("Udfyld manglende felter");
+                return;
+            }
+            
             SignupFactory.signup($scope.user).then(function (result) {
                 toastr.success(result.data);
                 $location.path('/login');
