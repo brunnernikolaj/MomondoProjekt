@@ -68,7 +68,7 @@
             </div><!-- /pricerange panel -->
 
             <div class="panel panel-default">
-                <div class="panel-heading">Rejsetid <small>- Minutter</small></div>
+                <div class="panel-heading">Rejsetid <small>- Timer</small></div>
                 <div class="panel-body">
                     <div>
                         <div>
@@ -80,6 +80,20 @@
                 </div>
             </div>
 
+             <div class="panel panel-default">
+                <div class="panel-heading">Tidspunkt <small>- Timer</small></div>
+                <div class="panel-body">
+                    <div>
+                        <div>
+                            <rzslider
+                            rz-slider-model="timeOfDaySlider.min"
+                            rz-slider-high="timeOfDaySlider.max"
+                            rz-slider-options="timeOfDaySlider.options"></rzslider>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div><!-- /.filters -->
         <!-- END /SIDEBAR FOR FILTERS -->
 

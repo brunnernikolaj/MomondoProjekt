@@ -119,7 +119,8 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
  * 
  * @returns {undefined}
  */
-angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'FlightSaver', 'AirportFactory', 'toastr', function ($scope, FlightFactory, saver, AirportFactory, toastr) {
+angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFactory', 'FlightSaver', 'AirportFactory', 'toastr', 
+    function ($scope,$timeout ,FlightFactory, saver, AirportFactory, toastr) {
         
     var from, to;
     $scope.cities = [];
@@ -130,22 +131,49 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
         max: 10,
         options: {
             floor: 0,
-            ceil: 0
+            ceil: 0,
+            translate: function(value){
+                return '£' + value
+            }
+        }
+    };
+
+     $scope.timeOfDaySlider = {
+        min: 0,
+        max: 24,
+        options: {
+            floor: 0,
+            ceil: 24,
+            step: 1,
+             translate: function(value){
+                if (value > 9){
+                    return value + ':00';
+                }
+                 return '0' + value + ':00';
+            }
         }
     };
 
     $scope.durationSlider = {
-        value: 200,
+        value: 10,
         options: {
             floor: 0,
-            ceil: 450,
-            step: 5,
+            ceil: 10,
+            step: 1,
+             translate: function(value){
+                return value + ' t';
+            }
         }
     };
 
         $scope.filterSearch = function (min, max, duration) {
             return function (item) {
-                if (item['traveltime'] > duration)
+                if (item['traveltime'] > duration * 60)
+                    return false;
+                
+                var hour = new Date(item['date']).getHours();
+                
+                if(hour > $scope.timeOfDaySlider.max || $scope.timeOfDaySlider.min > hour )
                     return false;
 
                 return item['totalPrice'] >= min && item['totalPrice'] <= max;
@@ -204,6 +232,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
 
                 if (res[0] != undefined) {
                     unpackFlights(res);
+                    
                 } else {
                     $scope.results = null;
                     toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
@@ -218,12 +247,19 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', 'FlightFactory', 'Fl
 
                 $scope.priceSlider.options.ceil = res.max;
                 $scope.priceSlider.max = res.max;
+                refreshSlider();
 
                 // We return the result here, then append the names once they are fetched
                 $scope.results = res.arr;
-
+                
                 FlightFactory.attachAirportNames(res.arr);
 
+            });
+        };
+        
+        var refreshSlider = function () {
+            $timeout(function () {
+                $scope.$broadcast('rzSliderForceRender');
             });
         };
     }]);
