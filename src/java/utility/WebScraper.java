@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.joda.time.DateTime;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,8 +41,8 @@ public class WebScraper {
      * @throws ParseException
      * @throws IOException
      */
-    public static List<Flight> getListOfFlights(String url) throws ParseException, IOException {
-
+    public static List<Flight> getListOfFlights(String url) throws ParseException, IOException {    
+        
         //Get IATA Code From Value
         String subFromUrl   = url.substring(url.indexOf("D_City=") + 7);
         String iataFrom     = subFromUrl.substring(0, subFromUrl.indexOf("&"));
@@ -85,10 +86,19 @@ public class WebScraper {
 
                         Flight flight = new Flight();
                         
+                        String[] timeOfDay = trRowInfo1.get(i).select("td.depdest div.emphasize").text().split(":");
+                        
+                        int hoursOfDay = Integer.parseInt(timeOfDay[0]);
+                        int minutesOfDay =  Integer.parseInt(timeOfDay[1]);
+
+                        DateTime dateTime = new DateTime(travelDate);
+                        dateTime = dateTime.plusHours(hoursOfDay);
+                        dateTime = dateTime.plusMinutes(minutesOfDay);
+                        
                         // Alot of the information, we can just as easely generate
                         flight.setIataFrom(iataFrom);
                         flight.setIataTo(iataTo);
-                        flight.setTravelDate(travelDate);
+                        flight.setTravelDate(dateTime.toDate());
                         flight.setFlightNumber("JF" + CommonService.getRandomNumber(100, 999));
                         flight.setNoOfSeats(CommonService.getRandomNumber(5, 300));
 
@@ -97,7 +107,7 @@ public class WebScraper {
                         String price = "0";
 
                         if (rawInfo1tds != null && rawInfo1tds.size() > 0) {
-                            price = rawInfo1tds.get(0).html();
+                            price = rawInfo1tds.get(0).text();
                         } else {
                             rawInfo1tds = trRowInfo1.get(i).select("td.standardlowfare label.fewseatsleftfare");
                             if (rawInfo1tds != null && rawInfo1tds.size() > 0) {
@@ -117,7 +127,7 @@ public class WebScraper {
                             int minutes = Integer.parseInt(str[2].replaceAll("[^\\d.]", ""));
 
                             if (hours > 0) 
-                                flight.setTravelTime(hours * minutes + minutes);
+                                flight.setTravelTime(hours * 60 + minutes);
                             else 
                                 flight.setTravelTime(minutes);
                         } catch (Exception e) {

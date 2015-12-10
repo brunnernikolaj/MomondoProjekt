@@ -209,7 +209,7 @@ public class FlightService {
             obj.addProperty("flightID", flight.getFlightNumber());
             obj.addProperty("numberOfSeats", seats);
             obj.addProperty("traveltime", flight.getTravelTime());
-            obj.addProperty("totalPrice", flight.getPrice().intValue() * seats);
+            obj.addProperty("totalPrice", flight.getPrice() * seats);
 
             TimeZone tz = TimeZone.getTimeZone("UTC");
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
