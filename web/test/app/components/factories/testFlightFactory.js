@@ -57,23 +57,24 @@ describe('myApp module FlightFactory', function() {
       httpBackend.verifyNoOutstandingRequest();
     });
     
-    it('FlightFactory should contain 1 functions', function () {
-            expect(Object.keys(FlightFactory).length).toEqual(1);
+    it('FlightFactory should contain 4 functions', function () {
+            expect(Object.keys(FlightFactory).length).toEqual(4);
     });
     
-    it('searchForFlights should return a promise that contains flightobjects', function () {
-
+    it('searchForFlights with no destination should return a promise that contains flightobjects', function () {
+        
       // expectGET to make sure this is called once.
       httpBackend.expectGET('api/search/CPH/2015-12-21T23:00:00.000Z/2').respond(returnData);
-
+      
+      
       // We make the http call
-      var returnedPromise = FlightFactory.searchForFlights('CPH', '2015-12-21T23:00:00.000Z', '2');
+      var returnedPromise = FlightFactory.searchForFlights('CPH', 'Tue Dec 22 2015 00:00:00 GMT+0100 (CET)', '2');
 
       // We need to store the result outside of the success function
       var result;
       
       returnedPromise.then(function(response) {
-        result = response.data;
+        result = response;
       });
 
       // We need to flush after a http call to use promises
@@ -88,16 +89,16 @@ describe('myApp module FlightFactory', function() {
     it('searchForFlights should return a promise that contains flightobjects', function () {
 
       // expectGET to make sure this is called once.
-      httpBackend.expectGET('api/search/CPH/ARN/2015-12-28T17:19:16.00Z/2').respond(returnData);
+      httpBackend.expectGET('api/search/CPH/ARN/2015-12-21T23:00:00.000Z/2').respond(returnData);
 
       // We make the http call
-      var returnedPromise = FlightFactory.searchForFlights('CPH', 'ARN', '2015-12-28T18:19:16+01:00', '2');
+      var returnedPromise = FlightFactory.searchForFlights('CPH', 'Tue Dec 22 2015 00:00:00 GMT+0100 (CET)', '2', 'ARN');
 
       // We need to store the result outside of the success function
       var result;
       
       returnedPromise.then(function(response) {
-        result = response.data;
+        result = response;
       });
 
       // We need to flush after a http call to use promises

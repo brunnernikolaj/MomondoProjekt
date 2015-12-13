@@ -230,7 +230,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
         
         // handle incomming data
         $scope.searchFlights = function () {
-            FlightFactory.searchForFlights(from, to, $scope.search.date, $scope.search.seats).then(function(res) {
+            FlightFactory.searchForFlights(from, $scope.search.date, $scope.search.seats, to).then(function(res) {
 
                 if (res[0] != undefined) {
                     unpackFlights(res);

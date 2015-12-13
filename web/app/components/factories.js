@@ -59,9 +59,9 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
         }
         
         
-        flight.searchForFlights = function(from, to, time, seats) {
+        flight.searchForFlights = function(from, time, seats, to) {
             
-            if (from == undefined || from == "" || time == undefined || time ==="" || seats == undefined || seats == "") {
+            if (arguments.length < 3) {
                 throw "An error occured while calling searchForFlights. one of the required arguments is undefined";
             }
             
@@ -73,7 +73,7 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
             lastSearch.seats = seats;
             
             if (to) {
-                return searchWithDestination(from, to, date, seats).then(function(res) {
+                return searchWithDestination(from, date, seats, to).then(function(res) {
                     return res.data;
                 });
             } else {
@@ -131,13 +131,12 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
         
         function searchWithNoDestination(from, time, seats) {
             var url = "api/search/" + from + "/" + time + "/" + seats;
-
             return http.get(url);
         };
 
-        function searchWithDestination(from, to, time, seats) {
+        function searchWithDestination(from, time, seats, to) {
+           
             var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
-
             return http.get(url);
         };
         
