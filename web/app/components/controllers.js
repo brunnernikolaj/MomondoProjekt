@@ -253,7 +253,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
 
                 // We return the result here, then append the names once they are fetched
                 $scope.results = res.arr;
-                
+                console.log($scope.results)
                 FlightFactory.attachAirportNames(res.arr);
 
             });

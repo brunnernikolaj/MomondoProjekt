@@ -9,13 +9,14 @@
  * @param {type} param2
  */
 angular.module('myApp').
-  directive('flightResult', function () {
+  directive('flightResult', function ($templateCache) {
+      
     return {
       restrict: 'E',
       scope: {
         flight: '=result'
       },
-      templateUrl: 'app/partials/flightResult.html',
+      template: $templateCache.get('flightResult.html'),
       link: function(scope, element, attr) {
           
           

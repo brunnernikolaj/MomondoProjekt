@@ -85,3 +85,49 @@ angular.module('myApp').config(['$routeProvider', '$httpProvider','toastrConfig'
   });
 
 }]);
+
+
+/**
+ * I know this seems messy, bun in order to be able to test, we need to have this already
+ * loaded into the dom and we do this by using angulars $templateCache service. 
+ * 
+ * It should be put in a seperate file, and I will look into that, once
+ * the test is up and running.
+ * 
+ * @param {type} param
+ */
+angular.module('myApp').run(function($templateCache) {
+    $templateCache.put('flightResult.html', 
+        '<div class="col-xs-12 col-sm-9">' +
+        '<div class="clearfix departure">' +
+            '<div class="row selskab">' +
+                '<div class="col-xs-12">' +
+                 '   <span class="selskabsnavn" id="tester">{{flight.airline}}</span>' +
+               ' </div>' +
+          '  </div>' +
+           ' <div class="col-xs-3 col-sm-3 col-md-2 company">' +
+           '     <img src="http://placehold.it/64x64" class="img-responsive">' +
+           ' </div>' +
+           ' <div class="col-xs-9 col-sm-9 col-md-3 departureinfo">' +
+           '     <h4>{{flight.origin}} {{flight.date| date:\'HH:mm\'}} <small>{{flight.originCity}}</small></h4>' +
+           ' </div>' +
+          '  <div class="col-xs-3 col-sm-3 col-md-3 traveltime">' +
+           '     <h5 class="time">{{flight.traveltime| traveltime}}</h5>' +
+         '       <div class="timeline"></div>' +
+         '       <p>direkte</p>' +
+         '   </div>' +
+        '    <div class="col-xs-9 col-sm-9 col-md-3 arrivalinfo">' +
+        '       <h4>{{flight.endDate| date:\'HH:mm\'}} {{flight.destination}} <small>{{flight.destinationCity}}</small></h4>' +
+        '    </div>' +
+       ' </div><!-- /.row.departure -->' +
+    '</div><!-- /.col-xs-12.col-sm-8 -->' +
+    '<div class="col-xs-12 col-sm-3 pricearea">' +
+      '  <!--<p class="airline-heading">{{flight.airline}}</p>-->' +
+       ' <div class="row prices">' +
+       '     <div class="col-xs-12 grouppassengers" ng-hide="flight.numberOfSeats <= 1">{{flight.totalPrice}} EUR <i class="fa fa-users"></i></div>' +
+       '    <div class="col-xs-12 singlepassenger">{{flight.totalPrice / flight.numberOfSeats}} EUR <i class="fa fa-user"></i></div>' +
+       ' </div>' +
+       ' <a ng-click="selectFlight(flight)" href="#/booking" class="btn btn-success"><i class="fa fa-plus"></i> Book Nu</a>' +
+    '</div>'
+        );
+});
