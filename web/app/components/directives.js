@@ -14,7 +14,8 @@ angular.module('myApp').
     return {
       restrict: 'E',
       scope: {
-        flight: '=result'
+        flight: '=result',
+        reserve: '=reserve'
       },
       template: $templateCache.get('flightResult.html'),
       link: function(scope, element, attr) {

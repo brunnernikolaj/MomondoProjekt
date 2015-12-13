@@ -89,10 +89,13 @@ angular.module('myApp').config(['$routeProvider', '$httpProvider','toastrConfig'
 
 /**
  * I know this seems messy, bun in order to be able to test, we need to have this already
- * loaded into the dom and we do this by using angulars $templateCache service. 
+ * loaded into the dom and we do this by using angulars $templateCache service for get/set
+ * of html templates. 
  * 
  * It should be put in a seperate file, and I will look into that, once
  * the test is up and running.
+ * 
+ * and by the way, .run runs after the entire angular js app has been bootstrapped
  * 
  * @param {type} param
  */
@@ -127,7 +130,7 @@ angular.module('myApp').run(function($templateCache) {
        '     <div class="col-xs-12 grouppassengers" ng-hide="flight.numberOfSeats <= 1">{{flight.totalPrice}} EUR <i class="fa fa-users"></i></div>' +
        '    <div class="col-xs-12 singlepassenger">{{flight.totalPrice / flight.numberOfSeats}} EUR <i class="fa fa-user"></i></div>' +
        ' </div>' +
-       ' <a ng-click="selectFlight(flight)" href="#/booking" class="btn btn-success"><i class="fa fa-plus"></i> Book Nu</a>' +
+       ' <a ng-click="reserve(flight)" href="#/booking" class="btn btn-success"><i class="fa fa-plus"></i> Book Nu</a>' +
     '</div>'
         );
 });

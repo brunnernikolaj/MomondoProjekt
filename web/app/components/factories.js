@@ -20,6 +20,14 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
         var flight = {};
         
         flight.getLastSearch = function() {
+            
+            // We provide support for localstorage, if supported
+            if (localStorage.lastSearch != undefined) {
+                var obj = localStorage.lastSearch;
+                var res = JSON.parse(obj);
+                return res;
+            }
+            
             return lastSearch;
         }
         
@@ -51,6 +59,13 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
             
             lastSearch.result = flattened;
             lastSearch.max = maxValue;
+            
+            // We store the result in local storage aswell, so it's still there if
+            // the user updates his browser window
+            if(typeof(Storage) !== "undefined") {
+                var obj = JSON.stringify(lastSearch);
+                localStorage.setItem("lastSearch", obj);
+            } 
             
             return $q.when({
                 arr: flattened,
@@ -278,14 +293,31 @@ angular.module('myApp').factory('FlightSaver', function () {
     
     var flightSaver = {};
     
-    var savedData;
+    var savedData = undefined;
 
     flightSaver.set = function (data) {
+        
         savedData = data;
+        
+        if(typeof(Storage) !== "undefined") {
+            var obj = JSON.stringify(savedData);
+            localStorage.setItem("savedData", obj);
+        } 
     };
 
     flightSaver.get = function () {
-        return savedData;
+        
+        if (savedData != undefined) {
+            return savedData;
+        }
+        
+        if (localStorage.lastSearch != undefined) {
+            var obj = localStorage.savedData;
+            var res = JSON.parse(obj);
+            return res;
+        }
+        
+        throw "No data has been saved in FlightSaver, so it is not possible to retrieve any.";
     };
 
 
