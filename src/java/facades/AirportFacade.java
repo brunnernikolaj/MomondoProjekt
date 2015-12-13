@@ -92,7 +92,7 @@ public class AirportFacade {
         try {
             dao.getAirportByIATA("CPH");
         } catch (NoResultException e) {
-             dao.deleteAll("AIRPORTS");
+            dao.deleteAll("AIRPORTS");
             List<Airport> airports = AirportScraper.fetchAiportData();
             dao.createFromList(airports);
         }

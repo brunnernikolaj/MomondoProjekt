@@ -1,5 +1,8 @@
 package dao;
 
+import com.microsoft.sqlserver.jdbc.SQLServerBulkCopy;
+import com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement;
+import com.microsoft.sqlserver.jdbc.SQLServerStatement;
 import deploy.DeploymentConfiguration;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -71,7 +74,7 @@ public abstract class DataManager<T, PK> {
      * @param entities List of entities to create
      */
     public void createFromList(List<T> entities) {
-        // Now save the flights
+      
         if (entities != null || entities.size() > 0) {
             transaction.begin();
             for (T entity : entities) 

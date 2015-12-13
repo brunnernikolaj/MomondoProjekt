@@ -86,8 +86,8 @@ rzslider .rz-pointer {
   cursor: pointer;
   background-color: #1abc9c;
   -webkit-border-radius: 16px;
-     -moz-border-radius: 16px;
-          border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
 }
 
 rzslider .rz-pointer:after {

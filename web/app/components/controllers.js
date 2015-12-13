@@ -279,7 +279,7 @@ angular.module('myApp').controller('SignupCtrl', ['$scope','$location', 'SignupF
 
         $scope.user = {};
 
-        $scope.signup = function () {
+        $scope.signup = function (form) {
             if (!form.$valid){
                 toastr.error("Udfyld manglende felter");
                 return;

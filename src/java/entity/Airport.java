@@ -18,6 +18,7 @@ import javax.persistence.Table;
  * @Author: Casper Schultz
  */
 @Entity
+
 @Table(name = "AIRPORTS")
 @NamedQueries({
     @NamedQuery(name = "Airport.findAirportByIATA", query = "SELECT p FROM Airport p WHERE p.IATAcode = :IATAcode"),
