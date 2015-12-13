@@ -244,6 +244,10 @@ angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http
             throw "An error occured calling getAirportByName. Trying to get airport name when no local airports are stored";
         }
         
+        airport.getAirport = function(name) {
+            return http.get('api/airport/lookup/' + name);
+        };
+        
         /**
          * Get airports from string
          * 
