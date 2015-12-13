@@ -5,6 +5,7 @@
  */
 package searchengine;
 
+import dao.WebsiteDAO;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -26,13 +27,12 @@ import us.monoid.json.JSONObject;
 public class SearchEngine {
 
     ExecutorService threadPool;
+    private Stream<String> urls;
 
     public SearchEngine() {
         threadPool = Executors.newFixedThreadPool(8);
-    }
-
-
-    private final Stream<String> urls = Stream.of("http://localhost:8080","http://angularairline-plaul.rhcloud.com");
+        urls = new WebsiteDAO().getAll().stream().map(x -> x.getUrl());
+    } 
 
     public <T extends AbstractSearchTask> JSONArray  search(Function<String,T> ctor) throws InterruptedException {
         
