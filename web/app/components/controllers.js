@@ -124,18 +124,19 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', '$timeout', 'FlightF
     function ($scope, $timeout, FlightFactory, saver, AirportFactory, toastr) {
 
         $scope.cities = [];
-        $scope.pagedResults = [];
+        
         $scope.airports = undefined;
 
+        //Stuff Used for pagination  
+        $scope.pagedResults = [];
         $scope.currentPage = 1;
         $scope.numPerPage = 10;
         $scope.maxSize = 5;
         $scope.resultSize = 1;
 
-        $scope.$watch("currentPage + numPerPage", function () {
+        $scope.$watch("currentPage", function () {
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
-
             
             $scope.pagedResults = $scope.results.slice(begin, end);
         });
@@ -149,6 +150,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', '$timeout', 'FlightF
             $scope.resultSize = filtered.length;
             $scope.pagedResults = filtered.slice(begin, end);
         });
+        //End stuff for pagination
 
         $scope.priceSlider = {
             min: 0,
