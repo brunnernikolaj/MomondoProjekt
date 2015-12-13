@@ -21,6 +21,10 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
         
         flight.getLastSearch = function() {
             
+            if (lastSearch.result != null) {
+                return lastSearch;
+            }
+            
             // We provide support for localstorage, if supported
             if (localStorage.lastSearch != undefined) {
                 var obj = localStorage.lastSearch;
@@ -28,7 +32,7 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
                 return res;
             }
             
-            return lastSearch;
+            throw = "FlightFactory: The object lastSearch has not been set, so there is no value to retrieve";
         }
         
         flight.unpackFlights = function(result) {
