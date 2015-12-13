@@ -2,19 +2,19 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
-                <form class="form-horizontal">
+                <form class="form-horizontal" ng-model="search">
                     <div class="col-sm-3">
                         <label class="control-label">Afrejse</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plane"></i></span>
-                            <autocomplete attr-placeholder="Origin" data="locations" on-select="pickorigin" on-type="updateLocations" required></autocomplete>
+                            <autocomplete ng-model="search.from" attr-placeholder="Origin" data="locations" on-select="pickorigin" on-type="updateLocations" required></autocomplete>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <label class="control-label">Destination</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plane"></i></span>
-                            <autocomplete attr-placeholder="Destination" data="locations" on-select="pickdestination" on-type="updateLocations"></autocomplete>
+                            <autocomplete ng-model="search.to" attr-placeholder="Destination" data="locations" on-select="pickdestination" on-type="updateLocations"></autocomplete>
                         </div>
                     </div>
                     <div class="col-sm-3">

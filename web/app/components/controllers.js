@@ -18,6 +18,7 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$rootScope', '$locatio
         // App variables
         $scope.title = "JustFly";
         $scope.project = "JustFly";
+        $scope.search = {};
 
         // Login variables
         $scope.authenticated = LoginFactory.isLoggedIn();
@@ -122,7 +123,6 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
 angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFactory', 'FlightSaver', 'AirportFactory', 'toastr', 
     function ($scope,$timeout ,FlightFactory, saver, AirportFactory, toastr) {
         
-    var from, to;
     $scope.cities = [];
     $scope.airports = undefined;
 
@@ -188,15 +188,15 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
         $scope.pickorigin = function(selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
-
-            from = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
+            
+            $scope.search.from = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
         }
 
         $scope.pickdestination = function (selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
 
-            to = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
+            $scope.search.to = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
         }
 
         $scope.updateLocations = function (typed) {
@@ -226,11 +226,16 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
             $scope.priceSlider.options.ceil = lastSearch.max;
             $scope.priceSlider.max = lastSearch.max;
             $scope.results = lastSearch.result;
+            
+            $scope.search.to = lastSearch.to;
+            $scope.search.from = lastSearch.from;
+            $scope.search.seats = lastSearch.seats;
+            $scope.search.date = new Date(lastSearch.time);
         }
         
         // handle incomming data
         $scope.searchFlights = function () {
-            FlightFactory.searchForFlights(from, $scope.search.date, $scope.search.seats, to).then(function(res) {
+            FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function(res) {
 
                 if (res[0] != undefined) {
                     unpackFlights(res);

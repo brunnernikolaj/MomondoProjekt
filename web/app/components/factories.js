@@ -32,7 +32,7 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
                 return res;
             }
             
-            throw "FlightFactory: The object lastSearch has not been set, so there is no value to retrieve";
+            return lastSearch;
         }
         
         flight.unpackFlights = function(result) {
@@ -84,19 +84,20 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
                 throw "An error occured while calling searchForFlights. one of the required arguments is undefined";
             }
             
-            var date = new Date(time).toISOString();
+            var date = new Date(time);
             
+            // We store the search
             lastSearch.time = date;
             lastSearch.from = from;
             lastSearch.to = to;
             lastSearch.seats = seats;
             
             if (to) {
-                return searchWithDestination(from, date, seats, to).then(function(res) {
+                return searchWithDestination(from, date.toISOString(), seats, to).then(function(res) {
                     return res.data;
                 });
             } else {
-                return searchWithNoDestination(from, date, seats).then(function(res) {
+                return searchWithNoDestination(from, date.toISOString(), seats).then(function(res) {
                     return res.data;
                 });
             }
