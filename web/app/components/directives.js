@@ -18,6 +18,7 @@ angular.module('myApp').
       templateUrl: 'app/partials/flightResult.html',
       link: function(scope, element, attr) {
           
+          
           element.on('mouseover', function(event) {
               element.css({
                 opacity: '0.8'
@@ -30,5 +31,12 @@ angular.module('myApp').
                });
           });
       }
+    };
+  });
+
+angular.module('myApp').
+  directive('noResult', function () {
+    return {
+      templateUrl: 'app/partials/noResult.html'
     };
   });
