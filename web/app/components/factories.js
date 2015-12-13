@@ -32,7 +32,7 @@ angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q
                 return res;
             }
             
-            throw = "FlightFactory: The object lastSearch has not been set, so there is no value to retrieve";
+            throw "FlightFactory: The object lastSearch has not been set, so there is no value to retrieve";
         }
         
         flight.unpackFlights = function(result) {
