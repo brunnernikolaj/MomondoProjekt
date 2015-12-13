@@ -18,6 +18,7 @@ angular.module('myApp').controller('AppCtrl', ['$scope', '$rootScope', '$locatio
         // App variables
         $scope.title = "JustFly";
         $scope.project = "JustFly";
+        $scope.search = {};
 
         // Login variables
         $scope.authenticated = LoginFactory.isLoggedIn();
@@ -122,9 +123,9 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
 angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFactory', 'FlightSaver', 'AirportFactory', 'toastr', 
     function ($scope,$timeout ,FlightFactory, saver, AirportFactory, toastr) {
         
-    var from, to;
     $scope.cities = [];
     $scope.airports = undefined;
+
 
     $scope.priceSlider = {
         min: 0,
@@ -181,22 +182,23 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
                 return price >= $scope.priceSlider.min && price <= $scope.priceSlider.max;
             }
         }; 
-        /*
-         * This part is for the autocomplete in the search form
-         */
+        
 
+        /**
+         * If the user uses the autocomplete by picking a value, we uses those
+         */
         $scope.pickorigin = function(selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
-
-            from = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
+            
+            $scope.search.from = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
         }
 
         $scope.pickdestination = function (selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
 
-            to = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
+            $scope.search.to = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
         }
 
         $scope.updateLocations = function (typed) {
@@ -226,20 +228,71 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
             $scope.priceSlider.options.ceil = lastSearch.max;
             $scope.priceSlider.max = lastSearch.max;
             $scope.results = lastSearch.result;
+            
+            $scope.search.to = lastSearch.to;
+            $scope.search.from = lastSearch.from;
+            $scope.search.seats = lastSearch.seats;
+            $scope.search.date = new Date(lastSearch.time);
         }
         
         // handle incomming data
         $scope.searchFlights = function () {
-            FlightFactory.searchForFlights(from, to, $scope.search.date, $scope.search.seats).then(function(res) {
+            
+            // Lets indicate that we are searching;
+            $scope.results = null;
+            var from = false;
+            var to = false;
+            
+            /**
+             * This defo need some refactoring
+             */
+            if ($scope.search.from) {
+                // If the user is only typing and not using autocomplete, we have no idea 
+                // about what from/to is containing, so we want to validate those. 
+                AirportFactory.getAirport($scope.search.from).then(function(res) {
+                    if (res.data == null) {
+                        console.log("Invalid from destination")
+                        console.log($scope.search.from)
+                    } else {
+                        from = true;
+                        console.log( res.data.IATAcode)
+                        $scope.search.from = res.data.IATAcode;
+                        lookup();
+                    }
+                });
+            }
+            
+            if ($scope.search.to) {
+                AirportFactory.getAirport($scope.search.to).then(function(res) {
+                    if (res.data == null) {
+                        console.log("Invalid to destination")
+                        console.log($scope.search.to)
+                    } else {
+                        console.log(res.data.IATAcode)
+                        to = true;
+                        $scope.search.to = res.data.IATAcode;
+                        lookup();
+                    }
+                });
+            } else {
+                to = true;
+                lookup();
+            }
+            
+            function lookup() {
+                if (from && to) {
+                    console.log("Searching")
+                    FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function(res) {
+                        if (res[0] != undefined) {
+                            unpackFlights(res);
 
-                if (res[0] != undefined) {
-                    unpackFlights(res);
-                    
-                } else {
-                    $scope.results = null;
-                    toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
-                }
-            });
+                        } else {
+                            $scope.results = null;
+                            toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
+                        }
+                    });
+                } 
+            }
         };
 
         //Function for unpacking resultdata from the server
@@ -250,12 +303,10 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
                 $scope.priceSlider.options.ceil = res.max;
                 $scope.priceSlider.max = res.max;
                 refreshSliders();
-
+                    
                 // We return the result here, then append the names once they are fetched
                 $scope.results = res.arr;
-                
                 FlightFactory.attachAirportNames(res.arr);
-
             });
         };
         
