@@ -132,4 +132,33 @@ public class AirportFacade {
             return false;
         }
     }
+
+    public Airport getAirportsByUnknown(String string) {
+        
+        Airport result = null;
+        
+        
+        try {
+            
+            // First lets see if we can get it with the IATA code
+            result = dao.getAirportByIATA(string);
+            
+        } catch(NoResultException e) {
+            System.out.println("Nothing found by iata code");
+        }
+        
+        try {
+            result = dao.getAirportByCity(string);
+        } catch (Exception e) {
+            System.out.println("Nothing found by city code");
+        } 
+        
+        try {
+            result = dao.getAiportByName(string);
+        } catch(Exception e) {
+            System.out.println("Nothing found by name");
+        }
+        
+        return result;
+    }
 }

@@ -33,6 +33,32 @@ public class AirportDAO extends DataManager<Airport, Integer> {
         return airport;
     }
     
+    public Airport getAiportByName(String name) {
+        
+        Airport airports = (Airport) this.getManager().createNamedQuery("Airport.findAirportByName")
+            .setParameter("name", name)
+            .getSingleResult();
+        
+        return airports;
+    }
+    
+    /**
+     * Finds an aiport by cityname.
+     * 
+     * @Author: Casper Schultz
+     * @Date: 6/12 2015
+     * 
+     * @param city          The airport city to look for
+     * @return              The found airport
+     */
+    public Airport getAirportByCity(String city) {
+        
+        List<Airport> airports = this.getManager().createNamedQuery("Airport.findAirportByCity")
+            .setParameter("city", city)
+            .getResultList();
+        
+        return airports.get(0);
+    }
     
     /**
      * Fetches an airport by city.

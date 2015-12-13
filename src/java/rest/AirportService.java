@@ -57,6 +57,19 @@ public class AirportService {
     }
     
     @GET
+    @Path("lookup/{string}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAiportByUnknown(@PathParam("string") String string) throws FlightException {
+        
+        if (string.length() < 1)
+            throw new FlightException("A minimum character length of 1 is required to fetch an airport", Response.Status.BAD_REQUEST, 4);
+        
+        Airport res = facade.getAirportsByUnknown(string);
+        
+        return gson.toJson(res);
+    }
+    
+    @GET
     @Path("valid/{city}")
     @Produces(MediaType.APPLICATION_JSON)
     public String validateCity(@PathParam("city") String city) throws FlightException {
