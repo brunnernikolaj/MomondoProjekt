@@ -12,6 +12,9 @@ angular.module('myApp').
   directive('flightResult', function () {
     return {
       restrict: 'E',
+      scope: {
+        flight: '=result'
+      },
       templateUrl: 'app/partials/flightResult.html'
     };
   });
