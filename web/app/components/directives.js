@@ -15,6 +15,20 @@ angular.module('myApp').
       scope: {
         flight: '=result'
       },
-      templateUrl: 'app/partials/flightResult.html'
+      templateUrl: 'app/partials/flightResult.html',
+      link: function(scope, element, attr) {
+          
+          element.on('mouseover', function(event) {
+              element.css({
+                opacity: '0.8'
+               });
+          });
+          
+          element.on('mouseleave', function(event) {
+              element.css({
+                opacity: '1'
+               });
+          });
+      }
     };
   });
