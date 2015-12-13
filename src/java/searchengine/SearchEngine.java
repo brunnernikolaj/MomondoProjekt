@@ -57,7 +57,7 @@ public class SearchEngine {
                     flightsInfo.put(obj);
             }
 
-            return flightsInfo.;
+            return flightsInfo;
 
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);

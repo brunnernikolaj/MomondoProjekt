@@ -102,11 +102,11 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
 
             $scope.reservation.userName = LoginFactory.getUsername();
 
-            ReservationFactory.reservateExternalTickets($scope.reservation).then(function(result) {
+            ReservationFactory.reservateExternalTickets($scope.reservation).then(function (result) {
                 toastr.success("Dine billeter er nu bestilt");
                 location.path('/my-reservations');
             }, function (error) {
-                toastr.error(error.statusText,"Fejl i bestilling");
+                toastr.error(error.statusText, "Fejl i bestilling");
             });
 
         };
@@ -120,77 +120,100 @@ angular.module('myApp').controller('BookingCtrl', ['$scope', '$location', 'toast
  * 
  * @returns {undefined}
  */
-angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFactory', 'FlightSaver', 'AirportFactory', 'toastr', 
-    function ($scope,$timeout ,FlightFactory, saver, AirportFactory, toastr) {
+angular.module('myApp').controller("SearchCtrl", ['$scope', '$timeout', 'FlightFactory', 'FlightSaver', 'AirportFactory', 'toastr',
+    function ($scope, $timeout, FlightFactory, saver, AirportFactory, toastr) {
+
+        $scope.cities = [];
+        $scope.pagedResults = [];
+        $scope.airports = undefined;
+
+        $scope.currentPage = 1;
+        $scope.numPerPage = 10;
+        $scope.maxSize = 5;
+        $scope.resultSize = 1;
+
+        $scope.$watch("currentPage + numPerPage", function () {
+            var begin = (($scope.currentPage - 1) * $scope.numPerPage);
+            var end = begin + $scope.numPerPage;
+
+            
+            $scope.pagedResults = $scope.results.slice(begin, end);
+        });
         
-    $scope.cities = [];
-    $scope.airports = undefined;
+        $scope.$watch("priceSlider.max + priceSlider.min + timeOfDaySlider.max + timeOfDaySlider.min + durationSlider.value", function () {
+            var begin = (($scope.currentPage - 1) * $scope.numPerPage);
+            var end = begin + $scope.numPerPage;
 
+            var filtered = $scope.results.filter($scope.filterSearch());
 
-    $scope.priceSlider = {
-        min: 0,
-        max: 10,
-        options: {
-            floor: 0,
-            ceil: 0,
-            translate: function(value){
-                return '£' + value
-            }
-        }
-    };
+            $scope.resultSize = filtered.length;
+            $scope.pagedResults = filtered.slice(begin, end);
+        });
 
-     $scope.timeOfDaySlider = {
-        min: 0,
-        max: 24,
-        options: {
-            floor: 0,
-            ceil: 24,
-            step: 1,
-             translate: function(value){
-                if (value > 9){
-                    return value + ':00';
+        $scope.priceSlider = {
+            min: 0,
+            max: 10,
+            options: {
+                floor: 0,
+                ceil: 0,
+                translate: function (value) {
+                    return '£' + value
                 }
-                 return '0' + value + ':00';
             }
-        }
-    };
+        };
 
-    $scope.durationSlider = {
-        value: 10,
-        options: {
-            floor: 0,
-            ceil: 10,
-            step: 1,
-             translate: function(value){
-                return value + ' t';
+        $scope.timeOfDaySlider = {
+            min: 0,
+            max: 24,
+            options: {
+                floor: 0,
+                ceil: 24,
+                step: 1,
+                translate: function (value) {
+                    if (value > 9) {
+                        return value + ':00';
+                    }
+                    return '0' + value + ':00';
+                }
             }
-        }
-    };
+        };
+
+        $scope.durationSlider = {
+            value: 10,
+            options: {
+                floor: 0,
+                ceil: 10,
+                step: 1,
+                translate: function (value) {
+                    return value + ' t';
+                }
+            }
+        };
 
         $scope.filterSearch = function () {
             return function (item) {
                 if (item['traveltime'] > $scope.durationSlider.value * 60)
                     return false;
-                
+
                 var hour = new Date(item['date']).getHours();
-                
-                if(hour > $scope.timeOfDaySlider.max || $scope.timeOfDaySlider.min > hour )
+
+                if (hour > $scope.timeOfDaySlider.max || $scope.timeOfDaySlider.min > hour)
                     return false;
 
                 var price = item['totalPrice'];
 
                 return price >= $scope.priceSlider.min && price <= $scope.priceSlider.max;
             }
-        }; 
-        
+        };
+
 
         /**
          * If the user uses the autocomplete by picking a value, we uses those
          */
-        $scope.pickorigin = function(selected) {
+        $scope.pickorigin = function (selected) {
             var airport = selected.split(",");
             airport = airport[2].trim();
-            
+
             $scope.search.from = AirportFactory.getLocalStoredAirportByName(airport).IATAcode;
         }
 
@@ -208,7 +231,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
                 return;
             }
 
-            AirportFactory.getAirportNiceNames(typed).then(function(res) {
+            AirportFactory.getAirportNiceNames(typed).then(function (res) {
                 $scope.locations = res;
             });
         };
@@ -220,50 +243,50 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
         $scope.selectFlight = function (flight) {
             saver.set(flight);
         };
-        
-        
+
+
         // If the user has already made a search, we get that on load
         if (FlightFactory.getLastSearch().result != null) {
             var lastSearch = FlightFactory.getLastSearch();
             $scope.priceSlider.options.ceil = lastSearch.max;
             $scope.priceSlider.max = lastSearch.max;
             $scope.results = lastSearch.result;
-            
+
             $scope.search.to = lastSearch.to;
             $scope.search.from = lastSearch.from;
             $scope.search.seats = lastSearch.seats;
             $scope.search.date = new Date(lastSearch.time);
         }
-        
+
         // handle incomming data
         $scope.searchFlights = function () {
-            
+
             // Lets indicate that we are searching;
             $scope.results = null;
             var from = false;
             var to = false;
-            
+
             /**
              * This defo need some refactoring
              */
             if ($scope.search.from) {
                 // If the user is only typing and not using autocomplete, we have no idea 
                 // about what from/to is containing, so we want to validate those. 
-                AirportFactory.getAirport($scope.search.from).then(function(res) {
+                AirportFactory.getAirport($scope.search.from).then(function (res) {
                     if (res.data == null) {
                         console.log("Invalid from destination")
                         console.log($scope.search.from)
                     } else {
                         from = true;
-                        console.log( res.data.IATAcode)
+                        console.log(res.data.IATAcode)
                         $scope.search.from = res.data.IATAcode;
                         lookup();
                     }
                 });
             }
-            
+
             if ($scope.search.to) {
-                AirportFactory.getAirport($scope.search.to).then(function(res) {
+                AirportFactory.getAirport($scope.search.to).then(function (res) {
                     if (res.data == null) {
                         console.log("Invalid to destination")
                         console.log($scope.search.to)
@@ -278,11 +301,11 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
                 to = true;
                 lookup();
             }
-            
+
             function lookup() {
                 if (from && to) {
                     console.log("Searching")
-                    FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function(res) {
+                    FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function (res) {
                         if (res[0] != undefined) {
                             unpackFlights(res);
 
@@ -291,25 +314,32 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
                             toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
                         }
                     });
-                } 
+                }
             }
         };
 
         //Function for unpacking resultdata from the server
         var unpackFlights = function (result) {
 
-            FlightFactory.unpackFlights(result).then(function(res) {
+            FlightFactory.unpackFlights(result).then(function (res) {
 
                 $scope.priceSlider.options.ceil = res.max;
                 $scope.priceSlider.max = res.max;
                 refreshSliders();
-                    
+
                 // We return the result here, then append the names once they are fetched
                 $scope.results = res.arr;
+                
+                //Setup pagination
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage);
+                var end = begin + $scope.numPerPage;
+                $scope.pagedResults = $scope.results.slice(begin, end);
+                $scope.resultSize = res.arr.length;
+                
                 FlightFactory.attachAirportNames(res.arr);
             });
         };
-        
+
         //Used after sliders are unhidden, to update layout 
         var refreshSliders = function () {
             $timeout(function () {
@@ -325,17 +355,17 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
  * @Date: 7/12 2015
  * 
  */
-angular.module('myApp').controller('SignupCtrl', ['$scope','$location', 'SignupFactory', 'toastr', 
-    function ($scope,$location, SignupFactory, toastr) {
+angular.module('myApp').controller('SignupCtrl', ['$scope', '$location', 'SignupFactory', 'toastr',
+    function ($scope, $location, SignupFactory, toastr) {
 
         $scope.user = {};
 
         $scope.signup = function (form) {
-            if (!form.$valid){
+            if (!form.$valid) {
                 toastr.error("Udfyld manglende felter");
                 return;
             }
-            
+
             SignupFactory.signup($scope.user).then(function (result) {
                 toastr.success(result.data);
                 $location.path('/login');
@@ -360,9 +390,9 @@ angular.module('myApp').controller('MyReservationsCtrl', ['$scope', 'toastr', 'R
         });
     }]);
 
-angular.module('myApp').controller('AdminCtrl', ['$scope','ReservationFactory', 'toastr',
+angular.module('myApp').controller('AdminCtrl', ['$scope', 'ReservationFactory', 'toastr',
     function ($scope, ReservationFactory, toastr) {
-        
+
         ReservationFactory.getAll().then(function (result) {
             $scope.reservations = result.data;
         });
