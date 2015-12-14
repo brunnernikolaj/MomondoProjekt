@@ -124,7 +124,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', '$timeout', 'FlightF
     function ($scope, $timeout, FlightFactory, saver, AirportFactory, toastr) {
 
         $scope.cities = [];
-        
+        $scope.locations = [];
         $scope.airports = undefined;
 
         //Stuff Used for pagination  
@@ -274,7 +274,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', '$timeout', 'FlightF
             if ($scope.search.from) {
                 // If the user is only typing and not using autocomplete, we have no idea 
                 // about what from/to is containing, so we want to validate those. 
-                AirportFactory.getAirport($scope.search.from).then(function (res) {
+                AirportFactory.lookupAirports($scope.search.from).then(function (res) {
                     if (res.data == null) {
                         console.log("Invalid from destination")
                         console.log($scope.search.from)
@@ -288,7 +288,7 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', '$timeout', 'FlightF
             }
 
             if ($scope.search.to) {
-                AirportFactory.getAirport($scope.search.to).then(function (res) {
+                AirportFactory.lookupAirports($scope.search.to).then(function (res) {
                     if (res.data == null) {
                         console.log("Invalid to destination")
                         console.log($scope.search.to)
