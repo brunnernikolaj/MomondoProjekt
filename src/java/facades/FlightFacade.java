@@ -1,11 +1,9 @@
 package facades;
 
-import com.google.gson.Gson;
 import dao.AirportDAO;
 import dao.FlightDAO;
 import dao.ReservationDAO;
 import dao.UserDAO;
-import dtos.PassengerDto;
 import dtos.ReservationDto;
 import dtos.ReservationResponseDto;
 import entity.Airport;
@@ -19,18 +17,13 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-import javax.persistence.TemporalType;
 import javax.ws.rs.core.Response;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import us.monoid.json.JSONException;
-import us.monoid.json.JSONObject;
-import us.monoid.web.Content;
-import us.monoid.web.Resty;
 import utility.NorweigianDestinations;
 import static utility.WebScraper.getListOfFlights;
 
@@ -283,25 +276,6 @@ public class FlightFacade {
         );
 
         return returnData;
-    }
-
-    private Reservation toEntity(ReservationDto reservation) {
-        List<Passenger> passengers = new ArrayList<>();
-
-        for (PassengerDto passenger : reservation.getPassengers()) {
-            passengers.add(new Passenger(
-                    passenger.getFirstName(),
-                    passenger.getLastName()
-            ));
-        }
-
-        return new Reservation(
-                0,
-                passengers,
-                reservation.getReserveeName(),
-                reservation.getReserveeEmail(),
-                reservation.getReservePhone()
-        );
     }
 
     public List<Reservation> getAllReservationsByUser(String userName) {

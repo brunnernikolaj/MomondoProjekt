@@ -10,7 +10,8 @@ import requests.FlightRequest;
 import us.monoid.json.JSONObject;
 
 /**
- *
+ * This class acts as a base class for all SearchTasks.
+ * 
  * @author Nikolaj
  */
 public abstract class AbstractSearchTask implements Callable<JSONObject>{
@@ -18,11 +19,13 @@ public abstract class AbstractSearchTask implements Callable<JSONObject>{
     protected FlightRequest request;
     protected String url;
 
+    /**
+     * 
+     * @param url
+     * @param request 
+     */
     public AbstractSearchTask(String url,FlightRequest request) {
         this.request = request;
         this.url = url;
-    }
-    
-    
-    
+    }  
 }

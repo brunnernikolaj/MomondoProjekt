@@ -46,58 +46,64 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-xs-12" ng-hide="results">
+        <div class="col-xs-12" ng-show="results.length === 0">
             <no-result></no-result>
         </div>
 
         <!-- SIDEBAR FOR FILTERS -->
-        <div class="col-sm-4 col-md-3 filters" ng-hide="results == null">
+        <div class="col-sm-4 col-md-3 filters" ng-hide="results.length === 0">
 
             <div class="panel panel-default">
                 <div class="panel-heading">Søgefilter <small>- lokalt</small></div>
                 <div class="panel-body">
-                        <h5>Priser <small>- EUR</small></h5>
+                    <h5>Priser <small>- EUR</small></h5>
+                    <div>
                         <div>
-                            <div>
-                                <rzslider
-                                    rz-slider-model="priceSlider.min"
-                                    rz-slider-high="priceSlider.max"
-                                    rz-slider-options="priceSlider.options"></rzslider>
-                            </div>
+                            <rzslider
+                                rz-slider-model="priceSlider.min"
+                                rz-slider-high="priceSlider.max"
+                                rz-slider-options="priceSlider.options"></rzslider>
                         </div>
-                        <hr>
-                        <h5>Tidspunkt <small>- Klokkeslet</small></h5>
+                    </div>
+                    <hr>
+                    <h5>Tidspunkt <small>- Klokkeslet</small></h5>
+                    <div>
                         <div>
-                            <div>
-                                <rzslider
-                                    rz-slider-model="timeOfDaySlider.min"
-                                    rz-slider-high="timeOfDaySlider.max"
-                                    rz-slider-options="timeOfDaySlider.options"></rzslider>
-                            </div>
+                            <rzslider
+                                rz-slider-model="timeOfDaySlider.min"
+                                rz-slider-high="timeOfDaySlider.max"
+                                rz-slider-options="timeOfDaySlider.options"></rzslider>
                         </div>
-                        <hr>
-                        <h5>Rejsetid <small>- Timer</small></h5>
+                    </div>
+                    <hr>
+                    <h5>Rejsetid <small>- Timer</small></h5>
+                    <div>
                         <div>
-                            <div>
-                                <rzslider
-                                    rz-slider-model="durationSlider.value"
-                                    rz-slider-options="durationSlider.options"></rzslider>
-                            </div>
+                            <rzslider
+                                rz-slider-model="durationSlider.value"
+                                rz-slider-options="durationSlider.options"></rzslider>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            </div><!-- /.filters -->
-            <!-- END /SIDEBAR FOR FILTERS -->
+        </div><!-- /.filters -->
+        <!-- END /SIDEBAR FOR FILTERS -->
 
-            <!-- RESULTS FROM SEARCH -->
-            <div class="col-sm-8 col-md-9 results">
+        <!-- RESULTS FROM SEARCH -->
+        <div class="col-sm-8 col-md-9 results">
 
-                <div class="row resultset" ng-repeat="flight in results | filter: filterSearch()">
-                    <flight-result result="flight" reserve="selectFlight"></flight-result>
-                </div><!-- /.resultset -->
-
-            </div><!-- /.results -->
-            <!-- END /RESULTS FROM SEARCH -->
-        </div>
+            <div class="row resultset" ng-repeat="flight in pagedResults">
+                <flight-result result="flight" reserve="selectFlight"></flight-result>
+            </div><!-- /.resultset -->
+              <uib-pagination 
+                ng-model="currentPage"
+                total-items="resultSize"
+                max-size="maxSize"  
+                boundary-links="true">
+            </uib-pagination>
+        </div><!-- /.results -->
+      
+        <!-- END /RESULTS FROM SEARCH -->
     </div>
+</div>

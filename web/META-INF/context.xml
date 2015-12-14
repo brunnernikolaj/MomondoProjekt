@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path=""/>
+<Context antiJARLocking="true" path="">
+  <Resource auth="Container" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc" password="Casper123" type="javax.sql.DataSource" url="jdbc:sqlserver://lipq2r7moz.database.windows.net:1433;database=Momondo;user=Nikolaj@lipq2r7moz;password=Casper123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;" username="Nikolaj"/>
+</Context>

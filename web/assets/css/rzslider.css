@@ -86,8 +86,8 @@ rzslider .rz-pointer {
   cursor: pointer;
   background-color: #1abc9c;
   -webkit-border-radius: 16px;
-     -moz-border-radius: 16px;
-          border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
 }
 
 rzslider .rz-pointer:after {
@@ -231,4 +231,8 @@ rzslider.vertical .rz-ticks .tick .tick-value {
   top: auto;
   right: -30px;
   transform: translate(0, -28%);
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+  background-color: #1abc9c !important;
 }
