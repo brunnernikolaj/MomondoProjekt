@@ -162,7 +162,11 @@ public class AirportFacade {
         
         try {
             
-            results.add(dao.getAirportByName(string));
+            for (Airport airport : dao.getAirportsByName(string)) {
+                if (!results.contains(airport)) {
+                    results.add(airport);
+                }
+            }
             
         } catch(Exception e) {
             System.out.println("Nothing found by name");

@@ -240,59 +240,16 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
             
             // Lets indicate that we are searching;
             $scope.results = null;
-            var from = false;
-            var to = false;
             
-            /**
-             * This defo need some refactoring
-             */
-            if ($scope.search.from) {
-                // If the user is only typing and not using autocomplete, we have no idea 
-                // about what from/to is containing, so we want to validate those. 
-                AirportFactory.getAirport($scope.search.from).then(function(res) {
-                    if (res.data == null) {
-                        console.log("Invalid from destination")
-                        console.log($scope.search.from)
-                    } else {
-                        from = true;
-                        console.log( res.data.IATAcode)
-                        $scope.search.from = res.data.IATAcode;
-                        lookup();
-                    }
-                });
-            }
-            
-            if ($scope.search.to) {
-                AirportFactory.getAirport($scope.search.to).then(function(res) {
-                    if (res.data == null) {
-                        console.log("Invalid to destination")
-                        console.log($scope.search.to)
-                    } else {
-                        console.log(res.data.IATAcode)
-                        to = true;
-                        $scope.search.to = res.data.IATAcode;
-                        lookup();
-                    }
-                });
-            } else {
-                to = true;
-                lookup();
-            }
-            
-            function lookup() {
-                if (from && to) {
-                    console.log("Searching")
-                    FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function(res) {
-                        if (res[0] != undefined) {
-                            unpackFlights(res);
+            FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function(res) {
+                if (res[0] != undefined) {
+                    unpackFlights(res);
 
-                        } else {
-                            $scope.results = null;
-                            toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
-                        }
-                    });
-                } 
-            }
+                } else {
+                    $scope.results = null;
+                    toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
+                }
+            });
         };
 
         //Function for unpacking resultdata from the server
