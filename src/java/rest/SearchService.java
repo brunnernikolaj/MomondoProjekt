@@ -64,7 +64,7 @@ public class SearchService {
     public String search(@PathParam("from") String from, @PathParam("day") String day, @PathParam("seats") int seats) throws FlightException {
         
         try {
-            Date time = convertToDate(day);
+            Date time = CommonService.dateFromIsoString(day);
             FlightRequest request = new FlightRequest(from, null, time, seats);
             String result = searchEngine.search(x -> new SearchTask(x, request)).toString();
             
@@ -105,16 +105,5 @@ public class SearchService {
             Logger.getLogger(SearchEngine.class.getName()).log(Level.SEVERE, null, ex);
             throw new FlightException("An unknown error occured while searching for flights", Response.Status.INTERNAL_SERVER_ERROR, 4);
         }
-    }
-    
-    
-
-    private Date convertToDate(String day) throws ParseException {
-        //TODO return proper representation object
-        TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        df.setTimeZone(tz);
-        Date time = df.parse(day);
-        return time;
     }
 }

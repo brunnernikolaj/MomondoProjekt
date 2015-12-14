@@ -1,8 +1,5 @@
 package dao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerBulkCopy;
-import com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement;
-import com.microsoft.sqlserver.jdbc.SQLServerStatement;
 import deploy.DeploymentConfiguration;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;

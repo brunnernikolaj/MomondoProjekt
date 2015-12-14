@@ -42,6 +42,9 @@ public class UserFacade {
         return dao.find(id);
     }
     
+    public List<User> getAll(){
+        return dao.getAll();
+    }
     
     public String createNewUser(User user) {
         user.AddRole("User");

@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,6 +20,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USERS")
+@NamedQueries({
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
+})
 public class User implements Serializable {
 
     @Column(name = "PASSWORD")
