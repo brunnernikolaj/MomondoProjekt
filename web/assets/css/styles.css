@@ -77,6 +77,21 @@ ol.breadcrumb {
 .ng-leave-active {
   opacity: 0; }
 
+body, html {
+  height: 100%; }
+
+.viewport {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  padding-bottom: 232px; }
+
+.stickyfooter {
+  position: relative;
+  height: 232px;
+  margin-top: -232px;
+  clear: both; }
+
 body {
   font-family: "Open Sans", "Helvetica Neue", Tahoma, sans-serif;
   font-weight: 400;

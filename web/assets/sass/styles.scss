@@ -15,10 +15,26 @@ $prilight: lighten($primary, 10%);
 $font-stack: 'Open Sans', 'Helvetica Neue', Tahoma, sans-serif;
 $font-head: 'Raleway', 'Helvetica Neue', Tahoma, sans-serif;
 
+body, html {
+	height:100%;
+}
+.viewport {
+	min-height: 100%;
+	height: auto !important;
+	height:100%;
+	padding-bottom:232px;
+}
+.stickyfooter {
+	position: relative;
+	height:232px;
+	margin-top:-232px;
+	clear:both;
+}
+
 body {
 	font-family: $font-stack;
 	font-weight: 400;
-        overflow-y: scroll;
+    overflow-y: scroll;
 }
 
 a {
