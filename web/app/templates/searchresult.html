@@ -93,7 +93,7 @@
         <!-- RESULTS FROM SEARCH -->
         <div class="col-sm-8 col-md-9 results">
 
-            <div class="row resultset" ng-repeat="flight in pagedResults| filter: filterSearch()">
+            <div class="row resultset" ng-repeat="flight in pagedResults">
                 <flight-result result="flight" reserve="selectFlight"></flight-result>
             </div><!-- /.resultset -->
               <uib-pagination 

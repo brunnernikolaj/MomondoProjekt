@@ -24,6 +24,7 @@ import requests.FlightRequest;
 import searchengine.SearchEngine;
 import searchengine.SearchTask;
 import searchengine.SearchTaskWithDestination;
+import utility.CommonService;
 
 /**
  * REST Web Service
@@ -94,7 +95,7 @@ public class SearchService {
     public String searchWithDestination(@PathParam("from") String from,@PathParam("to") String to, @PathParam("day") String day, @PathParam("seats") int seats) throws FlightException {
         
         try {
-            Date time = convertToDate(day);
+            Date time = CommonService.dateFromIsoString(day);
             FlightRequest request = new FlightRequest(from, to, time, seats);
             String result = searchEngine.search(x -> new SearchTaskWithDestination(x, request)).toString();
             
@@ -107,16 +108,7 @@ public class SearchService {
     }
     
     
-    /**
-     * Converts a date as String to ISO 8601.
-     * 
-     * @Author: Nikolaj
-     * @Date: 6/12 2015
-     * 
-     * @param day               Date as string
-     * @return                  Date object formatted after ISO 8601
-     * @throws ParseException 
-     */
+
     private Date convertToDate(String day) throws ParseException {
         //TODO return proper representation object
         TimeZone tz = TimeZone.getTimeZone("UTC");

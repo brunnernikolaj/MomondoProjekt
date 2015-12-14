@@ -45,6 +45,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.commons.mail.EmailException;
 import org.joda.time.DateTime;
 import us.monoid.json.JSONException;
+import utility.CommonService;
 import utility.MailService;
 import utility.NorweigianDestinations;
 
@@ -211,12 +212,7 @@ public class FlightService {
             obj.addProperty("traveltime", flight.getTravelTime());
             obj.addProperty("totalPrice", flight.getPrice() * seats);
 
-            TimeZone tz = TimeZone.getTimeZone("UTC");
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            df.setTimeZone(tz);
-            String time = df.format(flight.getTravelDate());
-
-            DateTime date = new DateTime(flight.getTravelDate());
+            String time = CommonService.formatDateIso(flight.getTravelDate());
 
             obj.addProperty("date", time);
 
