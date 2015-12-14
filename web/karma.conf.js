@@ -2,7 +2,9 @@ module.exports = function(config){
   config.set({
 
     basePath : './',
-
+     
+     reporters : ['coverage', 'progress'],
+     
     files : [
       'bower_components/angular/angular.js',
       'bower_components/angular-route/angular-route.js',
@@ -16,14 +18,17 @@ module.exports = function(config){
       'app/components/**/*.js',
       'app/components/*.js',
       'app/view*/**/*.js',
-      'test/app/*.js',
-      'test/app/view*/**/*.js',
-      'test/app/components/**/*.js',
-      'test/app/authentication/**/*.js'
+      'test/app/components/**/*.js'
     ],
-
+    
+    preprocessors : {
+        'app/components/*.js': ['coverage']
+    },
+    
     autoWatch : true,
-
+    
+    
+    
     frameworks: ['jasmine'],
 
     browsers : ['Chrome'],
@@ -32,13 +37,19 @@ module.exports = function(config){
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-coverage'
             ],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
-    }
+    },
+    
+    coverageReporter: {
+        type : 'html',
+        dir : 'coverage/'
+      }
 
   });
 };

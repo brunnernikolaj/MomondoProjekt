@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/factories.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">components/</a> factories.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">45.64% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>68/149</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">26.32% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>10/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">51.61% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>16/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">45.95% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>68/148</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+/**
+ * FlightFactory
+ * 
+ * @param angular http
+ * @returns Object containing flight factory methods
+ */
+angular.module('myApp').factory('FlightFactory', ["$http", 'AirportFactory', '$q', function (http, AirportFactory, $q) {
+        
+        var lastSearch = {
+            result: null,
+            from: null,
+            to: undefined,
+            time: null,
+            seats: 0,
+            max: 0
+        };
+        
+        var flight = {};
+        
+        flight.getLastSearch = <span class="fstat-no" title="function not covered" >function() {</span>
+            
+<span class="cstat-no" title="statement not covered" >            if (lastSearch.result != null) {</span>
+<span class="cstat-no" title="statement not covered" >                return lastSearch;</span>
+            }
+            
+            // We provide support for localstorage, if supported
+<span class="cstat-no" title="statement not covered" >            if (localStorage.lastSearch != undefined) {</span>
+<span class="cstat-no" title="statement not covered" >                var obj = localStorage.lastSearch;</span>
+<span class="cstat-no" title="statement not covered" >                var res = JSON.parse(obj);</span>
+<span class="cstat-no" title="statement not covered" >                return res;</span>
+            }
+            
+<span class="cstat-no" title="statement not covered" >            return lastSearch;</span>
+        }
+        
+        flight.unpackFlights = <span class="fstat-no" title="function not covered" >function(result) {</span>
+            
+<span class="cstat-no" title="statement not covered" >            var maxValue = 0;</span>
+            
+<span class="cstat-no" title="statement not covered" >            result.forEach(<span class="fstat-no" title="function not covered" >function (airline, index) {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                airline.flights.forEach(<span class="fstat-no" title="function not covered" >function (flight, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    flight.airline = airline.airline;</span>
+<span class="cstat-no" title="statement not covered" >                    var date = new Date(flight.date);</span>
+<span class="cstat-no" title="statement not covered" >                    flight.endDate = new Date(date.setMinutes(date.getMinutes() + flight.traveltime)).toISOString();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    if (flight.totalPrice &gt; maxValue) {</span>
+<span class="cstat-no" title="statement not covered" >                        maxValue = flight.totalPrice;</span>
+                    }
+                });
+            })
+&nbsp;
+            //Select all flight arrays and then flatten them to one array
+<span class="cstat-no" title="statement not covered" >            var flights = result.map(airline =&gt; <span class="cstat-no" title="statement not covered" >airline.flights)</span>;</span>
+<span class="cstat-no" title="statement not covered" >            var flattened = [];</span>
+<span class="cstat-no" title="statement not covered" >            for (var i = 0; i &lt; flights.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >                var current = flights[i];</span>
+<span class="cstat-no" title="statement not covered" >                for (var j = 0; j &lt; current.length; ++j)</span>
+<span class="cstat-no" title="statement not covered" >                    flattened.push(current[j]);</span>
+            }
+            
+<span class="cstat-no" title="statement not covered" >            lastSearch.result = flattened;</span>
+<span class="cstat-no" title="statement not covered" >            lastSearch.max = maxValue;</span>
+            
+            // We store the result in local storage aswell, so it's still there if
+            // the user updates his browser window
+<span class="cstat-no" title="statement not covered" >            if(typeof(Storage) !== "undefined") {</span>
+<span class="cstat-no" title="statement not covered" >                var obj = JSON.stringify(lastSearch);</span>
+<span class="cstat-no" title="statement not covered" >                localStorage.setItem("lastSearch", obj);</span>
+            } 
+            
+<span class="cstat-no" title="statement not covered" >            return $q.when({</span>
+                arr: flattened,
+                max: maxValue
+            });
+        }
+        
+        
+        flight.searchForFlights = function(from, time, seats, to) {
+            
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (arguments.length &lt; 3) {
+<span class="cstat-no" title="statement not covered" >                throw "An error occured while calling searchForFlights. one of the required arguments is undefined";</span>
+            }
+            
+            var date = new Date(time);
+            
+            // We store the search
+            lastSearch.time = date;
+            lastSearch.from = from;
+            lastSearch.to = to;
+            lastSearch.seats = seats;
+            
+            if (to) {
+                return searchWithDestination(from, date.toISOString(), seats, to).then(function(res) {
+                    return res.data;
+                });
+            } else {
+                return searchWithNoDestination(from, date.toISOString(), seats).then(function(res) {
+                    return res.data;
+                });
+            }
+        }
+        
+        
+        flight.attachAirportNames = <span class="fstat-no" title="function not covered" >function(flights) {</span>
+            
+            // Airports we should fetch
+<span class="cstat-no" title="statement not covered" >            var airportCodes = [];</span>
+&nbsp;
+            // First we gotta loop through and get all the different iata codes
+            // and prepare the flight object for the new data.
+<span class="cstat-no" title="statement not covered" >            for (var i = 0, l = flights.length; i &lt; l; i++) {</span>
+&nbsp;
+                // Prepare for populating later
+<span class="cstat-no" title="statement not covered" >                flights[i].originCity = "";</span>
+<span class="cstat-no" title="statement not covered" >                flights[i].originName = "";</span>
+<span class="cstat-no" title="statement not covered" >                flights[i].destinationCity = "";</span>
+<span class="cstat-no" title="statement not covered" >                flights[i].destinationName = "";</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                if (airportCodes.indexOf(flights[i].origin) == -1) {</span>
+<span class="cstat-no" title="statement not covered" >                    airportCodes.push(flights[i].origin);</span>
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                if (airportCodes.indexOf(flights[i].destination) == -1) {</span>
+<span class="cstat-no" title="statement not covered" >                    airportCodes.push(flights[i].destination);</span>
+                }
+            }
+&nbsp;
+            // Now we fetch the airport names.
+<span class="cstat-no" title="statement not covered" >            for (var c = 0, d = airportCodes.length; c &lt; d; c++) {</span>
+<span class="cstat-no" title="statement not covered" >                AirportFactory.getAirportByIATA(airportCodes[c]).then(<span class="fstat-no" title="function not covered" >function (res) {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    for (var j = 0; j &lt; flights.length; j++) {</span>
+<span class="cstat-no" title="statement not covered" >                        if (flights[j].origin == res.data.IATAcode) {</span>
+<span class="cstat-no" title="statement not covered" >                            flights[j].originName = res.data.name;</span>
+<span class="cstat-no" title="statement not covered" >                            flights[j].originCity = res.data.city;</span>
+                        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        if (flights[j].destination == res.data.IATAcode) {</span>
+<span class="cstat-no" title="statement not covered" >                            flights[j].destinationName = res.data.name;</span>
+<span class="cstat-no" title="statement not covered" >                            flights[j].destinationCity = res.data.city;</span>
+                        }
+                    }
+                });
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return flights;</span>
+        }
+        
+        function searchWithNoDestination(from, time, seats) {
+            var url = "api/search/" + from + "/" + time + "/" + seats;
+            return http.get(url);
+        };
+&nbsp;
+        function searchWithDestination(from, time, seats, to) {
+           
+            var url = "api/search/" + from + "/" + to + "/" + time + "/" + seats;
+            return http.get(url);
+        };
+        
+        
+&nbsp;
+        return flight;
+    }]);
+&nbsp;
+angular.module('myApp').factory('ReservationFactory', ["$http", function (http) {
+&nbsp;
+        var reservation = {};
+&nbsp;
+        reservation.reservateTickets = <span class="fstat-no" title="function not covered" >function (ticketRequest) {</span>
+<span class="cstat-no" title="statement not covered" >            var url = "api/flightreservation";</span>
+<span class="cstat-no" title="statement not covered" >            return http.post(url, ticketRequest);</span>
+        };
+&nbsp;
+        reservation.reservateExternalTickets = <span class="fstat-no" title="function not covered" >function (ticketRequest) {</span>
+<span class="cstat-no" title="statement not covered" >            var url = "api/reservation";</span>
+<span class="cstat-no" title="statement not covered" >            return http.post(url, ticketRequest);</span>
+        };
+        
+        reservation.getAll = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >            var url = "api/reservation";</span>
+<span class="cstat-no" title="statement not covered" >            return http.get(url);</span>
+        };
+        
+        reservation.getByUser = <span class="fstat-no" title="function not covered" >function (username) {</span>
+<span class="cstat-no" title="statement not covered" >            var url = "api/reservation/user/" + username;</span>
+<span class="cstat-no" title="statement not covered" >            return http.get(url);</span>
+        };
+&nbsp;
+        return reservation;
+    }]);
+&nbsp;
+/**
+ * Airport Factory.
+ * 
+ * @Author: Casper Schultz
+ * @Date: 5/12 2015
+ * 
+ * @param angular $http 
+ * @param angular $q 
+ * @returns Object containing methods for alking with the Airport API
+ */
+angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http, $q) {
+        
+        var airports = [];
+        
+        var airport = {};
+        
+        airport.getAirports = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >            return airports;</span>
+        }
+        
+        airport.getAirportsByCity = function (name) {
+            var url = "api/airport/city/" + name;
+            return http.get(url);
+        };
+&nbsp;
+        airport.getAirportByIATA = function (iata) {
+            var url = "api/airport/" + iata;
+            return http.get(url);
+        };
+&nbsp;
+        airport.isValidAirport = function (city) {
+            var url = "api/airport/valid/" + city;
+            return http.get(url);
+        };
+        
+        /**
+         * Get local stored airport by name.
+         * 
+         * @param {type} name
+         * @returns {unresolved}
+         */
+        airport.getLocalStoredAirportByName = <span class="fstat-no" title="function not covered" >function(name) {</span>
+            
+<span class="cstat-no" title="statement not covered" >            for (var i = 0, l = airports.length; i &lt; l; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                if (airports[i].name.toLowerCase() == name.toLowerCase()) {</span>
+<span class="cstat-no" title="statement not covered" >                    return airports[i];</span>
+                }
+            }
+            
+<span class="cstat-no" title="statement not covered" >            throw "An error occured calling getAirportByName. Trying to get airport name when no local airports are stored";</span>
+        }
+        
+        airport.lookupAirports = function(name) {
+            return http.get('api/airport/lookup/' + name);
+        };
+        
+        /**
+         * Get airports from string
+         * 
+         * @param {type} str
+         * @returns {unresolved}
+         */
+        airport.getAirportNiceNames = function(str) {
+            
+            // We wont call the server, if the string is less then 3 long
+            // But we return an empty promise instead
+            if (str.length &lt; 3) {
+                throw "getAirportNames expects an input of a string that is atleast 3 characters long";
+            }
+            
+            var airportNames = [];
+            
+            // We fetch the list when a character list contains of 3 letters
+            // so its safe to look up locally after.
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (str.length &gt; 3 &amp;&amp; airports.length &gt; 0) {
+                
+<span class="cstat-no" title="statement not covered" >                for (var i = 0, l = airports.length; i &lt; l; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (str.toLowerCase() == airports[i].name.substring(0, str.length).toLowerCase() || str.toLowerCase() == airports[i].city.substring(0, str.length).toLowerCase() ) {</span>
+<span class="cstat-no" title="statement not covered" >                        airportNames.push(airports[i].country + ", " + airports[i].city + ", " + airports[i].name);</span>
+                    }
+                }
+                 
+<span class="cstat-no" title="statement not covered" >                return $q.when(airportNames);</span>
+            }
+           
+            
+            return airport.lookupAirports(str).then(<span class="fstat-no" title="function not covered" >function(response) {</span>
+                
+<span class="cstat-no" title="statement not covered" >                airports =[];</span>
+<span class="cstat-no" title="statement not covered" >                airports = response.data;</span>
+                
+<span class="cstat-no" title="statement not covered" >                for (var i = 0, l = response.data.length; i &lt; l; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                    airportNames.push(response.data[i].country + ", " + response.data[i].city + ", " + response.data[i].name);</span>
+                }
+                 
+<span class="cstat-no" title="statement not covered" >                return airportNames;</span>
+            });
+        };   
+&nbsp;
+        return airport;
+    }]);
+&nbsp;
+/**
+ * Stores flightdata temporary.
+ * 
+ * @returns {data}
+ */
+angular.module('myApp').factory('FlightSaver', function () {
+    
+    var flightSaver = {};
+    
+    var savedData = undefined;
+&nbsp;
+    flightSaver.set = function (data) {
+        
+        savedData = data;
+        
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(typeof(Storage) !== "undefined") {
+            var obj = JSON.stringify(savedData);
+            localStorage.setItem("savedData", obj);
+        } 
+    };
+&nbsp;
+    flightSaver.get = function () {
+        
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (savedData != undefined) {
+            return savedData;
+        }
+        
+<span class="cstat-no" title="statement not covered" >        if (localStorage.lastSearch != undefined) {</span>
+<span class="cstat-no" title="statement not covered" >            var obj = localStorage.savedData;</span>
+<span class="cstat-no" title="statement not covered" >            var res = JSON.parse(obj);</span>
+<span class="cstat-no" title="statement not covered" >            return res;</span>
+        }
+        
+<span class="cstat-no" title="statement not covered" >        throw "No data has been saved in FlightSaver, so it is not possible to retrieve any.";</span>
+    };
+&nbsp;
+&nbsp;
+    return flightSaver;
+});
+&nbsp;
+app.factory('SignupFactory',[ '$http', <span class="fstat-no" title="function not covered" >function (http) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var signup = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    signup.signup = <span class="fstat-no" title="function not covered" >function (user) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var url = "api/register";</span>
+<span class="cstat-no" title="statement not covered" >        return http.post(url, user);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return signup;</span>
+}]);
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 15 2015 00:07:58 GMT+0100 (CET)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

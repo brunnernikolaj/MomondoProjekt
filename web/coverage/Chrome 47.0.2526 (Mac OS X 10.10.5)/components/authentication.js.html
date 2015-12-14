@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/authentication.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">components/</a> authentication.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.96% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>6/67</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">20% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">11.11% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.96% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>6/67</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*
+ * Angular authentication module
+ * 
+ * A rewrite of the security module provided for the semester projects.
+ * 
+ * @Author: Casper Schultz
+ */
+'use strict';
+&nbsp;
+angular.module('security', [])
+&nbsp;
+        /**
+         * URL base decoder
+         * 
+         * @returns {Function}
+         */
+        .service('UrlBaseDecode', <span class="fstat-no" title="function not covered" >function () {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return <span class="fstat-no" title="function not covered" >function (str) {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var output = str.replace('-', '+').replace('_', '/');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                switch (output.length % 4) {</span>
+                    case 0:
+<span class="cstat-no" title="statement not covered" >                        break;</span>
+                    case 2:
+<span class="cstat-no" title="statement not covered" >                        output += '==';</span>
+<span class="cstat-no" title="statement not covered" >                        break;</span>
+                    case 3:
+<span class="cstat-no" title="statement not covered" >                        output += '=';</span>
+<span class="cstat-no" title="statement not covered" >                        break;</span>
+                    default:
+<span class="cstat-no" title="statement not covered" >                        throw 'Illegal base64url string!';</span>
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return window.atob(output); </span>//polifyll https://github.com/davidchambers/Base64.js
+            };
+        })
+&nbsp;
+&nbsp;
+        /**
+         * Factory adds authentication header
+         * 
+         * @param {type} $rootScope
+         * @param {type} $q
+         * @param {type} $window
+         * @returns {authentication_L41.authenticationAnonym$1}
+         */
+        .factory('AuthInterceptor', function ($rootScope, $q, $window) {
+            return {
+                request: function (config) {
+                    config.headers = config.headers || <span class="branch-1 cbranch-no" title="branch not covered" >{};</span>
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if ($window.sessionStorage.token) {
+<span class="cstat-no" title="statement not covered" >                        config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;</span>
+                    }
+                    $rootScope.error = "";
+                    return config;
+                },
+                responseError: <span class="fstat-no" title="function not covered" >function (rejection) {</span>
+<span class="cstat-no" title="statement not covered" >                    return $q.reject(rejection);</span>
+                }
+            };
+        })
+&nbsp;
+&nbsp;
+        /**
+         * Factory for handling the login / logout events.
+         * 
+         * @param {type} $http
+         * @param {type} $window
+         * @param {type} $location
+         * @param {type} UrlBaseDecode
+         * @returns {authentication_L36.auth}
+         */
+        .factory('LoginFactory', <span class="fstat-no" title="function not covered" >function ($http, $window, $rootScope, UrlBaseDecode) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var auth = {</span>
+                username: "",
+                authenticated: false,
+                roles: [],
+                admin: false,
+                user: false,
+                message: '',
+                error: null
+            };
+&nbsp;
+            //This sets the login data from session store if user pressed F5 (You are still logged in)
+<span class="cstat-no" title="statement not covered" >            var init = <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                var token = $window.sessionStorage.token;</span>
+<span class="cstat-no" title="statement not covered" >                if (token) {</span>
+<span class="cstat-no" title="statement not covered" >                    auth.authenticated = true;</span>
+<span class="cstat-no" title="statement not covered" >                    var encodedProfile = token.split('.')[1];</span>
+<span class="cstat-no" title="statement not covered" >                    var profile = JSON.parse(UrlBaseDecode(encodedProfile));</span>
+<span class="cstat-no" title="statement not covered" >                    auth.username = profile.username;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var roles = profile.roles.split(",");</span>
+<span class="cstat-no" title="statement not covered" >                    roles.forEach(<span class="fstat-no" title="function not covered" >function (role) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        auth.roles.push(role);</span>
+                    });
+<span class="cstat-no" title="statement not covered" >                    auth.error = null;</span>
+                }
+            };
+&nbsp;
+            // and fire it after definition
+<span class="cstat-no" title="statement not covered" >            init();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            auth.isLoggedIn = <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                return this.authenticated;</span>
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            auth.isAdmin = <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                return this.roles.indexOf('Admin') !== -1;</span>
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            auth.isUser = <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                return this.roles.indexOf('User') !== -1;</span>
+            };
+            
+<span class="cstat-no" title="statement not covered" >            auth.isRole = <span class="fstat-no" title="function not covered" >function (role) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return this.roles.indexOf(role) !== -1;</span>
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            auth.getUsername = <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                return this.username;</span>
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            auth.doLogout = <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                this.authenticated = false;</span>
+<span class="cstat-no" title="statement not covered" >                this.roles = [];</span>
+<span class="cstat-no" title="statement not covered" >                delete $window.sessionStorage.token;</span>
+<span class="cstat-no" title="statement not covered" >                $rootScope.$broadcast('auth:loggedOut', auth);</span>
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            auth.doLogin = <span class="fstat-no" title="function not covered" >function (userJson) {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $http.post('api/login', userJson).success(<span class="fstat-no" title="function not covered" >function (data) {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    $window.sessionStorage.token = data.token;</span>
+<span class="cstat-no" title="statement not covered" >                    self.authenticated = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var encodedProfile = data.token.split('.')[1];</span>
+<span class="cstat-no" title="statement not covered" >                    var profile = JSON.parse(UrlBaseDecode(encodedProfile));</span>
+<span class="cstat-no" title="statement not covered" >                    self.username = profile.username;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    self.roles = [];</span>
+<span class="cstat-no" title="statement not covered" >                    var roles = profile.roles.split(",");</span>
+<span class="cstat-no" title="statement not covered" >                    roles.forEach(<span class="fstat-no" title="function not covered" >function (role) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        auth.roles.push(role);</span>
+                    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    auth.error = null;</span>
+<span class="cstat-no" title="statement not covered" >                    $rootScope.$broadcast('auth:loggedIn', auth);</span>
+                })
+                        .error(<span class="fstat-no" title="function not covered" >function (data) {</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.$broadcast('auth:failedLogin', "Brugernavn og password stemmer ikke overens");</span>
+<span class="cstat-no" title="statement not covered" >                            delete $window.sessionStorage.token;</span>
+<span class="cstat-no" title="statement not covered" >                            self.authenticated = false;</span>
+<span class="cstat-no" title="statement not covered" >                            self.roles = [];</span>
+<span class="cstat-no" title="statement not covered" >                            self.username = "";</span>
+<span class="cstat-no" title="statement not covered" >                            self.error = data.error;</span>
+                        });
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return auth;</span>
+        });
+&nbsp;
+&nbsp;
+/**
+ * NOT SURE ABOUT WHY THESE HAS BEEN ADDED IN THE FIRST PLACE
+ * 
+ * They are not needed
+ * 
+ * So for now, I will comment them out, and find a solution, when/if
+ * I will ever need it.
+ */
+//  //Other controller emits the logOutEvent to force a logout
+//  $scope.$on('logOutEvent', function (event, args) {
+//    $scope.error = "Your session timed out. Please login again";
+//    $scope.logout();
+//  });
+//
+//  $scope.isActive = function (viewLocation) {
+//    return viewLocation === $location.path();
+//  };
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 15 2015 00:07:58 GMT+0100 (CET)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
