@@ -241,6 +241,10 @@ angular.module('myApp').controller("SearchCtrl", ['$scope','$timeout', 'FlightFa
             // Lets indicate that we are searching;
             $scope.results = null;
             
+            // @TODO
+            // We have no idea if the user has used aiport name, city or iata code
+            // so we need to translate whatever into an iata code.
+            
             FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function(res) {
                 if (res[0] != undefined) {
                     unpackFlights(res);

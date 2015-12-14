@@ -134,3 +134,44 @@ angular.module('myApp').run(function($templateCache) {
     '</div>'
         );
 });
+
+
+angular.module('myApp').run(function($templateCache) {
+    $templateCache.put('flightSearhForm.html', 
+        '<form class="form-horizontal" ng-model="search">' +
+                   ' <div class="col-sm-3">' +
+                        ' <label class="control-label">Afrejse</label>' +
+                      '   <div class="input-group">' +
+                         '    <span class="input-group-addon"><i class="fa fa-plane"></i></span>' +
+                       '      <autocomplete ng-model="search.from" attr-placeholder="Origin" data="locations" on-select="pickorigin" on-type="updateLocations" required></autocomplete>' +
+                      '   </div>' +
+                    ' </div>' +
+                   '  <div class="col-sm-3">' +
+                        ' <label class="control-label">Destination</label>' +
+                       '  <div class="input-group">' +
+                        '    <span class="input-group-addon"><i class="fa fa-plane"></i></span>' +
+                       '     <autocomplete ng-model="search.to" attr-placeholder="Destination" data="locations" on-select="pickdestination" on-type="updateLocations"></autocomplete>' +
+                       ' </div>' +
+                   ' </div>' +
+                  '  <div class="col-sm-3">' +
+                  '      <label class="control-label">Dato</label>' +
+                   '     <div class="input-group">' +
+                   '         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>' +
+                   '         <input type="date" class="form-control" ng-model="search.date" placeholder="2/12/2015">' +
+                  '      </div>' +
+                 '   </div> ' +
+                   ' <div class="col-sm-3">' +
+                     '   <label class="control-label">Passagerer</label>' +
+                      '  <div class="input-group">' +
+                      '      <span class="input-group-addon"><i class="fa fa-user"></i></span>' +
+                     '       <input type="number" class="form-control" ng-model="search.seats" name="adults" min="0" value="0">' +
+                    '    </div>' +
+                   ' </div>' +
+                  '  <div class="col-xs-12">' +
+                   '     <div class="input-group col-sm-3 formbutton">' +
+                   '         <button type="submit" ng-click="searchFlights()" id="search"  class="btn btn-primary col-xs-12"><i class="fa fa-search"></i> Find Fly</button>' +
+                   '     </div>' +
+                   ' </div>' +
+             '   </form>'
+    );
+});
