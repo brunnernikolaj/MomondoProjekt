@@ -244,7 +244,7 @@ angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http
             throw "An error occured calling getAirportByName. Trying to get airport name when no local airports are stored";
         }
         
-        airport.getAirport = function(name) {
+        airport.lookupAirports = function(name) {
             return http.get('api/airport/lookup/' + name);
         };
         
@@ -269,7 +269,7 @@ angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http
             if (str.length > 3 && airports.length > 0) {
                 
                 for (var i = 0, l = airports.length; i < l; i++) {
-                    if (str == airports[i].city.substring(0, str.length).toLowerCase()) {
+                    if (str.toLowerCase() == airports[i].name.substring(0, str.length).toLowerCase() || str.toLowerCase() == airports[i].city.substring(0, str.length).toLowerCase() ) {
                         airportNames.push(airports[i].country + ", " + airports[i].city + ", " + airports[i].name);
                     }
                 }
@@ -278,8 +278,9 @@ angular.module('myApp').factory('AirportFactory', ["$http", "$q", function (http
             }
            
             
-            return airport.getAirportsByCity(str).then(function(response) {
+            return airport.lookupAirports(str).then(function(response) {
                 
+                airports =[];
                 airports = response.data;
                 
                 for (var i = 0, l = response.data.length; i < l; i++) {

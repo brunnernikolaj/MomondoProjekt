@@ -318,6 +318,18 @@ angular.module('myApp').controller("SearchCtrl", ['$scope', '$timeout', 'FlightF
                     });
                 }
             }
+
+            
+            FlightFactory.searchForFlights($scope.search.from, $scope.search.date, $scope.search.seats, $scope.search.to).then(function(res) {
+                if (res[0] != undefined) {
+                    unpackFlights(res);
+
+                } else {
+                    $scope.results = null;
+                    toastr.info('Der blev ikke fundet nogle flyafgange. Prøv venligst en ny søgning');
+                }
+            });
+
         };
 
         //Function for unpacking resultdata from the server

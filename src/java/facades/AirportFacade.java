@@ -4,6 +4,7 @@ import dao.AirportDAO;
 import entity.Airport;
 import exceptions.FlightException;
 import exceptions.RestException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.ws.rs.core.Response;
@@ -133,32 +134,44 @@ public class AirportFacade {
         }
     }
 
-    public Airport getAirportsByUnknown(String string) {
+    public List<Airport> getAirportsByUnknown(String string) {
         
-        Airport result = null;
+        List<Airport> results = new ArrayList();
         
         
         try {
             
             // First lets see if we can get it with the IATA code
-            result = dao.getAirportByIATA(string);
+            results.add(dao.getAirportByIATA(string));
             
         } catch(NoResultException e) {
             System.out.println("Nothing found by iata code");
         }
         
         try {
-            result = dao.getAirportByCity(string);
+            
+            for (Airport airport : dao.getAirportsByCity(string)) {
+                if (!results.contains(airport)) {
+                    results.add(airport);
+                }
+            } 
+            
         } catch (Exception e) {
             System.out.println("Nothing found by city code");
         } 
         
         try {
-            result = dao.getAiportByName(string);
+            
+            for (Airport airport : dao.getAirportsByName(string)) {
+                if (!results.contains(airport)) {
+                    results.add(airport);
+                }
+            }
+            
         } catch(Exception e) {
             System.out.println("Nothing found by name");
         }
         
-        return result;
+        return results;
     }
 }

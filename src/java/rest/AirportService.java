@@ -64,7 +64,7 @@ public class AirportService {
         if (string.length() < 1)
             throw new FlightException("A minimum character length of 1 is required to fetch an airport", Response.Status.BAD_REQUEST, 4);
         
-        Airport res = facade.getAirportsByUnknown(string);
+        List<Airport> res = facade.getAirportsByUnknown(string);
         
         return gson.toJson(res);
     }
